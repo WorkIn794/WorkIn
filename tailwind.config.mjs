@@ -2,7 +2,22 @@
 export default {
 	content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
 	theme: {
-		extend: {},
+		extend: {
+			colors: {
+				WIblack: {
+					default: "#231F20"
+				},
+				WIwhite: {
+					default: "#FFFFFF"
+				},
+				WIivory: {
+					default: "#E7E4D8"
+				},
+				WIblue: {
+					default: "#003954"
+				}
+			}
+		},
 	},
 	plugins: [],
 }

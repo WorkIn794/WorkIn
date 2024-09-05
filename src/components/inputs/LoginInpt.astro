@@ -1,0 +1,15 @@
+---
+interface Props{
+    form: string;
+    name: string;
+    type: "email" | "password";
+    label: "Email Address" | "Password";
+};
+
+const {form, name, type } = Astro.props;
+---
+
+<div class="">
+    <label for={name}></label>
+    <input form={form} name={name} type={type} class=""/>
+</div>
