@@ -1,20 +1,23 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-	content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
+	content: [
+		"./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}",
+		"./src/styles/*.css"
+	],
 	theme: {
 		extend: {
 			colors: {
 				WIblack: {
-					default: "#231F20"
+					DEFAULT: "#231F20"
 				},
 				WIwhite: {
-					default: "#FFFFFF"
+					DEFAULT: "#FFFFFF"
 				},
 				WIivory: {
-					default: "#E7E4D8"
+					DEFAULT: "#E7E4D8"
 				},
 				WIblue: {
-					default: "#003954"
+					DEFAULT: "#003954"
 				}
 			}
 		},

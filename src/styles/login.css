@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+section {
+    @apply pl-0 sm:pl-8;
+}
+section + section {
+    @apply bg-blue-500 h-full hidden
+    sm:inline;
+}
+
+h1, h2 ~ h2, small {
+    @apply mb-10;
+}
+h1 {
+    @apply
+    text-4xl text-WIblue font-sans font-bold
+    sm:text-5xl;
+}
+h1 span {
+    @apply text-WIivory;
+}
+h2 {
+    @apply text-2xl text-WIblue font-bold
+    sm:text-2xl;
+}
+h2 span {
+    @apply text-xl font-semibold; 
+}
+small {
+    @apply font-semibold opacity-60;
+}
