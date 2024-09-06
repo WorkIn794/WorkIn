@@ -3,23 +3,25 @@
 @tailwind utilities;
 
 section {
-    @apply pl-0 sm:pl-8;
+    @apply p-12 col-span-5;
 }
 section + section {
-    @apply bg-blue-500 h-full hidden
+    @apply bg-blue-500 h-screen px-0
+    col-span-7
+    hidden
     sm:inline;
 }
 
-h1, h2 ~ h2, small {
-    @apply mb-10;
-}
+h1, h2 ~ h2, small {@apply mb-10;}
+h1, h2, small {@apply min-w-64;}
 h1 {
     @apply
     text-4xl text-WIblue font-sans font-bold
+    h-16 block
     sm:text-5xl;
 }
 h1 span {
-    @apply text-WIivory;
+    @apply text-WIivory-contrast;
 }
 h2 {
     @apply text-2xl text-WIblue font-bold
@@ -29,5 +31,5 @@ h2 span {
     @apply text-xl font-semibold; 
 }
 small {
-    @apply font-semibold opacity-60;
+    @apply font-semibold opacity-60 block;
 }

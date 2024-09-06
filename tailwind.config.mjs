@@ -14,7 +14,8 @@ export default {
 					DEFAULT: "#FFFFFF"
 				},
 				WIivory: {
-					DEFAULT: "#E7E4D8"
+					DEFAULT: "#E7E4D8",
+					contrast: "#D0C8C1"
 				},
 				WIblue: {
 					DEFAULT: "#003954"

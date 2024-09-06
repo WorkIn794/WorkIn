@@ -1,15 +1,18 @@
 ---
 import LoginLayout from "@layouts/LoginLayout.astro";
+import Navmenu from "@components/inputs/Navmenu.astro";
 ---
 
 <LoginLayout title="WorkIn">
 	<section>
+		<Navmenu mobile/>
 		<h1>WorkIn<span>AI</span></h1>
 		<h2>Artificial Intelligence <span>empowering</span></h2>
 		<h2><span>your</span> Career Journey</h2>
 		<small>Welcome back! Please <ins>login</ins> to your account.</small>
 	</section>
 	<section>
+		<Navmenu mobile={false}/>
 		ola crayola
 	</section>
 </LoginLayout>

@@ -1,0 +1,18 @@
+---
+const navPages: ReadonlyArray<string> = ["Home", "About us", "Blog", "Pricing"];
+
+interface Props{
+    mobile: boolean;
+};
+
+const { mobile } = Astro.props;
+---
+
+<header class:list={["min-w-64 max-w-sm h-16 mx-auto", `${mobile ? `sm:hidden` : `block`}`]}>
+    <nav class="size-full flex justify-between items-center sm:items-start sm:justify-around">
+        {navPages.map(page =>
+        <a href="https://youtu.be/dQw4w9WgXcQ?si=S2f1ZH6iodUjWRr8">
+            {page}
+        </a>)}
+    </nav>
+</header>
