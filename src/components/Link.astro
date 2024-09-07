@@ -1,11 +1,26 @@
 ---
+import { cva } from "cva";
+import { twMerge } from "tailwind-merge";
+import type { VariantProps } from "cva";
 import type { HTMLAttributes } from "astro/types";
+
+const link = cva([
+    "text-WIblack relative",
+    "before:w-full before:h-px",
+    "before:absolute before:bottom-0 before:scale-x-0",
+    "before:transition-all before:duration-300 before:ease-in-out",
+    "hover:before:scale-x-100"
+], {
+    variants: {}
+});
+
 interface Props extends HTMLAttributes<"a">{
     href: string;
     text: string;
+    className?: string;
 };
 
-const { href, text } = Astro.props;
+const { href, text, className = "" } = Astro.props;
 ---
 
 <a href={href}
