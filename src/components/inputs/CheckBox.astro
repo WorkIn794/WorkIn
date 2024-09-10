@@ -1,0 +1,15 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<"input">{
+    form: string;
+    name: string;
+    text: string;
+    remember?: boolean;
+};
+
+const { form, name, text } = Astro.props;
+---
+
+<input type="checkbox" form={form} name={name} id={name} required/>
+<label for={name}>{text}</label>

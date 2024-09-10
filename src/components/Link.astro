@@ -5,30 +5,38 @@ import type { VariantProps } from "cva";
 import type { HTMLAttributes } from "astro/types";
 
 const link = cva([
-    "text-WIblack relative",
-    "before:w-full before:h-px",
-    "before:absolute before:bottom-0 before:scale-x-0",
-    "before:transition-all before:duration-300 before:ease-in-out",
-    "hover:before:scale-x-100"
+        "relative",
+        "before:bg-WIblack",
+        "before:w-full before:h-px",
+        "before:absolute before:bottom-0 before:scale-x-0",
+        "before:transition-all before:duration-300 before:ease-in-out.",
+        "hover:before:scale-x-100"
 ], {
-    variants: {}
+    variants: {
+        intent: {
+            primary: [
+                "text-WIblack"
+            ],
+            forgetPW: [
+                "text-WIblack text-sm text-opacity-60 text-nowrap",
+                "float-none",
+                "before:bg-opacity-60",
+                "xs:float-right",
+                "sm:float-none",
+                "md:float-right"
+            ]
+        }
+    }
 });
 
-interface Props extends HTMLAttributes<"a">{
-    href: string;
-    text: string;
-    className?: string;
-};
+export interface Props extends HTMLAttributes<"a">,
+    VariantProps<typeof link>{
+        href: string;
+        text: string;
+        className?: string;
+    };
 
-const { href, text, className = "" } = Astro.props;
+const { href, text, className = "", intent = "primary" } = Astro.props;
 ---
 
-<a href={href}
-    class="text-WIblack relative
-        before:bg-WIblack
-        before:w-full before:h-px
-        before:absolute before:bottom-0 before:scale-x-0
-        before:transition-all before:duration-300 before:ease-in-out
-        hover:before:scale-x-100">
-    {text}
-</a>
+<a href={href} class={twMerge([link({intent}), className])}>{text}</a>

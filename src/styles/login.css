@@ -33,3 +33,7 @@ h2 span {
 small {
     @apply font-semibold opacity-60 block;
 }
+
+div + div {
+    @apply mb-4;
+}

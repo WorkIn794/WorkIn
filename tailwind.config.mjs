@@ -27,6 +27,9 @@ export default {
 			},
 			borderWidth: {
 				1: "1px"
+			},
+			screens: {
+				xs: "350px"
 			}
 		},
 	},

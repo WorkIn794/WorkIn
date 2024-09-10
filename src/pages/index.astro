@@ -2,6 +2,8 @@
 import LoginLayout from "@layouts/LoginLayout.astro";
 import Navmenu from "@components/Navmenu.astro";
 import LoginInpt from "@components/inputs/LoginInpt.astro";
+import CheckBox from "@components/inputs/CheckBox.astro";
+import Link from "@components/Link.astro";
 ---
 
 <LoginLayout title="WorkIn">
@@ -14,10 +16,11 @@ import LoginInpt from "@components/inputs/LoginInpt.astro";
 		<form id="form" name="login" action="" method="get">
 			<LoginInpt form="login" name="email" type="email" label="Email Address"/>
 			<LoginInpt form="login" name="password" type="password" label="Password"/>
+			<CheckBox name="rememberMe" form="login" text="Remember Me"/>
+			<Link href="https://youtu.be/dQw4w9WgXcQ?si=S2f1ZH6iodUjWRr8" text="Forgot Password?" intent="forgetPW"/>
 		</form>
 	</section>
 	<section>
 		<Navmenu mobile={false}/>
-		ola crayola
 	</section>
 </LoginLayout>

@@ -1,19 +1,21 @@
 ---
-interface Props{
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<"input">{
     form: string;
     name: string;
     type: "email" | "password";
     label: "Email Address" | "Password";
 };
 
-const {form, name, type, label } = Astro.props;
+const {form, name, type, label, ...props } = Astro.props;
 ---
 
 <div class="min-w-56 w-full h-16 p-2 border-WIgrey border-1 flex flex-col-reverse
     transition-all duration-200 ease-in-out
     has-[:focus]:border-l-WIblue-input has-[:focus]:border-l-4
     has-[:focus:invalid]:border-l-red-600">
-    <input form={form} id={name} name={name} type={type} class="text-WIblue font-semibold outline-none peer" required/>
+    <input {...props} form={form} id={name} name={name} type={type} class="text-WIblue font-semibold outline-none peer" required/>
     <label for={name}
         class="
             text-base text-WIblack
