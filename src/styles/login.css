@@ -13,7 +13,7 @@ section + section {
 }
 
 h1, h2 ~ h2, small {@apply mb-10;}
-h1, h2, small {@apply min-w-64;}
+h1, h2, small {@apply min-w-56;}
 h1 {
     @apply
     text-4xl text-WIblue font-sans font-bold
