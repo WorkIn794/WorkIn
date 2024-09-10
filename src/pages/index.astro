@@ -1,6 +1,7 @@
 ---
 import LoginLayout from "@layouts/LoginLayout.astro";
 import Navmenu from "@components/inputs/Navmenu.astro";
+import LoginInpt from "@components/inputs/LoginInpt.astro";
 ---
 
 <LoginLayout title="WorkIn">
@@ -10,6 +11,10 @@ import Navmenu from "@components/inputs/Navmenu.astro";
 		<h2>Artificial Intelligence <span>empowering</span></h2>
 		<h2><span>your</span> Career Journey</h2>
 		<small>Welcome back! Please <ins>login</ins> to your account.</small>
+		<form id="form" name="login" action="" method="get">
+			<LoginInpt form="login" name="email" type="email" label="Email Address"/>
+			<LoginInpt form="login" name="password" type="password" label="Password"/>
+		</form>
 	</section>
 	<section>
 		<Navmenu mobile={false}/>
