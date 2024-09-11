@@ -13,16 +13,43 @@ const {form, name, type, label, ...props } = Astro.props;
 
 <div class="min-w-56 w-full h-16 p-2 border-WIgrey border-1 flex flex-col-reverse
     transition-all duration-200 ease-in-out
-    has-[:focus]:border-l-WIblue-input has-[:focus]:border-l-4
+    has-[:focus:valid]:border-l-WIblue-input has-[:focus]:border-l-4
     has-[:focus:invalid]:border-l-red-600">
     <input {...props} form={form} id={name} name={name} type={type} class="text-WIblue font-semibold outline-none peer" required/>
-    <label for={name}
+    <label for={name} data-type="formInpt"
         class="
-            text-base text-WIblack
+            text-base text-WIblack text-opacity-100
             transition-all duration-200 ease-in-out
             translate-y-full
+            after:content-['*'] after:text-red-600 after:hidden
             hover:cursor-text
+            peer-valid:after:hidden
             peer-focus:translate-y-0 peer-focus:text-sm peer-focus:text-opacity-60">
         {label}
     </label>
 </div>
+
+<script>
+    const labels: NodeListOf<HTMLLabelElement> = document.querySelectorAll("div label[data-type=\"formInpt\"]");
+    labels.forEach(label => label.addEventListener("click",
+        () => {
+            const input: HTMLInputElement = label.previousElementSibling as HTMLInputElement;
+
+            input.addEventListener("focusout", () => {
+                if(input.validity.valid) label.classList.replace("after:inline", "after:hidden");
+                else label.classList.replace("after:hidden", "after:inline");
+            });
+            input.addEventListener("blur", () => {
+                if(input.value){
+                    label.classList.replace("text-opacity-100", "text-opacity-60");
+                    label.classList.replace("text-base", "text-sm");
+                    label.classList.replace("translate-y-full", "translate-y-0");
+                }else{
+                    label.classList.replace("text-opacity-60", "text-opacity-100");
+                    label.classList.replace("text-sm", "text-base");
+                    label.classList.replace("translate-y-0", "translate-y-full");
+                }
+            });
+        }
+    ));
+</script>
