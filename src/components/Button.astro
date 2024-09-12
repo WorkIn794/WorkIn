@@ -1,0 +1,27 @@
+---
+import { cva } from "cva";
+import { twMerge } from "tailwind-merge";
+import type { VariantProps } from "cva";
+import type { HTMLAttributes } from "astro/types";
+
+const button = cva([], {
+    variants: {
+        intent: {
+            login: [
+
+            ]
+        }
+    }
+});
+
+interface Props extends HTMLAttributes<"button">,
+    VariantProps<typeof button>{
+        text: string;
+        className?: string;
+    };
+const { text, className, intent } = Astro.props;
+---
+
+<button class={twMerge([button({intent}), className])}>
+    {text}
+</button>

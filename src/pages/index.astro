@@ -4,6 +4,7 @@ import Navmenu from "@components/Navmenu.astro";
 import LoginInpt from "@components/inputs/LoginInpt.astro";
 import CheckBox from "@components/inputs/CheckBox.astro";
 import Link from "@components/Link.astro";
+import Button from "@components/Button.astro";
 ---
 
 <LoginLayout title="WorkIn">
@@ -18,6 +19,8 @@ import Link from "@components/Link.astro";
 			<LoginInpt form="login" name="password" type="password" label="Password"/>
 			<CheckBox name="rememberMe" form="login" text="Remember Me" intent="login"/>
 			<Link href="https://youtu.be/dQw4w9WgXcQ?si=S2f1ZH6iodUjWRr8" text="Forgot Password?" intent="forgetPW"/>
+			<Button text="Login"/>
+			<Button text="Sign Up"/>
 		</form>
 	</section>
 	<section>

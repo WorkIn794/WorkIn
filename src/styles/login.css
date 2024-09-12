@@ -34,6 +34,6 @@ small {
     @apply font-semibold opacity-60 block;
 }
 
-div + div {
-    @apply mb-3; 
+form {
+    @apply flex flex-col;
 }
