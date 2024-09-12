@@ -1,15 +1,29 @@
 ---
+import { cva } from "cva";
+import { twMerge } from "tailwind-merge";
+import type { VariantProps } from "cva";
 import type { HTMLAttributes } from "astro/types";
 
-interface Props extends HTMLAttributes<"input">{
-    form: string;
-    name: string;
-    text: string;
-    remember?: boolean;
-};
+const checkBox = cva([], {
+    variants: {
+        intent: {
+            login: [
+                "size-3 ml-2",
+                "[&+label]:text-sm [&+label]:opacity-60"
+            ]
+        }
+    }
+});
 
-const { form, name, text } = Astro.props;
+interface Props extends HTMLAttributes<"input">,
+    VariantProps<typeof checkBox>{
+        form: string;
+        name: string;
+        text: string;
+        className?: string | string[];
+    };
+const { form, name, text, className = "", intent } = Astro.props;
 ---
 
-<input type="checkbox" form={form} name={name} id={name} required/>
+<input type="checkbox" form={form} name={name} id={name} class={twMerge([checkBox({intent}), className])}/>
 <label for={name}>{text}</label>

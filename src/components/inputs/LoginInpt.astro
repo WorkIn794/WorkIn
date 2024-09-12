@@ -35,10 +35,10 @@ const {form, name, type, label, ...props } = Astro.props;
         () => {
             const input: HTMLInputElement = label.previousElementSibling as HTMLInputElement;
 
-            input.addEventListener("focusout", () => {
-                if(input.validity.valid) label.classList.replace("after:inline", "after:hidden");
-                else label.classList.replace("after:hidden", "after:inline");
-            });
+            input.addEventListener("focusout", () => input.validity.valid ?
+                label.classList.replace("after:inline", "after:hidden") :
+                label.classList.replace("after:hidden", "after:inline")
+            );
             input.addEventListener("blur", () => {
                 if(input.value){
                     label.classList.replace("text-opacity-100", "text-opacity-60");
