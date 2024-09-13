@@ -8,7 +8,12 @@ const button = cva([], {
     variants: {
         intent: {
             login: [
-
+                "text-WIblue",
+                "w-24 h-12",
+                "border-WIblue border-2 rounded-lg",
+                "transition duration-200 ease-in-out",
+                "hover:text-white hover:bg-WIblue hover:shadow-md",
+                "focus:text-white focus:bg-WIblue focus:shadow-md"
             ]
         }
     }
@@ -17,11 +22,12 @@ const button = cva([], {
 interface Props extends HTMLAttributes<"button">,
     VariantProps<typeof button>{
         text: string;
+        form?: string;
         className?: string;
     };
-const { text, className, intent } = Astro.props;
+const { text, className, intent, ...props } = Astro.props;
 ---
 
-<button class={twMerge([button({intent}), className])}>
+<button {...props} class={twMerge([button({intent}), className])}>
     {text}
 </button>

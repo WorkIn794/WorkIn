@@ -17,10 +17,12 @@ import Button from "@components/Button.astro";
 		<form id="form" name="login" action="" method="get">
 			<LoginInpt form="login" name="email" type="email" label="Email Address"/>
 			<LoginInpt form="login" name="password" type="password" label="Password"/>
-			<CheckBox name="rememberMe" form="login" text="Remember Me" intent="login"/>
-			<Link href="https://youtu.be/dQw4w9WgXcQ?si=S2f1ZH6iodUjWRr8" text="Forgot Password?" intent="forgetPW"/>
-			<Button text="Login"/>
-			<Button text="Sign Up"/>
+			<div class="mt-2 ml-2 flex flex-wrap justify-between">
+				<CheckBox name="rememberMe" form="login" text="Remember Me" intent="login"/>
+				<Link href="https://youtu.be/dQw4w9WgXcQ?si=S2f1ZH6iodUjWRr8" text="Forgot Password?" intent="forgetPW"/>
+			</div>
+			<Button form="form" type="submit" text="Login" intent="login"/>
+			<Button text="Sign Up" intent="login"/>
 		</form>
 	</section>
 	<section>
