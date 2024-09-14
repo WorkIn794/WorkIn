@@ -3,10 +3,10 @@
 @tailwind utilities;
 
 section {
-    @apply px-12 py-4 sm:py-12;
+    @apply min-h-svh px-12 py-4 sm:py-12;
 }
 section + section {
-    @apply bg-blue-500 h-screen px-0
+    @apply bg-blue-500 px-0
     hidden
     sm:inline;
 }
@@ -30,4 +30,14 @@ h2 span {
 }
 small {
     @apply font-semibold opacity-60 block;
+}
+
+footer {
+    @apply text-sm text-nowrap mt-12 flex flex-wrap justify-between gap-y-2;
+}
+footer p{
+    @apply font-medium opacity-60;
+}
+footer a{
+    @apply text-WIblue font-bold;
 }
