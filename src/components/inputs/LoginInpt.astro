@@ -8,6 +8,10 @@ interface Props extends HTMLAttributes<"input">{
     label: "Email Address" | "Password";
 };
 
+const handleInput = (e: InputEvent) => {
+    const input = e.target as HTMLInputElement;
+    console.log(input.value)
+}
 const {form, name, type, label, ...props } = Astro.props;
 ---
 
@@ -17,19 +21,20 @@ const {form, name, type, label, ...props } = Astro.props;
     has-[:focus:invalid]:border-l-red-600">
     <input {...props} form={form} id={name} name={name} type={type} class="text-WIblue font-semibold outline-none peer" required/>
     <label for={name} data-type="formInpt"
-        class="
-            text-base text-WIblack text-opacity-100
+        class:list={["text-opacity-100 text-base translate-y-full",
+        `text-WIblack
             transition-all duration-200 ease-in-out
-            translate-y-full
             after:content-['*'] after:text-red-600 after:hidden
             hover:cursor-text
             peer-valid:after:hidden
-            peer-focus:translate-y-0 peer-focus:text-sm peer-focus:text-opacity-60">
+            peer-focus:translate-y-0 peer-focus:text-sm peer-focus:text-opacity-60`]}>
         {label}
     </label>
 </div>
 
 <script>
+    const string = "text-opacity-100 text-base translate-y-full"
+    const strins = "text-opacity-60 text-sm translate-y-0"
     const labels: NodeListOf<HTMLLabelElement> = document.querySelectorAll("div label[data-type=\"formInpt\"]");
     labels.forEach(label => label.addEventListener("click",
         () => {
@@ -39,15 +44,15 @@ const {form, name, type, label, ...props } = Astro.props;
                 label.classList.replace("after:inline", "after:hidden") :
                 label.classList.replace("after:hidden", "after:inline"));
             input.addEventListener("blur", () => {
-                if(input.value){
-                    label.classList.replace("text-opacity-100", "text-opacity-60");
-                    label.classList.replace("text-base", "text-sm");
-                    label.classList.replace("translate-y-full", "translate-y-0");
-                }else{
-                    label.classList.replace("text-opacity-60", "text-opacity-100");
-                    label.classList.replace("text-sm", "text-base");
-                    label.classList.replace("translate-y-0", "translate-y-full");
-                }
+                input.value ?
+                    label.classList.replace(
+                        "text-opacity-100 text-base translate-y-full",
+                        "text-opacity-60 text-sm translate-y-0"
+                    ) :
+                    label.classList.replace(
+                        "text-opacity-60 text-sm translate-y-0",
+                        "text-opacity-100 text-base translate-y-full"
+                    );
             });
         }
     ));

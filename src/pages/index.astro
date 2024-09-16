@@ -19,18 +19,18 @@ import Button from "@components/Button.astro";
 			<LoginInpt form="login" name="password" type="password" label="Password"/>
 			<div class="mt-2 mb-10 ml-2 flex flex-wrap justify-between">
 				<CheckBox name="rememberMe" form="login" text="Remember Me" intent="login"/>
-				<Link href="https://youtu.be/dQw4w9WgXcQ?si=S2f1ZH6iodUjWRr8" text="Forgot Password?" intent="forgetPW"/>
+				<Link href="https://youtu.be/dQw4w9WgXcQ?si=S2f1ZH6iodUjWRr8" text="Forgot Password?" intent="forgetPW" aria-label="Forgotten password"/>
 			</div>
 			<div class="flex gap-x-4">
-				<Button form="form" type="submit" text="Login" intent="login" className="flex-none"/>
-				<Button text="Sign Up" intent="login" className="flex-none"/>
+				<Button aria-label="Login" form="form" type="submit" text="Login" intent="login" className="flex-none"/>
+				<Button aria-label="Sign up" type="button" text="Sign Up" intent="login" className="flex-none"/>
 			</div>
 		</form>
 		<footer>
 			<p>Or login with</p>
-			<Link href="https://youtu.be/dQw4w9WgXcQ?si=S2f1ZH6iodUjWRr8" text="Facebook"/>
-			<Link href="https://youtu.be/dQw4w9WgXcQ?si=S2f1ZH6iodUjWRr8" text="LinkedIn"/>
-			<Link href="https://youtu.be/dQw4w9WgXcQ?si=S2f1ZH6iodUjWRr8" text="Google"/>
+			<Link href="https://youtu.be/dQw4w9WgXcQ?si=S2f1ZH6iodUjWRr8" text="Facebook" 	aria-label="Login with Facebook"/>
+			<Link href="https://youtu.be/dQw4w9WgXcQ?si=S2f1ZH6iodUjWRr8" text="LinkedIn" 	aria-label="Login with LinkedIn"/>
+			<Link href="https://youtu.be/dQw4w9WgXcQ?si=S2f1ZH6iodUjWRr8" text="Google" 	aria-label="Login with Google"/>
 		</footer>
 	</section>
 	<section>
