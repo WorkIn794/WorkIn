@@ -1,4 +1,5 @@
 ---
+import { Icon } from "astro-icon/components";
 import { cva } from "cva";
 import { twMerge } from "tailwind-merge";
 import type { VariantProps } from "cva";
@@ -10,7 +11,7 @@ const link = cva([
         "before:bg-WIblack",
         "before:w-full before:h-px",
         "before:absolute before:bottom-0 before:scale-x-0",
-        "before:transition-all before:duration-300 before:ease-in-out.",
+        "before:transition-all before:duration-300 before:ease-in-out",
         "hover:before:scale-x-100"
 ], {
     variants: {
@@ -30,9 +31,17 @@ export interface Props extends HTMLAttributes<"a">,
     VariantProps<typeof link>{
         href: string;
         text: string;
-        className?: string;
+        className?: string | string[];
+        icon?: "heroicons:folder"
+            | "heroicons:chat-bubble-oval-left"
+            | "heroicons:user"
+            | string
+            ;
     };
-const { href, text, className = "", intent = "primary" } = Astro.props;
+const { href, text, icon, className = "", intent = "primary" } = Astro.props;
 ---
 
-<a href={href} class={twMerge([link({intent}), className])}>{text}</a>
+<a href={href} class={twMerge([link({intent}), className])}>
+    {icon && <Icon name={icon}/>}
+    {text}
+</a>

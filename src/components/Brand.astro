@@ -1,0 +1,18 @@
+---
+import { twMerge } from "tailwind-merge";
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<"div">{
+    className?: string | string[];
+};
+
+const { className = "" } = Astro.props;
+---
+
+<div class={twMerge([
+    "text-WIblue text-4xl text-center font-bold",
+    "w-48 h-fit pb-6",
+    "border-WIblack border-b-[1.5px]",
+    className])}>
+    <h1>WorkIn<span class="text-WIivory-contrast">AI</span></h1>
+</div>

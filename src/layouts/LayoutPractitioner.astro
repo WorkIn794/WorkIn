@@ -1,5 +1,13 @@
 ---
-import Header from "@components/Header.astro"
+import Brand from "@components/Brand.astro";
+import NavBar from "@components/NavBar.astro";
+
+// [<text>, <iconName>] <- Format.
+const navItems: ReadonlyArray<[string, string]> = [
+	["My applications", "heroicons:folder"],
+	["Notifications", "heroicons:chat-bubble-oval-left"],
+	["Profile", "heroicons:user"]
+];
 ---
 
 <!doctype html>
@@ -12,8 +20,11 @@ import Header from "@components/Header.astro"
 		<title>WorkIn</title>
 	</head>
 	<body>
-		<main class="">
-			<Header/>
+		<main class="p-8">
+			<header>
+				<Brand/>
+				<NavBar items={navItems}/>
+			</header>
 			<slot />
 		</main>
 	</body>
