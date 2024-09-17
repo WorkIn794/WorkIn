@@ -1,0 +1,20 @@
+---
+import Header from "@components/Header.astro"
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content="Astro description" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>WorkIn</title>
+	</head>
+	<body>
+		<main class="">
+			<Header/>
+			<slot />
+		</main>
+	</body>
+</html>

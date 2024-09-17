@@ -1,7 +1,7 @@
 ---
 import Link from "@components/Link.astro";
 
-const navPages: ReadonlyArray<string> = ["Home", "About us", "Blog", "Pricing"];
+const navPages: ReadonlyArray<string> = ["Home", "About us", "Blog", "Pricing", "Enterprise"];
 
 interface Props{
     mobile: boolean;
@@ -16,6 +16,7 @@ const { mobile } = Astro.props;
             <Link
                 href="https://youtu.be/dQw4w9WgXcQ?si=S2f1ZH6iodUjWRr8"
                 text={page}
+                className="sm:text-sm md:text-base"
             />
         )}
     </nav>
