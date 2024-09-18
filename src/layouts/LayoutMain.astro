@@ -1,0 +1,43 @@
+---
+import Brand from "@components/Brand.astro";
+import NavBar from "@components/NavBar.astro";
+import type { XOR } from "ts-xor";
+
+interface Practitioner{
+	practitioner: boolean;
+};
+interface Enterprise{
+	enterprise: boolean;
+};
+type User = XOR<Practitioner, Enterprise>;
+type Props = User & {navBar?: boolean}
+
+const { practitioner, enterprise, navBar } = Astro.props;
+
+// [<text>, <iconName>, <href>] <- Format.
+const navItems: ReadonlyArray<[string, string, string]> = [
+	practitioner ? ["My applications", "heroicons:folder", "uwu"] : ["", "", ""],
+	["Notifications", "heroicons:chat-bubble-oval-left", "wuw"],
+	["Profile", "heroicons:user", "oqo"]
+];
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content="Astro description" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>WorkIn</title>
+	</head>
+	<body>
+		<main class="p-8">
+			<header class="flex justify-between">
+				<Brand/>
+				{navBar && <NavBar items={navItems}/>}
+			</header>
+			<slot />
+		</main>
+	</body>
+</html>

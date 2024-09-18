@@ -4,17 +4,14 @@ import { twMerge } from "tailwind-merge";
 import type { HTMLAttributes } from "astro/types";
 
 interface Props extends HTMLAttributes<"nav">{
-    items: ReadonlyArray<[string, string]>;
+    items: ReadonlyArray<[string, string, string]>;
     className?: string | string[];
 };
 
 const { items, className = "", ...navProps } = Astro.props;
 ---
 
-<nav {...navProps} class={twMerge(["", className])}>
-    {items.map(item =>
-        <Link href="" text={item[0]} icon={item[1]}
-            className={[`${item[1] && "flex items-center gap-x-2"}`]}
-        />
-    )}
+<nav {...navProps} class={twMerge(["flex gap-x-6 items-start", className])}>
+    {items.filter(item => item.every(prop => prop !== ""))
+        .map(([text, icon, href]) => <Link href={href} text={text} icon={icon} intent="navBar"/>)}
 </nav>
