@@ -14,9 +14,9 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/check": "^0.9.3",
-    "@astrojs/tailwind": "^5.1.0",
-    "astro": "^4.15.2",
+    "@astrojs/check": "0.9.3",
+    "@astrojs/tailwind": "5.1.1",
+    "astro": "5.0.0-beta.1",
     "astro-icon": "^1.1.1",
     "cva": "npm:class-variance-authority",
     "tailwind-merge": "^2.5.2",

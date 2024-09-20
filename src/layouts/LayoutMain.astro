@@ -1,20 +1,14 @@
 ---
 import Brand from "@components/Brand.astro";
 import NavBar from "@components/NavBar.astro";
-import type { XOR } from "ts-xor";
+import type { User } from "../types/global";
 
-interface Practitioner{
-	practitioner: boolean;
-};
-interface Enterprise{
-	enterprise: boolean;
-};
-type User = XOR<Practitioner, Enterprise>;
 type Props = User & {navBar?: boolean}
 
 const { practitioner, enterprise, navBar } = Astro.props;
 
 // [<text>, <iconName>, <href>] <- Format.
+// ["", "", ""] <- Format to ommit element.
 const navItems: ReadonlyArray<[string, string, string]> = [
 	practitioner ? ["My applications", "heroicons:folder", "uwu"] : ["", "", ""],
 	["Notifications", "heroicons:chat-bubble-oval-left", "wuw"],
