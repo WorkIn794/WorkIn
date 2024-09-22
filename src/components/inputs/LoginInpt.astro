@@ -8,20 +8,16 @@ interface Props extends HTMLAttributes<"input">{
     label: "Email Address" | "Password";
 };
 
-const handleInput = (e: InputEvent) => {
-    const input = e.target as HTMLInputElement;
-    console.log(input.value)
-}
 const {form, name, type, label, ...props } = Astro.props;
 ---
 
-<div class="min-w-56 w-full h-16 p-2 border-WIgrey border-1 flex flex-col-reverse
+<div class="w-full h-16 p-2 border-WIgrey border-1 flex flex-col-reverse
     transition-all duration-200 ease-in-out
     has-[:focus:valid]:border-l-WIblue-input has-[:focus]:border-l-4
     has-[:focus:invalid]:border-l-red-600">
     <input {...props} form={form} id={name} name={name} type={type} class="text-WIblue font-semibold outline-none peer" required/>
     <label for={name} data-type="formInpt"
-        class:list={["text-opacity-100 text-base translate-y-full",
+        class:list={["value-empty",
         `text-WIblack
             transition-all duration-200 ease-in-out
             after:content-['*'] after:text-red-600 after:hidden
@@ -33,8 +29,6 @@ const {form, name, type, label, ...props } = Astro.props;
 </div>
 
 <script>
-    const string = "text-opacity-100 text-base translate-y-full"
-    const strins = "text-opacity-60 text-sm translate-y-0"
     const labels: NodeListOf<HTMLLabelElement> = document.querySelectorAll("div label[data-type=\"formInpt\"]");
     labels.forEach(label => label.addEventListener("click",
         () => {
@@ -43,17 +37,23 @@ const {form, name, type, label, ...props } = Astro.props;
             input.addEventListener("focusout", () => input.validity.valid ?
                 label.classList.replace("after:inline", "after:hidden") :
                 label.classList.replace("after:hidden", "after:inline"));
-            input.addEventListener("blur", () => {
-                input.value ?
-                    label.classList.replace(
-                        "text-opacity-100 text-base translate-y-full",
-                        "text-opacity-60 text-sm translate-y-0"
-                    ) :
-                    label.classList.replace(
-                        "text-opacity-60 text-sm translate-y-0",
-                        "text-opacity-100 text-base translate-y-full"
-                    );
-            });
+            input.addEventListener("blur", () => input.value ?
+                label.classList.replace("value-empty", "value-filled") :
+                label.classList.replace("value-filled", "value-empty")
+            );
         }
     ));
 </script>
+
+<style>
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.value-empty{
+    @apply text-opacity-100 text-base translate-y-full;
+}
+.value-filled{
+    @apply text-opacity-60 text-sm translate-y-0;
+}
+</style>
