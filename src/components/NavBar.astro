@@ -13,5 +13,5 @@ const { items, className = "", ...navProps } = Astro.props;
 
 <nav {...navProps} class={twMerge(["flex gap-x-6 items-start", className])}>
     {items.filter(item => item.every(prop => prop !== ""))
-        .map(([text, icon, href]) => <Link href={href} text={text} icon={icon} intent="navBar"/>)}
+        .map(([text, icon, href]) => <Link href={href} text={text} icon={icon} iconLeft intent="navBar"/>)}
 </nav>
