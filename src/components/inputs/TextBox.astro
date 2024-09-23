@@ -3,25 +3,33 @@ import { cva } from "cva";
 import { twMerge } from "tailwind-merge";
 import type { VariantProps } from "cva";
 import type { HTMLAttributes } from "astro/types";
+import type { ClassName } from "src/types/global";
 
-const textbox = cva([
-    ""
-], {
+const textbox = cva(["[&_input]:outline-none"], {
     variants: {
         intent: {
-            BASS: [""]
+            primary: [
+                "[&_label]:font-semibold",
+                "[&_label]:block",
+                "[&_input]:w-full [&_input]:h-12 [&_input]:pl-4",
+                "[&_input]:text-WIblack [&_input]:text-opacity-60 [&_input]:font-semibold",
+                "[&_input]:border-WIblack [&_input]:border-opacity-60 [&_input]:border-[1.5px] [&_input]:rounded-md"
+            ]
         }
     }
-})
+});
 
 interface Props extends HTMLAttributes<"input">,
     VariantProps<typeof textbox>{
         label?: string;
-        className?: string;
+        className?: ClassName;
 };
 
-const { label, intent, className = "", name, ...inptProps } = Astro.props;
+const { label, intent = "primary", className, name, ...inptProps } = Astro.props;
 ---
 
-{label && <label for={name}>{label}</label>}
-<input {...inptProps} id={name} class:list={twMerge([textbox({intent}), className])}/>
+<div id={name && `containerFor:${name.toUpperCase()}`} class={twMerge([textbox({intent})])}>
+    {label &&
+    <label id={name && `labelFor:${name.toUpperCase()}`} for={name} class="">{label}</label>}
+    <input {...inptProps} id={name} name={name}/>
+</div>

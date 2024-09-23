@@ -1,0 +1,17 @@
+---
+import LayoutMain from "@layouts/LayoutMain.astro";
+import Link from "@components/Link.astro";
+import TextBox from "@components/inputs/TextBox.astro";
+---
+
+<LayoutMain practitioner>
+    <Link href="uwu" text="Back" icon="heroicons:chevron-left-16-solid" iconLeft intent="navControl" className="my-6"/>
+    <form action="" class="w-2/3">
+        <TextBox label="Name" name="name" type="text" required/>
+        <TextBox label="Last Name" name="lastName"/>
+        <TextBox label="Email" name="email"/>
+        <TextBox label="Password" name="password"/>
+        <TextBox label="Confirm Password" name="confirmPassword"/>
+        <TextBox label="Contact Number" name="contactNumber"/>
+    </form>
+</LayoutMain>
