@@ -11,7 +11,7 @@ const textbox = cva(["[&_input]:outline-none"], {
             primary: [
                 "[&_label]:font-semibold",
                 "[&_label]:block",
-                "[&_input]:w-full [&_input]:h-12 [&_input]:pl-4",
+                "[&_input]:w-full [&_input]:h-12 [&_input]:px-4",
                 "[&_input]:text-WIblack [&_input]:text-opacity-60 [&_input]:font-semibold",
                 "[&_input]:border-WIblack [&_input]:border-opacity-60 [&_input]:border-[1.5px] [&_input]:rounded-md"
             ]
@@ -23,13 +23,23 @@ interface Props extends HTMLAttributes<"input">,
     VariantProps<typeof textbox>{
         label?: string;
         className?: ClassName;
+        iconConfirm?: boolean;
 };
 
-const { label, intent = "primary", className, name, ...inptProps } = Astro.props;
+const { label, iconConfirm, intent = "primary", className, name, ...inptProps } = Astro.props;
 ---
 
 <div id={name && `containerFor:${name.toUpperCase()}`} class={twMerge([textbox({intent})])}>
     {label &&
-    <label id={name && `labelFor:${name.toUpperCase()}`} for={name} class="">{label}</label>}
-    <input {...inptProps} id={name} name={name}/>
+    <label id={name && `labelFor:${name.toUpperCase()}`} for={name}>{label}</label>}
+    <input {...inptProps} id={name} name={name} class:list={[iconConfirm && "svg-icon"]}/>
 </div>
+
+<style>
+    .svg-icon{
+        background-image: url("/svg/CheckBoxIcon.svg");
+        background-size: 20px;
+        background-repeat: no-repeat;
+        background-position: right 5% bottom 50%;
+    }
+</style>
