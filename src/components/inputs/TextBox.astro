@@ -5,7 +5,9 @@ import type { VariantProps } from "cva";
 import type { HTMLAttributes } from "astro/types";
 import type { ClassName } from "src/types/global";
 
-const textbox = cva(["[&_input]:outline-none"], {
+const textbox = cva([
+    "[&_input]:outline-none"
+], {
     variants: {
         intent: {
             primary: [
@@ -32,14 +34,26 @@ const { label, iconConfirm, intent = "primary", className, name, ...inptProps } 
 <div id={name && `containerFor:${name.toUpperCase()}`} class={twMerge([textbox({intent})])}>
     {label &&
     <label id={name && `labelFor:${name.toUpperCase()}`} for={name}>{label}</label>}
-    <input {...inptProps} id={name} name={name} class:list={[iconConfirm && "svg-icon"]}/>
+    <input {...inptProps} id={name} name={name} class:list={[iconConfirm && "svg-icon", "input-validation"]} placeholder=""/>
 </div>
 
 <style>
+    /* Todo Select label based on input validity */
+    @tailwind base;
+    @tailwind components;
+    @tailwind utilities;
+
     .svg-icon{
+        background-image: none;
+    }
+    .svg-icon:valid{
         background-image: url("/svg/CheckBoxIcon.svg");
         background-size: 24px;
         background-repeat: no-repeat;
         background-position: right 5% bottom 50%;
+    }
+
+    .input-validation:not(:placeholder-shown):invalid{
+        @apply border-red-600;
     }
 </style>
