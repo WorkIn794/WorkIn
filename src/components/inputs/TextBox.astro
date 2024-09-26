@@ -5,15 +5,13 @@ import type { VariantProps } from "cva";
 import type { HTMLAttributes } from "astro/types";
 import type { ClassName } from "src/types/global";
 
-const textbox = cva([
-    "[&_input]:outline-none"
-], {
+const textbox = cva(["[&_input]:outline-none"],{
     variants: {
         intent: {
             primary: [
                 "[&_label]:font-semibold",
                 "[&_label]:block",
-                "[&_input]:w-full [&_input]:h-12 [&_input]:px-4",
+                "[&_input]:w-full [&_input]:h-12 [&_input]:pl-4",
                 "[&_input]:text-WIblack [&_input]:text-opacity-60 [&_input]:font-semibold",
                 "[&_input]:border-WIblack [&_input]:border-opacity-60 [&_input]:border-[1.5px] [&_input]:rounded-md"
             ]
@@ -28,24 +26,20 @@ interface Props extends HTMLAttributes<"input">,
         iconConfirm?: boolean;
 };
 
-const { label, iconConfirm, intent = "primary", className, name, ...inptProps } = Astro.props;
+const { label, iconConfirm, intent = "primary", className, name, placeholder = "", ...inptProps } = Astro.props;
 ---
 
-<div id={name && `containerFor:${name.toUpperCase()}`} class={twMerge([textbox({intent})])}>
+<div id={name && `containerFor:${name.toUpperCase()}`} class={twMerge([textbox({intent}), className])}>
     {label &&
     <label id={name && `labelFor:${name.toUpperCase()}`} for={name}>{label}</label>}
-    <input {...inptProps} id={name} name={name} class:list={[iconConfirm && "svg-icon", "input-validation"]} placeholder=""/>
+    <input {...inptProps} id={name} name={name} class:list={[iconConfirm && "svg-icon", "input-validation"]} placeholder={placeholder}/>
 </div>
 
 <style>
-    /* Todo Select label based on input validity */
     @tailwind base;
     @tailwind components;
     @tailwind utilities;
 
-    .svg-icon{
-        background-image: none;
-    }
     .svg-icon:valid{
         background-image: url("/svg/CheckBoxIcon.svg");
         background-size: 24px;
@@ -55,5 +49,8 @@ const { label, iconConfirm, intent = "primary", className, name, ...inptProps } 
 
     .input-validation:not(:placeholder-shown):invalid{
         @apply border-red-600;
+    }
+    div:has(:not(input:placeholder-shown):invalid) > label{
+        @apply after:content-['\0000a0*'] after:text-red-600;
     }
 </style>

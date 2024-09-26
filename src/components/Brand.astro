@@ -6,7 +6,7 @@ interface Props extends HTMLAttributes<"div">{
     className?: string | string[];
 };
 
-const { className = "" } = Astro.props;
+const { className } = Astro.props;
 ---
 
 <div class={twMerge([

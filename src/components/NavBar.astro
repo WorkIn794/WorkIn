@@ -8,7 +8,7 @@ interface Props extends HTMLAttributes<"nav">{
     className?: string | string[];
 };
 
-const { items, className = "", ...navProps } = Astro.props;
+const { items, className, ...navProps } = Astro.props;
 ---
 
 <nav {...navProps} class={twMerge(["flex gap-x-6 items-start", className])}>

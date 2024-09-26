@@ -48,7 +48,7 @@ type Props =
         className?: ClassName;
         iconClass?: ClassName;
     }
-const { href, text, icon, iconLeft, iconRight, intent, className = "", iconClass = "" } = Astro.props;
+const { href, text, icon, iconLeft, iconRight, intent, className, iconClass } = Astro.props;
 ---
 
 <a href={href} class={twMerge([link({intent}), `${iconRight && "flex-row-reverse"}`, `${iconLeft && "flex-row"}`, className])}>
