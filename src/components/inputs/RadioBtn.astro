@@ -1,0 +1,30 @@
+---
+import { twMerge } from "tailwind-merge";
+import type { HTMLAttributes } from "astro/types";
+import type { ClassName } from "src/types/global";
+
+interface Props extends HTMLAttributes<"input">{
+    group: string;
+    label: string;
+    className?: ClassName;
+};
+
+const { group, label, className, name = group, ...radioBtnProps } = Astro.props;
+---
+
+<label for={group || name} class="text-WIblack text-opacity-50 text-2xl">
+    {label}
+    <input name={group || name} type="radio" class={twMerge([className,
+        "appearance-none",
+        "size-[1em]",
+        "border-[0.1em] border-current",
+        "block",
+        "relative",
+        "-translate-x-[0.25em]",
+        "hover:cursor-pointer",
+        "before:checked:bg-WIblue-input",
+        "before:size-full before:scale-90",
+        "before:absolute"])}
+        {...radioBtnProps}
+    />
+</label>

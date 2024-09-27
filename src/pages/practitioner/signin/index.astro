@@ -2,17 +2,19 @@
 import LayoutMain from "@layouts/LayoutMain.astro";
 import Link from "@components/Link.astro";
 import TextBox from "@components/inputs/TextBox.astro";
+
+const formName: Readonly<string> = "practitionerSignIn";
 ---
 
 <LayoutMain practitioner>
-    <Link href="../" text="Back" icon="heroicons:chevron-left-16-solid" iconLeft intent="navControl" className="my-6"/>
-    <form action="" class="w-2/3 grid grid-cols-2 gap-y-2">
-        <TextBox label="Name"               name="name"             title="Enter your name"         type="text"     className="justify-self-start w-11/12"  required/>
-        <TextBox label="Last Name"          name="lastName"         title="Enter your last name"    type="text"     className="justify-self-end w-11/12"    required/>
-        <TextBox label="Email"              name="email"            title="Enter your email"        type="email"    className="col-span-full"                  required iconConfirm/>
-        <TextBox label="Password"           name="password"         title="Enter your password"     type="password" className="col-span-full"                  required iconConfirm/>
-        <TextBox label="Confirm Password"   name="confirmPassword"  title="Confirm password"        type="password" className="col-span-full"                  required iconConfirm/>
-        <TextBox label="Contact Number"     name="contactNumber"    title="Enter your phone number" type="tel"      className="col-span-full"                  required iconConfirm/>
+    <Link href="/practitioner" text="Back" icon="heroicons:chevron-left-16-solid" iconLeft intent="navControl" className="my-6"/>
+    <form id={formName} name={formName} action="" class="w-2/3 grid grid-cols-2 gap-y-2">
+        <TextBox label="Name"             name="name"            title="Enter your name"         type="text"     className="justify-self-start w-11/12" required/>
+        <TextBox label="Last Name"        name="lastName"        title="Enter your last name"    type="text"     className="justify-self-end w-11/12"   required/>
+        <TextBox label="Email"            name="email"           title="Enter your email"        type="email"    className="col-span-full"              required iconConfirm/>
+        <TextBox label="Password"         name="password"        title="Enter your password"     type="password" className="col-span-full"              required iconConfirm/>
+        <TextBox label="Confirm Password" name="confirmPassword" title="Confirm password"        type="password" className="col-span-full"              required iconConfirm/>
+        <TextBox label="Contact Number"   name="contactNumber"   title="Enter your phone number" type="tel"      className="col-span-full"              required iconConfirm/>
     </form>
-    <Link href="./data" text="Next" icon="heroicons:chevron-right-16-solid" iconRight intent="navControl" className="float-right my-6"/>
+    <Link href="/practitioner/signin/data" text="Next" icon="heroicons:chevron-right-16-solid" iconRight intent="navControl" className="float-right my-6"/>
 </LayoutMain>

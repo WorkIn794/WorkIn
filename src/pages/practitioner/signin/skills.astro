@@ -1,5 +1,13 @@
 ---
 import LayoutMain from "@layouts/LayoutMain.astro";
+import Link from "@components/Link.astro";
+import RadioBtn from "@components/inputs/RadioBtn.astro";
 ---
 
-<LayoutMain practitioner></LayoutMain>
+<LayoutMain practitioner>
+    <Link href="./data" text="Back" icon="heroicons:chevron-left-16-solid" iconLeft intent="navControl" className="my-6"/>
+    <form action="" class="">
+        <RadioBtn group="Excel" label="0"/>
+        <RadioBtn group="Excel" label="1"/>
+    </form>
+</LayoutMain>
