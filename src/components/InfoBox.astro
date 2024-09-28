@@ -1,0 +1,39 @@
+---
+import { twMerge } from "tailwind-merge";
+import { cva } from "cva";
+import type { HTMLAttributes } from "astro/types";
+import type { ClassName } from "src/types/global";
+import type { VariantProps } from "cva";
+
+const infoBox = cva([], {
+    variants: {
+        intent: {
+            primary: [
+                "bg-WIgray-light",
+                "p-3",
+                "rounded-md",
+                "text-WIgray-contrast text-sm font-semibold leading-tight"
+            ],
+            label: [
+                "px-6 py-4",
+                "border-[1.5px] border-WIgray-contrast rounded-md",
+                "text-WIgray-contrast text-center font-semibold"
+            ]
+        },
+        size: {
+            full: ["w-full max-w-5xl"],
+            small: ["w-52"]
+        }
+    }
+});
+
+interface Props extends HTMLAttributes<"div">,
+    VariantProps<typeof infoBox>{
+    text: string;
+    className?: ClassName;
+};
+
+const { text, intent = "primary", size = "full", className, ...divProps } = Astro.props;
+---
+
+<div class={twMerge([className, infoBox({intent, size})])} {...divProps}>{text}</div>

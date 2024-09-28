@@ -10,9 +10,6 @@ export default {
 				WIblack: {
 					DEFAULT: "#231F20"
 				},
-				WIgrey: {
-					DEFAULT: "#C1BBBB"
-				},
 				WIwhite: {
 					DEFAULT: "#FFFFFF"
 				},
@@ -23,6 +20,11 @@ export default {
 				WIblue: {
 					DEFAULT: "#003954",
 					input: "#0C31F1"
+				},
+				WIgray: {
+					DEFAULT: "#C1BBBB",
+					contrast: "#858585",
+					light: "#D9D9D9"
 				}
 			},
 			borderWidth: {
