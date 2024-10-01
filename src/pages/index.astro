@@ -15,8 +15,8 @@ import Button from "@components/Button.astro";
 		<h2><span>your</span> Career Journey</h2>
 		<small>Welcome back! Please <ins>login</ins> to your account.</small>
 		<form id="form" name="login" action="" method="get">
-			<LoginInpt form="login" name="email" type="email" label="Email Address"/>
-			<LoginInpt form="login" name="password" type="password" label="Password"/>
+			<LoginInpt form="login" name="email" type="email" label="Email Address" autocomplete="email" required/>
+			<LoginInpt form="login" name="password" type="password" label="Password" autocomplete="current-password" required/>
 			<div class="mt-2 mb-10 ml-2 flex flex-wrap justify-between">
 				<CheckBox name="rememberMe" form="login" text="Remember Me" intent="login"/>
 				<Link href="https://youtu.be/dQw4w9WgXcQ?si=S2f1ZH6iodUjWRr8" text="Forgot Password?" intent="forgetPW" aria-label="Forgotten password"/>
