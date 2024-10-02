@@ -11,7 +11,7 @@ interface Props extends HTMLAttributes<"input">{
 const {form, name, type, label, placeholder = "", id, ...inputProps } = Astro.props;
 ---
 
-<div class="container-login">
+<div>
     <label for={id || name}>{label}</label>
     <input id={id || name} form={form} name={name} type={type} placeholder={placeholder}{...inputProps}/>
 </div>
@@ -21,29 +21,29 @@ const {form, name, type, label, placeholder = "", id, ...inputProps } = Astro.pr
 @tailwind components;
 @tailwind utilities;
 
-div.container-login{
+div{
     @apply
     h-16 py-1
     box-content
     border-WIgray-light border-1
     transition duration-200 ease-in;
 }
-div.container-login:has(input:not(:placeholder-shown):invalid){
+div:has(input:not(:placeholder-shown):invalid){
     @apply border-l-red-600 border-l-4;
 }
-div.container-login:has(input:not(:placeholder-shown):valid){
+div:has(input:not(:placeholder-shown):valid){
     @apply border-l-WIblue-input border-l-4;
 }
-div.container-login:has(input:not(:placeholder-shown), input:focus) label{
+div:has(input:not(:placeholder-shown), input:focus) label{
     @apply
     text-sm text-opacity-60
     translate-y-0;
 }
 
-div.container-login *{
+div *{
     @apply w-full h-1/2 pl-4 outline-none;
 }
-div.container-login label{
+div label{
     @apply block
     text-WIblack
     cursor-pointer

@@ -1,5 +1,6 @@
 # WorkIn
 ## Todo:
-[x] Change the name of Navmenu.
-[x] Fix Link icon alignment.
-[x] Improve practitionner signin input's titles.
+[] Change the name of Navmenu.
+[] Fix Link icon alignment.
+[] Improve practitionner signin input's titles.
+[] Add validation for practitioner signin.
