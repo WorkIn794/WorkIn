@@ -1,13 +1,12 @@
 ---
 import Link from "@components/Link.astro";
 
-const navPages: ReadonlyArray<string> = ["Home", "About us", "Blog", "Pricing", "Enterprise"];
-
 interface Props{
     mobile: boolean;
+    navPages: ReadonlyArray<string>;
 };
 
-const { mobile } = Astro.props;
+const { mobile, navPages } = Astro.props;
 ---
 
 <header class:list={["min-w-64 max-w-sm h-16 mx-auto", `${mobile ? `sm:hidden` : `block`}`]}>
