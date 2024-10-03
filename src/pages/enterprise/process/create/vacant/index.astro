@@ -1,6 +1,7 @@
 ---
 import LayoutMain from "@layouts/LayoutMain.astro";
 import TextBox from "@components/inputs/TextBox.astro";
+import TextArea from "@components/inputs/TextArea.astro";
 import Link from "@components/Link.astro";
 ---
 
@@ -11,5 +12,6 @@ import Link from "@components/Link.astro";
         <TextBox name="modality" label="Modality" type="text" required/>
         <TextBox name="department" label="Department" type="text" required/> 
         <TextBox name="district" label="District"/>
+        <TextArea name="description"/>
     </form>
 </LayoutMain>

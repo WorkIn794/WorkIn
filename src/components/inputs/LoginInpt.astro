@@ -13,7 +13,7 @@ const {form, name, type, label, placeholder = "", id, ...inputProps } = Astro.pr
 
 <div>
     <label for={id || name}>{label}</label>
-    <input id={id || name} form={form} name={name} type={type} placeholder={placeholder}{...inputProps}/>
+    <input id={id || name} name={name || id} type={type} form={form} placeholder={placeholder} {...inputProps}/>
 </div>
 
 <style>

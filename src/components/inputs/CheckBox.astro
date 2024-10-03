@@ -21,8 +21,8 @@ interface Props extends HTMLAttributes<"input">,
         text: string;
         className?: string | string[];
     };
-const { form, name, text, className = "", intent } = Astro.props;
+const { form, name, text, className, intent, id, ...inputProps } = Astro.props;
 ---
 
-<div><input type="checkbox" form={form} name={name} id={name} class={twMerge([checkBox({intent}), className])}/>
-<label for={name}>{text}</label></div>
+<div><input id={id || name} name={name || id} form={form} type="checkbox" class={twMerge([checkBox({intent}), className])} {...inputProps}/>
+<label for={id || name}>{text}</label></div>

@@ -27,7 +27,7 @@ const { name, label, iconConfirm, intent, className, innerClass, id, ...inputPro
 <div class:list={[textbox({intent}), className]}>
     {label &&
     <label for={id || name}>{label}</label>}
-    <input id={id || name} name={id || name} class:list={[innerClass, iconConfirm && "icon"]} {...inputProps}/>
+    <input id={id || name} name={name || id} class:list={[innerClass, iconConfirm && "icon"]} {...inputProps}/>
 </div>
 
 <style>

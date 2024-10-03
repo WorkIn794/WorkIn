@@ -1,0 +1,20 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import type { ClassName } from "src/types/global";
+
+interface Props extends HTMLAttributes<"textarea">{
+    name: string;
+    label?: string;
+    className?: ClassName;
+};
+
+const { name, label, className, id, ...textareaProps } = Astro.props;
+---
+
+<div>
+    {label &&
+    <label for={id || name}>{label}</label>}
+    <textarea id={id || name} name={name || id} {...textareaProps}>
+        test
+    </textarea>
+</div>
