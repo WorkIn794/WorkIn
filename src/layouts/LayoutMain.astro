@@ -1,11 +1,15 @@
 ---
 import Brand from "@components/Brand.astro";
 import NavBar from "@components/NavBar.astro";
+import SideBar from "@components/SideBar.astro";
 import type { User } from "../types/global";
 
-type Props = User & {navBar?: boolean}
+type Props = User & {
+	navBar?: boolean;
+	sideBar?: boolean;
+};
 
-const { practitioner, enterprise, navBar } = Astro.props;
+const { practitioner, enterprise, navBar, sideBar } = Astro.props;
 
 // [<text>, <iconName>, <href>] <- Format.
 // ["", "", ""] <- Format to ommit element.
@@ -26,12 +30,37 @@ const navItems: ReadonlyArray<[string, string, string]> = [
 		<title>WorkIn</title>
 	</head>
 	<body>
-		<main class="p-12">
-			<header class="flex justify-between">
+		<main style={{gridTemplateAreas: `"header header header header" "${sideBar ? "sidebar" : "content"} content content content"`}}>
+			<header>
 				<Brand/>
 				{navBar && <NavBar items={navItems}/>}
 			</header>
-			<slot />
+			{sideBar && <SideBar/>}
+			<section>
+				<slot />
+			</section>
 		</main>
 	</body>
 </html>
+
+<style>
+	main{
+		min-height: 100vh;
+		padding: 3rem;
+		display: grid;
+		grid-template-columns: repeat(4, minmax(200px, 1fr));
+		grid-template-rows: min-content;
+	}
+	header{
+		display: flex;
+		justify-content: space-between;
+		grid-area: header;
+	}
+	aside{
+		height: 100%;
+		grid-area: sidebar;
+	}
+	section{
+		grid-area: content;
+	}
+</style>

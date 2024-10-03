@@ -3,7 +3,7 @@ import Link from "@components/Link.astro";
 
 interface Props{
     mobile: boolean;
-    navPages: ReadonlyArray<string>;
+    navPages: ReadonlyArray<[string, string]>;
 };
 
 const { mobile, navPages } = Astro.props;
@@ -11,10 +11,10 @@ const { mobile, navPages } = Astro.props;
 
 <header class:list={["min-w-64 max-w-sm h-16 mx-auto", `${mobile ? `sm:hidden` : `block`}`]}>
     <nav class="size-full flex justify-between items-center sm:items-start sm:justify-around">
-        {navPages.map(page =>
+        {navPages.map(([text, href]) =>
             <Link
-                href="https://youtu.be/dQw4w9WgXcQ?si=S2f1ZH6iodUjWRr8"
-                text={page}
+                href={href}
+                text={text}
                 className="sm:text-sm md:text-base"
             />
         )}
