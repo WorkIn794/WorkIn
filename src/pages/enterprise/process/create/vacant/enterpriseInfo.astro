@@ -1,0 +1,31 @@
+---
+import LayoutMain from "@layouts/LayoutMain.astro";
+import Link from "@components/Link.astro";
+import InfoBox from "@components/InfoBox.astro";
+import TextBox from "@components/inputs/TextBox.astro";
+import TextArea from "@components/inputs/TextArea.astro";
+import Button from "@components/Button.astro";
+
+const formName: Readonly<string> = "enterpriseInfo";
+const questionSetId: Readonly<string> = "questionSet";
+---
+
+<LayoutMain enterprise navBar sideBar>
+    <Link href="/enterprise/process/create/vacant" text="Back" icon="heroicons:chevron-left-16-solid" iconLeft intent="navControl" className="my-4"/>
+    <form name={formName}>
+        <InfoBox text="Please answer the questions to ensure a better matching"/>
+        <TextBox name="salary" label="What is the salary range for this position?" type="text" required/>
+        <TextBox name="skills" label="What skills are you looking for in this position?" type="text" required/>
+        <TextBox name="onboarding" label="When do you need to onboard this intern?" type="text" required/>
+        <TextArea name="benefits" label="What benefits does your company offer?" required/>
+        <InfoBox text="What questions would you like to include in the interviews?"/>
+        <section id={questionSetId}>
+
+        </section>
+    </form>
+    <Link href="test" text="Finish" icon="heroicons:chevron-right-16-solid" iconRight intent="navControl" className="float-right my-4"/>
+</LayoutMain>
+
+<script is:inline define:vars={{questionSetId}}>
+    console.log(questionSetId);
+</script>
