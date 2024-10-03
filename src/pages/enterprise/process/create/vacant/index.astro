@@ -1,7 +1,15 @@
 ---
 import LayoutMain from "@layouts/LayoutMain.astro";
+import TextBox from "@components/inputs/TextBox.astro";
+import Link from "@components/Link.astro";
 ---
 
 <LayoutMain enterprise navBar sideBar>
-
+    <Link href="/enterprise/process" text="Back" icon="heroicons:chevron-left-16-solid" iconLeft intent="navControl" className="my-4"/>
+    <form name="createVacant">
+        <TextBox name="jobPosition" label="Job Position" type="text" required />
+        <TextBox name="modality" label="Modality" type="text" required/>
+        <TextBox name="department" label="Department" type="text" required/> 
+        <TextBox name="district" label="District"/>
+    </form>
 </LayoutMain>
