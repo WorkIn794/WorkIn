@@ -15,7 +15,7 @@ const { name, label, height = 4, className, id, ...textareaProps } = Astro.props
 <div class:list={[className]}>
     {label &&
     <label for={id || name}>{label}</label>}
-    <textarea id={id || name} name={name || id} wrap="hard" {...textareaProps}/>
+    <textarea id={id || name} name={name || id} wrap="hard" lang="en" spellcheck {...textareaProps}/>
 </div>
 
 <style define:vars={{height}}>

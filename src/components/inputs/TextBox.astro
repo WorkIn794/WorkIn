@@ -15,6 +15,7 @@ const textbox = cva([], {
 interface Props extends HTMLAttributes<"input">,
     VariantProps<typeof textbox>{
         name: string;
+        type: "text" | "password" | "email" | "number" | "tel" | "url";
         label?: string;
         className?: ClassName;
         innerClass?: ClassName;
