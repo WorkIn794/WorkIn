@@ -7,11 +7,14 @@ import Link from "@components/Link.astro";
 
 <LayoutMain enterprise navBar sideBar>
     <Link href="/enterprise/process" text="Back" icon="heroicons:chevron-left-16-solid" iconLeft intent="navControl" className="my-4"/>
-    <form name="createVacant">
-        <TextBox name="jobPosition" label="Job Position" type="text" required />
-        <TextBox name="modality" label="Modality" type="text" required/>
+    <form name="createVacant" class="grid grid-cols-2 gap-y-2">
+        <TextBox name="jobPosition" label="Job Position" type="text" className="col-span-full" required />
+        <TextBox name="modality" label="Modality" type="text" className="col-span-full" required />
         <TextBox name="department" label="Department" type="text" required/> 
         <TextBox name="district" label="District"/>
-        <TextArea name="description"/>
+        <TextArea name="companyDescription" label="Company Description:" className="col-span-full" required/>
+        <TextArea name="description" label="What are we looking for? (Up to 300 words):" height={6} className="col-span-full" required/>
+        <TextArea name="requirements" label="Requirements:" className="col-span-full" required/>
     </form>
+    <Link href="" text="Next" icon="heroicons:chevron-right-16-solid" iconRight intent="navControl" className="float-right my-4"/>
 </LayoutMain>

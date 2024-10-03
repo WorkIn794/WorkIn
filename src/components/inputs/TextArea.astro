@@ -4,17 +4,40 @@ import type { ClassName } from "src/types/global";
 
 interface Props extends HTMLAttributes<"textarea">{
     name: string;
+    height?: number;
     label?: string;
     className?: ClassName;
 };
 
-const { name, label, className, id, ...textareaProps } = Astro.props;
+const { name, label, height = 4, className, id, ...textareaProps } = Astro.props;
 ---
 
-<div>
+<div class:list={[className]}>
     {label &&
     <label for={id || name}>{label}</label>}
-    <textarea id={id || name} name={name || id} {...textareaProps}>
-        test
-    </textarea>
+    <textarea id={id || name} name={name || id} wrap="hard" {...textareaProps}/>
 </div>
+
+<style define:vars={{height}}>
+    @tailwind base;
+    @tailwind components;
+    @tailwind utilities;
+
+    div{
+        @apply text-WIblack;
+    }
+    label{
+        @apply font-semibold block;
+    }
+    textarea{
+        height: calc(var(--height) * 1rem);
+        @apply
+        w-full p-2
+        resize-none
+        outline-none
+        border-WIgray-contrast border-[1.5px] rounded-md;
+    }
+    textarea:user-invalid{
+        @apply border-red-600;
+    }
+</style>
