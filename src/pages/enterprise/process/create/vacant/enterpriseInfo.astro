@@ -7,9 +7,8 @@ import TextArea from "@components/inputs/TextArea.astro";
 import Button from "@components/Button.astro";
 
 const formName: Readonly<string> = "enterpriseInfo";
-const questionSetId: Readonly<string> = "questionSet";
 ---
-
+ 
 <LayoutMain enterprise navBar sideBar>
     <Link href="/enterprise/process/create/vacant" text="Back" icon="heroicons:chevron-left-16-solid" iconLeft intent="navControl" className="my-4"/>
     <form name={formName}>
@@ -19,13 +18,8 @@ const questionSetId: Readonly<string> = "questionSet";
         <TextBox name="onboarding" label="When do you need to onboard this intern?" type="text" required/>
         <TextArea name="benefits" label="What benefits does your company offer?" required/>
         <InfoBox text="What questions would you like to include in the interviews?"/>
-        <section id={questionSetId}>
-
-        </section>
+        <div id="interviewQuestions"/>
     </form>
+    <Button id="addQuestion" text="Add question" icon="heroicons:plus-circle-16-solid" intent="withIcon" className="my-4"/>
     <Link href="test" text="Finish" icon="heroicons:chevron-right-16-solid" iconRight intent="navControl" className="float-right my-4"/>
 </LayoutMain>
-
-<script is:inline define:vars={{questionSetId}}>
-    console.log(questionSetId);
-</script>
