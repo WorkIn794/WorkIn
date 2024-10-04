@@ -8,7 +8,7 @@ import Button from "@components/Button.astro";
 
 const formName: Readonly<string> = "enterpriseInfo";
 ---
- 
+
 <LayoutMain enterprise navBar sideBar>
     <Link href="/enterprise/process/create/vacant" text="Back" icon="heroicons:chevron-left-16-solid" iconLeft intent="navControl" className="my-4"/>
     <form name={formName}>
@@ -18,8 +18,53 @@ const formName: Readonly<string> = "enterpriseInfo";
         <TextBox name="onboarding" label="When do you need to onboard this intern?" type="text" required/>
         <TextArea name="benefits" label="What benefits does your company offer?" required/>
         <InfoBox text="What questions would you like to include in the interviews?"/>
-        <div id="interviewQuestions"/>
+        <div id="questionContainer"/>
     </form>
     <Button id="addQuestion" text="Add question" icon="heroicons:plus-circle-16-solid" intent="withIcon" className="my-4"/>
     <Link href="test" text="Finish" icon="heroicons:chevron-right-16-solid" iconRight intent="navControl" className="float-right my-4"/>
 </LayoutMain>
+
+<style>
+    #questionContainer{
+        max-height: 180px;
+        margin-top: 1rem;
+        overflow-y: scroll;
+    }
+    /* #questionContainer::-webkit-scrollbar{
+        width: 8px;
+    }
+    #questionContainer::-webkit-scrollbar-thumb{
+        border-radius: 12px;
+        background-color: #8080804e;
+    } */
+</style>
+
+<script>
+    let questionCount: number = 0;
+    const questionContainer: HTMLDivElement = document.getElementById("questionContainer") as HTMLDivElement;
+    const addBtn: HTMLButtonElement = document.getElementById("addQuestion") as HTMLButtonElement;
+
+    addBtn.addEventListener("click", () => {
+        questionCount++;
+        const divContainer: HTMLDivElement = document.createElement("div");
+        const label: HTMLLabelElement = document.createElement("label");
+        const input: HTMLInputElement = document.createElement("input");
+        const labelId: string = `question${questionCount}`;
+        const inputId: string = `question${questionCount}`;
+
+        divContainer.classList.add("text-WIblack");
+        label.classList.add("text-base", "font-semibold", "block");
+        label.innerText = `Question ${questionCount}`;
+        label.htmlFor = labelId;
+        input.classList.add("w-full", "h-10", "py-1", "pl-4", "outline-none", "border-WIgray-contrast", "border-[1.5px]", "rounded-md");
+        input.id = inputId;
+        input.name = inputId;
+        input.type = "text";
+        input.value = "";
+        input.title = `Question ${questionCount}`;
+
+        divContainer.appendChild(label);
+        divContainer.appendChild(input);
+        questionContainer.appendChild(divContainer);
+    });
+</script>
