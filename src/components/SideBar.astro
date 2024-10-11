@@ -1,5 +1,37 @@
-<aside>
+---
+import Link from "./Link.astro"
+import type { HTMLAttributes } from "astro/types";
+import type { ClassName } from "src/types/global";
+
+interface Props extends HTMLAttributes<"aside">{
+    content: ReadonlyArray<[string, string, string]>; // [Text, IconName, Link]
+    className?: ClassName;
+};
+const { content, className, ...asideProps } = Astro.props;
+---
+
+<aside class:list={[className]} {...asideProps}>
     <nav>
-        ola
+        <div id="sideBarHeader">
+            {content.map(([text, icon, link]) => <div><Link href={link} text={text} icon={icon} iconLeft intent="sideBar" className="size-full"/></div>)}
+        </div>
+        <div>
+            <div><Link href="test" text="Contact us" icon="heroicons:cog-8-tooth-20-solid" iconLeft intent="sideBar" className="size-full"/></div>
+            <div><Link href="test" text="Log out" icon="heroicons:arrow-right-on-rectangle" iconLeft intent="sideBar" className="size-full"/></div>
+        </div>
     </nav>
 </aside>
+
+<style>
+    nav{
+        @apply h-full pt-8
+        flex flex-col justify-between
+    }
+    nav div div{
+        @apply
+        w-[90%] h-16 pl-2 my-1
+        flex items-center
+        transition-colors duration-200 ease-in-out
+        hover:bg-WIgray-light;
+    }
+</style>
