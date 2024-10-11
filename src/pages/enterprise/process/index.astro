@@ -1,7 +1,30 @@
 ---
 import LayoutMain from "@layouts/LayoutMain.astro";
+import Loader from "@components/Loader.astro";
 ---
 
-<LayoutMain enterprise navBar>
-    <h1>Process</h1>
+<LayoutMain enterprise navBar sideBar>
+    <div id="loaderContainer"><Loader id="loader" size={6}/></div>
 </LayoutMain>
+
+<style>
+    #loaderContainer{
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }      
+</style>
+
+<script>
+    function removeLoader(): void {
+        const loaderContainer: HTMLDivElement = document.getElementById("loaderContainer") as HTMLDivElement;
+        const loader: HTMLDivElement = document.getElementById("loader") as HTMLDivElement;
+
+        loader.remove();
+        loaderContainer.remove();
+    }
+
+    setTimeout(() => {removeLoader();}, 2000);
+</script>
