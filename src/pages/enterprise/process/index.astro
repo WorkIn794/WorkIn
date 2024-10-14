@@ -1,11 +1,11 @@
 ---
 import LayoutMain from "@layouts/LayoutMain.astro";
 import Loader from "@components/Loader.astro";
-import View from "@svelteComponents/View.svelte";
+import View from "@svelteComponents/views/EnterpriseView.svelte";
 ---
 
 <LayoutMain enterprise navBar sideBar>
-    <View client:idle user="enterprise">
-        <Loader slot="loader" id="loader" size={6}/>
+    <View client:idle currentView="process">
+        <Loader slot="loader" size={6}/>
     </View>
 </LayoutMain>

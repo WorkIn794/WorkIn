@@ -3,15 +3,14 @@ import type { HTMLAttributes } from "astro/types";
 import type { ClassName } from "src/types/global";
 
 interface Props extends HTMLAttributes<"div">{
-    id: string;
     size?: number;
     className?: ClassName;
 };
 
-const { id, size = 4, className, ...divProps } = Astro.props;
+const { size = 4, className, ...divProps } = Astro.props;
 ---
 
-<div id={id} class:list={["loader", className]} {...divProps}/>
+<div class:list={["loader", className]} {...divProps}/>
 
 <style define:vars={{size}}>
     .loader {
