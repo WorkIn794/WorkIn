@@ -5,7 +5,7 @@ import View from "@svelteComponents/views/EnterpriseView.svelte";
 ---
 
 <LayoutMain enterprise navBar sideBar>
-    <View client:idle currentView="process">
+    <View client:idle process>
         <Loader slot="loader" size={6}/>
     </View>
 </LayoutMain>
