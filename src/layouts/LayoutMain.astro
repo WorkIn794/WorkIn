@@ -53,7 +53,7 @@ const mainElementStyle: astroHTML.JSX.CSSProperties = {
 				{navBar && <NavBar items={navItems}/>}
 			</header>
 			{sideBar && <SideBar content={sideBarItems}/>}
-			<section>
+			<section class="max-h-screen overflow-y-scroll">
 				<slot />
 			</section>
 		</main>

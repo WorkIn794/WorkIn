@@ -4,23 +4,23 @@
 
     type $$Props = EnterpriseView;
 
-    const namePromise: Promise<string> = getName();
-    async function getName(): Promise<string>{
-        const response = await (await fetch("https://api.jikan.moe/v4/random/characters")).json();
-        const name: string = response.data.name;
+    const processes = fetchProcess();
+    async function fetchProcess(){
+        const response = await (await fetch("http://localhost:3001/processes")).json();
 
-        return name;
+        return response;
     }
 </script>
 
-{#await namePromise}
+{#await processes}
     <div class="size-full flex justify-center items-center">
         <slot name="loader"/>
     </div>
-{:then name}
+{:then data}
     {#if $$props.process}
-        <h2>Hola {name}!</h2>
-        <ProcessCard enterprise position="Software Engineer" status="In Progress"/>
+        {#each data as process, index}
+            <ProcessCard id={index} enterprise position={process.position} status={process.status} details={process.applicants} className="my-2"/>
+        {/each}
     {:else if $$props.dashboard}
         <h1>Dashboard</h1>
     {/if}

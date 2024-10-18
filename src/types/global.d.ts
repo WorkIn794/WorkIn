@@ -34,7 +34,7 @@ interface EnterpriseCard{
 	enterprise: true;
 	status: Status;
 	position: string;
-	details?: Applicant[];
+	details: Applicant[];
 };
 type UserExtendedCard = XOR<PractitionerCard, EnterpriseCard>;
 
