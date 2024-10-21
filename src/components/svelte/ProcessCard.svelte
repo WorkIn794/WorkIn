@@ -1,6 +1,7 @@
 <script lang="ts">
-    import { twMerge } from "tailwind-merge";
     import Chevron from "@components/svelte/icons/Chevron.svelte"
+    import Pencil from "@components/svelte/icons/Pencil.svelte";
+    import { twMerge } from "tailwind-merge";
     import type { ClassName, UserExtendedCard } from "../../types/global";
 
     type $$Props =
@@ -21,7 +22,7 @@
 <div id={`card-${id}`} class={twMerge([
     "bg-WIgray-light", "min-h-20 p-4", "rounded-md", "grid grid-flow-row",
     "transition-all duration-200 ease-in-out delay-100", className])} {...restProps}> 
-    <div class="flex justify-between items-center">
+    <div class="mb-4 flex justify-between items-center">
         {#if $$props.enterprise}
             <span class="basis-1/3">{position}</span>
             {#if status === "Closed"}
@@ -33,10 +34,8 @@
             {/if}
             <button class="view-info">View details</button>
             <button class="view-info">View results</button>
-            <button class="icon">ola</button>
-            <button on:click={toggelCard} class="icon">
-                <Chevron id={id} toggleState={isOpen}/>
-            </button>
+            <button class="icon"><Pencil className="size-5 m-auto"/></button>
+            <button on:click={toggelCard} class="icon"><Chevron id={id} toggleState={isOpen}/></button>
         {:else if $$props.practitioner}
             <h1>Practitioner</h1>
         {/if}
@@ -49,7 +48,7 @@
                 <b class="block">{applicant.firstName} {applicant.lastName}</b>
                 <ul>
                     {#each applicant.skills as skill}
-                        <li>{skill}</li>
+                        <li>&nbsp;&nbsp;&nbsp;&nbsp;{skill}</li>
                     {/each}
                 </ul>
             {/each}
