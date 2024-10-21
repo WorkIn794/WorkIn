@@ -51,7 +51,9 @@
             <h1>Practitioner</h1>
         {/if}
     </div>
-    <div class={`details ${isOpen ? "toggle": ""}`}>
+    <input type="checkbox" bind:checked={isOpen}/>
+    <details open>
+        <summary/>
         {#if $$props.enterprise}
             {#each details as applicant}
                 <b class="block">{applicant.firstName} {applicant.lastName}</b>
@@ -64,7 +66,7 @@
         {:else if $$props.practitioner}
             <h1>Practitioner</h1>
         {/if}
-    </div>
+    </details>
 </div>
 
 <style>
@@ -105,29 +107,19 @@
         top: 25%;
     }
 
-    div.details{
-        max-height: 11rem;
+    input[type="checkbox"]{
         height: 0px;
-        overflow-y: hidden;
-        animation-duration: 1000ms;
-        animation-fill-mode: forwards;
-        animation-timing-function: ease-in-out;
+        appearance: none;
     }
-    div.toggle{
+    summary{
+        list-style: none;
+    }
+    details{
+        max-height: 0rem;
         overflow-y: scroll;
-        animation-name: toggle;
+        transition: max-height 200ms ease-in-out;
     }
-    div.toggle-close{
-        overflow-y: hidden;
-        animation-name: toggle-close;
-    }
-
-    @keyframes toggle{
-        from {height: 0px}
-        to {height: 11rem}
-    }
-    @keyframes toggle-close{
-        from {height: 11rem}
-        to {height: 0px}
+    input[type="checkbox"]:checked + details{
+        max-height: 11rem;
     }
 </style>
