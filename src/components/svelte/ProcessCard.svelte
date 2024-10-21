@@ -11,23 +11,7 @@
     const restProps = $$restProps;
     const { id, position, status, details, className } = $$props;
 
-    // Status color
-    enum statusColors {
-        RED = "B70000",
-        YELLOW = "FDB022",
-        GREEN = "23B000"
-    };
-    const { RED, YELLOW, GREEN } = statusColors;
-
-    let statusColor: statusColors;
-    switch(status){
-        case "Closed": statusColor = RED; break;
-        case "In Progress": statusColor = YELLOW; break;
-        case "Accepted": statusColor = GREEN; break;
-        default: statusColor = RED;
-    };
-
-    // Card open/close state
+    // Card toggle state
     let isOpen = false;
     function toggelCard(): void{
         isOpen = !isOpen;
@@ -40,7 +24,13 @@
     <div class="flex justify-between items-center">
         {#if $$props.enterprise}
             <span class="basis-1/3">{position}</span>
-            <span class={`status after:bg-[#${statusColor}]`}>Status</span>
+            {#if status === "Closed"}
+                <span class="status after:bg-[#B70000]">Status</span>
+            {:else if status === "In Progress"}
+                <span class="status after:bg-[#FDB022]">Status</span>
+            {:else if status === "Accepted"}
+                <span class="status after:bg-[#23B000]">Status</span>
+            {/if}
             <button class="view-info">View details</button>
             <button class="view-info">View results</button>
             <button class="icon">ola</button>
