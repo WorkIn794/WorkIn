@@ -34,7 +34,9 @@
     }
 </script>
 
-<div id={`card-${id}`} class={twMerge(["bg-WIgray-light", "min-h-20 p-4", "rounded-md", "grid grid-flow-row", className])} {...restProps}> 
+<div id={`card-${id}`} class={twMerge([
+    "bg-WIgray-light", "min-h-20 p-4", "rounded-md", "grid grid-flow-row",
+    "transition-all duration-200 ease-in-out delay-100", className])} {...restProps}> 
     <div class="flex justify-between items-center">
         {#if $$props.enterprise}
             <span class="basis-1/3">{position}</span>
@@ -49,7 +51,7 @@
             <h1>Practitioner</h1>
         {/if}
     </div>
-    <div class="max-h-44 overflow-y-scroll hidden transition-transform duration-200 ease-in-out">
+    <div class={`details ${isOpen ? "toggle": ""}`}>
         {#if $$props.enterprise}
             {#each details as applicant}
                 <b class="block">{applicant.firstName} {applicant.lastName}</b>
@@ -101,5 +103,31 @@
         position: absolute;
         right: 0;
         top: 25%;
+    }
+
+    div.details{
+        max-height: 11rem;
+        height: 0px;
+        overflow-y: hidden;
+        animation-duration: 1000ms;
+        animation-fill-mode: forwards;
+        animation-timing-function: ease-in-out;
+    }
+    div.toggle{
+        overflow-y: scroll;
+        animation-name: toggle;
+    }
+    div.toggle-close{
+        overflow-y: hidden;
+        animation-name: toggle-close;
+    }
+
+    @keyframes toggle{
+        from {height: 0px}
+        to {height: 11rem}
+    }
+    @keyframes toggle-close{
+        from {height: 11rem}
+        to {height: 0px}
     }
 </style>
