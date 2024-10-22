@@ -2,10 +2,33 @@
 import LayoutMain from "@layouts/LayoutMain.astro";
 import Loader from "@components/Loader.astro";
 import View from "@svelteComponents/views/EnterpriseView.svelte";
+import Button from "@components/Button.astro";
 ---
 
 <LayoutMain enterprise navBar sideBar>
+    <Button text="Create Job Post" icon="heroicons:plus-circle-16-solid" intent="withIcon"/>
+    <legend class="w-3/5 h-14 flex justify-between items-center">
+        <b>All Groups</b>
+        <span class="after:bg-[#B70000]">Closed</span>
+        <span class="after:bg-[#FDB022]">In Progress</span>
+        <span class="after:bg-[#23B000]">Accepted</span>
+    </legend>
     <View client:idle process>
         <Loader slot="loader" size={6}/>
     </View>
 </LayoutMain>
+
+<style>
+    legend span{
+        position: relative;
+    }
+    legend span::after{
+        content: "";
+        width: 0.75rem;
+        height: 50%;
+        border-radius: 100%;
+        position: absolute;
+        left: 110%;
+        top: 25%;
+    }
+</style>

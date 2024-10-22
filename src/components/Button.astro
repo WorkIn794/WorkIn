@@ -49,5 +49,5 @@ const { text, icon, className, intent, size = "md", iconPosition, ...buttonProps
 
 <button class={twMerge([button({intent, size, iconPosition}), className])} {...buttonProps}>
     {icon && <Icon name={icon} class:list={["group-hover:text-WIblue-input"]}/>}
-    <span class:list={[icon && "group-hover:before:scale-x-100"]}>{text}</span>
+    <span set:text={text} class:list={[icon && "group-hover:before:scale-x-100"]}/>
 </button>

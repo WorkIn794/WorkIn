@@ -22,8 +22,8 @@ const navItems: ReadonlyArray<[string, string, string]> = [
 
 const sideBarItems: ReadonlyArray<[string, string, string]> = enterprise ?
 	[
-		["Dashboard", "heroicons:chart-bar-solid", "owo"],
-		["My processes", "heroicons:user-group-solid", "uwu"]
+		["Dashboard", "heroicons:chart-bar-solid", "/enterprise/dashboard"],
+		["My processes", "heroicons:user-group-solid", "/enterprise/process"]
 	] :
 	[
 		["", "", ""]
@@ -62,7 +62,7 @@ const mainElementStyle: astroHTML.JSX.CSSProperties = {
 
 <style>
 	main{
-		min-height: 100vh;
+		height: 100vh;
 		padding: 3rem 3rem;
 		display: grid;
 		grid-template-columns: repeat(4, minmax(200px, 1fr));
