@@ -2,23 +2,36 @@
 import LayoutMain from "@layouts/LayoutMain.astro";
 import Loader from "@components/Loader.astro";
 import View from "@svelteComponents/views/EnterpriseView.svelte";
-import Button from "@components/Button.astro";
+import Link from "@components/Link.astro";
+import Searchbar from "@components/svelte/Searchbar.svelte";
 ---
 
 <LayoutMain enterprise navBar sideBar>
-    <Button text="Create Job Post" icon="heroicons:plus-circle-16-solid" intent="withIcon"/>
-    <legend class="w-3/5 h-14 flex justify-between items-center">
-        <b>All Groups</b>
-        <span class="after:bg-[#B70000]">Closed</span>
-        <span class="after:bg-[#FDB022]">In Progress</span>
-        <span class="after:bg-[#23B000]">Accepted</span>
-    </legend>
+    <section id="search">
+        <div class="flex justify-between">
+            <Link href="" text="Create Job Post" icon="heroicons:plus-circle-16-solid" iconLeft intent="iconBtn"/>
+            <Searchbar client:idle placeholder="Search" className="basis-4/5 min-h-8"/>
+        </div>
+        <legend class="w-3/5 h-14 flex justify-between items-center">
+            <b>All Groups</b>
+            <span class="after:bg-[#B70000]">Closed</span>
+            <span class="after:bg-[#FDB022]">In Progress</span>
+            <span class="after:bg-[#23B000]">Accepted</span>
+        </legend>
+    </section>
     <View client:idle process>
         <Loader slot="loader" size={6}/>
     </View>
 </LayoutMain>
 
 <style>
+    #search{
+        background-color: white;
+        position: sticky;
+        inset: 0;
+        z-index: 1;
+    }
+
     legend span{
         position: relative;
     }

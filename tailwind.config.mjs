@@ -30,9 +30,6 @@ export default {
 			borderWidth: {
 				1: "1px"
 			},
-			gridTemplateColumns: {
-				
-			},
 			screens: {
 				xs: "350px"
 			}

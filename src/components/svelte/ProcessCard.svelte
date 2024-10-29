@@ -14,9 +14,7 @@
 
     // Card toggle state
     let isOpen = false;
-    function toggelCard(): void{
-        isOpen = !isOpen;
-    }
+    const toggle = (): void => {isOpen = !isOpen};
 </script>
 
 <div id={`card-${id}`} class={twMerge([
@@ -32,10 +30,9 @@
             {:else if status === "Accepted"}
                 <span class="status after:bg-[#23B000]">Status</span>
             {/if}
-            <button class="view-info">View details</button>
             <button class="view-info">View results</button>
             <button class="icon"><Pencil className="size-5 m-auto"/></button>
-            <button on:click={toggelCard} class="icon"><Chevron id={id} toggleState={isOpen}/></button>
+            <button on:click={toggle} class="icon"><Chevron id={id} toggleState={isOpen}/></button>
         {:else if $$props.practitioner}
             <h1>Practitioner</h1>
         {/if}

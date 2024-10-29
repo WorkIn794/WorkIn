@@ -22,6 +22,7 @@ const button = cva([], {
                 "flex flex-nowrap items-center gap-x-2",
                 "[&_svg]:size-[1.5em]",
                 "[&_svg]:transition-all [&_svg]:duration-200 [&_svg]:ease-in",
+                "[&_span]:text-nowrap",
                 "[&_span]:relative",
                 "[&_span]:before:bg-WIblack",
                 "[&_span]:before:w-full [&_span]:before:h-[1.1px]",
@@ -48,6 +49,6 @@ const { text, icon, className, intent, size = "md", iconPosition, ...buttonProps
 ---
 
 <button class={twMerge([button({intent, size, iconPosition}), className])} {...buttonProps}>
-    {icon && <Icon name={icon} class:list={["group-hover:text-WIblue-input"]}/>}
+    {icon && <Icon name={icon} class:list={[intent === "withIcon" && "group-hover:text-WIblue-input"]}/>}
     <span set:text={text} class:list={[icon && "group-hover:before:scale-x-100"]}/>
 </button>

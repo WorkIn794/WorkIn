@@ -41,6 +41,10 @@ const link = cva([
                 "[&_span]:before:hidden",
                 "[&_svg]:text-[1.5em]",
                 "[&_svg]:hover:scale-110 [&_svg]:hover:text-WIblue"
+            ],
+            iconBtn: [
+                "gap-x-1",
+                "icon-hover"
             ]
         }
     }
@@ -54,7 +58,7 @@ type Props =
         text: string;
         className?: ClassName;
         iconClass?: ClassName;
-    }
+    };
 const { href, text, icon, iconLeft, iconRight, intent, className, iconClass } = Astro.props;
 ---
 
@@ -62,3 +66,13 @@ const { href, text, icon, iconLeft, iconRight, intent, className, iconClass } = 
     {icon && <Icon name={icon} class={twMerge([iconClass])}/>}
     <span>{text}</span>
 </a>
+
+<style>
+    a.icon-hover:hover svg{
+        color: #0C31F1;
+        transform: scale(1.1);
+        transition:
+            transform 200ms ease-in-out 0s,
+            color 200ms ease-in-out 0s;
+    }
+</style>
