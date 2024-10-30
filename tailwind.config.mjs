@@ -19,7 +19,10 @@ export default {
 				},
 				WIblue: {
 					DEFAULT: "#003954",
-					input: "#0C31F1"
+					input: "#0C31F1",
+					pastel: "#C6DCFD",
+					lavander: "#A9C0FC",
+					malva: "#7B98FF"
 				},
 				WIgray: {
 					DEFAULT: "#C1BBBB",

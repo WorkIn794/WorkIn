@@ -1,7 +1,11 @@
 ---
 import LayoutMain from "@layouts/LayoutMain.astro";
+import View from "@svelteComponents/views/EnterpriseView.svelte";
+import Loader from "@components/Loader.astro";
 ---
 
 <LayoutMain enterprise navBar sideBar>
-    <h1>DASHBOARD</h1>
+    <View client:idle dashboard>
+        <Loader slot="loader" size={6}/>
+    </View>
 </LayoutMain>
