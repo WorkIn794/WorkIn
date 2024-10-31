@@ -1,6 +1,8 @@
 <script lang="ts">
+    import { onMount } from "svelte";
     import { cva } from "cva";
     import { twMerge } from "tailwind-merge";
+    import { plot, lineY, dot } from "@observablehq/plot";
     import type { HTMLAttributes } from "astro/types";
     import type { VariantProps } from "cva";
     import type { ClassName } from "../../types/global";
@@ -32,7 +34,9 @@
                 ],
                 timeProcess: [
                     "bg-WIblue-lavander",
-                    "min-h-44"
+                    "min-h-32",
+                    "p-4",
+                    "[&_h1]:text-lg [&_h1]:font-semibold [&_h1]:mb-4"
                 ]
             }
         }
@@ -61,6 +65,26 @@
     };
     const { data, type, className } = $$props;
     const restCardProps = $$restProps;
+
+    // Graph implementation
+    let graph: HTMLDivElement;
+    if(type === "Time for each process") onMount(() => {
+        graph?.appendChild(plot({
+            marks: [
+                lineY(data, {y: "time"}),
+                dot(data, {
+                    y: "time",
+                    x: (_, i) => i,
+                    tip: true,
+                    title: (d) => `${d.name}\n${d.time} days`,
+                    fill: "black"
+                })
+            ],
+            x: { label: "", type: "time", ticks: [] },
+            y: { label: "", grid: true },
+            style: "width: 100%;"
+        }));
+    });
 </script>
 
 {#if type === "Applicants number" || type === "Average days"}
@@ -76,7 +100,7 @@
         <p>Pending processes</p>
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
             <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0 0 20.25 18V6A2.25 2.25 0 0 0 18 3.75H6A2.25 2.25 0 0 0 3.75 6v12A2.25 2.25 0 0 0 6 20.25Z" />
-        </svg>  
+        </svg>
     </div>
 {:else if type === "Top Applicants" || type === "Top Skills"}
     <div class={twMerge([card({intent: "topApplicants"}), className])} {...restCardProps}>
@@ -97,7 +121,7 @@
         {/if}
     </div>
 {:else}
-    <div class={twMerge([card({intent: "timeProcess"}), className])} {...restCardProps}>
-        ola
+    <div bind:this={graph} class={twMerge([card({intent: "timeProcess"}), className])} {...restCardProps}>
+        <h1>Time taken for each process</h1>
     </div>
 {/if}
