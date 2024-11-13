@@ -4,14 +4,19 @@
     import type { ClassName } from "../../types/global";
 
     interface $$Props extends HTMLAttributes<"input">{
+        readonly id: string;
         className?: ClassName;
     };
-    const { className } = $$props;
+    const { className, id } = $$props;
     const restProps = $$restProps;
 </script>
 
 <input
+    id={id}
+    name="searchBar"
     type="search"
+    spellcheck={false}
+    list={`${id}-datalist`}
     class={twMerge([
         "bg-WIgray-light",
         "text-WIblack",
@@ -22,3 +27,5 @@
         className])}
     {...restProps}
 />
+<!-- Populate datalist with options on component load -->
+<datalist id={`${id}-datalist`}/>

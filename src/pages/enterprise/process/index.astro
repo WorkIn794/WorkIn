@@ -10,7 +10,7 @@ import Searchbar from "@components/svelte/Searchbar.svelte";
     <section id="search">
         <div class="flex justify-between">
             <Link href="" text="Create Job Post" icon="heroicons:plus-circle-16-solid" iconLeft intent="iconBtn"/>
-            <Searchbar client:idle placeholder="Search" className="basis-4/5 min-h-8"/>
+            <Searchbar client:idle id="searchBar" placeholder="Search" className="basis-4/5 min-h-8"/>
         </div>
         <legend class="w-3/5 h-14 flex justify-between items-center">
             <b>All Groups</b>

@@ -1,7 +1,7 @@
 {
   "name": "workin",
   "type": "module",
-  "version": "0.4.8",
+  "version": "0.4.10",
   "author": "Vicente Javier Viera Guizar",
   "description": "",
   "license": "UNLICENSED",
@@ -11,7 +11,8 @@
     "start": "astro dev",
     "build": "astro check && astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "ntl": "netlify dev"
   },
   "dependencies": {
     "@astrojs/check": "0.9.3",

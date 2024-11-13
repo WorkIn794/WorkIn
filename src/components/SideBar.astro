@@ -11,45 +11,21 @@ const { content, className, ...asideProps } = Astro.props;
 ---
 
 <aside class:list={[className]} {...asideProps}>
-    <nav>
+    <nav class="h-full pt-8 flex flex-col justify-between">
         <div>
-            {content.map(([text, icon, link]) => <div><Link href={link} text={text} icon={icon} iconLeft intent="sideBar" className="size-full"/></div>)}
+            {content.map(([text, icon, link]) =>
+                <div class="w-[90%] h-16 pl-2 my-1 flex items-center transition-colors duration-200 ease-in-out hover:bg-WIgray-light">
+                    <Link href={link} text={text} icon={icon} iconLeft intent="sideBar" className="size-full"/>
+                </div>
+            )}
         </div>
         <div>
-            <div><Link href="test" text="Contact us" icon="heroicons:cog-8-tooth-20-solid" iconLeft intent="sideBar" className="size-full"/></div>
-            <div><Link href="test" text="Log out" icon="heroicons:arrow-right-on-rectangle" iconLeft intent="sideBar" className="size-full"/></div>
+            <div class="w-[90%] h-16 pl-2 my-1 flex items-center transition-colors duration-200 ease-in-out hover:bg-WIgray-light">
+                <Link href="test" text="Contact us" icon="heroicons:cog-8-tooth-20-solid" iconLeft intent="sideBar" className="size-full"/>
+            </div>
+            <div class="w-[90%] h-16 pl-2 my-1 flex items-center transition-colors duration-200 ease-in-out hover:bg-WIgray-light">
+                <Link href="test" text="Log out" icon="heroicons:arrow-right-on-rectangle" iconLeft intent="sideBar" className="size-full"/>
+            </div>
         </div>
     </nav>
 </aside>
-
-<style>
-    nav{
-        @apply h-full pt-8
-        flex flex-col justify-between
-    }
-    nav div div{
-        @apply
-        w-[90%] h-16 pl-2 my-1
-        flex items-center
-        transition-colors duration-200 ease-in-out
-        hover:bg-WIgray-light;
-    }
-</style>
-
-<!-- <script>
-    const sideBarElements: HTMLCollection = document.getElementById("sideBarHeader")?.children as HTMLCollection;
-    for(const element of sideBarElements){
-        element.addEventListener("click", event => {
-            const target: HTMLDivElement = event.currentTarget as HTMLDivElement;
-            target.classList.replace("hover:bg-WIgray-light", "hover:bg-none");
-            console.log(target);
-        })
-    }
-
-    const links = document.getElementsByTagName("a");
-    for(const link of links){
-        link.addEventListener("click", event => {
-            event.preventDefault();
-        }, true);
-    }
-</script> -->

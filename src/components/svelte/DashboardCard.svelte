@@ -76,7 +76,7 @@
                     y: "time",
                     x: (_, i) => i,
                     tip: true,
-                    title: (d) => `${d.name}\n${d.time} days`,
+                    title: d => `${d.name}\n${d.time} days`,
                     fill: "black"
                 })
             ],

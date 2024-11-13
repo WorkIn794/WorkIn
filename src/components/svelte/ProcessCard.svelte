@@ -18,8 +18,11 @@
 </script>
 
 <div id={`card-${id}`} class={twMerge([
-    "bg-WIgray-light", "min-h-20 p-4", "rounded-md", "grid grid-flow-row",
-    "transition-all duration-200 ease-in-out delay-100", className])} {...restProps}> 
+    "bg-WIgray-light", "min-h-20 p-4",
+    "rounded-md",
+    "grid grid-flow-row",
+    "transition-all duration-200 ease-in-out delay-100", className])}
+    {...restProps}> 
     <div class="mb-4 flex justify-between items-center">
         {#if $$props.enterprise}
             <span class="basis-1/3">{position}</span>
