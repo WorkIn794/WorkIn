@@ -9,11 +9,4 @@ export default defineConfig({
   integrations: [tailwind(), icon(), svelte()],
   output: "server",
   adapter: netlify()
-  // experimental: {
-  //   env: {
-  //     schema: {
-  //       API_KEY: envField.string({context: "client", access: "public", default: "TEST"})
-  //     }
-  //   }
-  // }
 });

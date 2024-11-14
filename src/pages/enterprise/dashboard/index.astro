@@ -9,3 +9,9 @@ import Loader from "@components/Loader.astro";
         <Loader slot="loader" size={6}/>
     </View>
 </LayoutMain>
+
+<script>
+    await fetch("http://localhost:8888/.netlify/functions/hello")
+        .then(async res => console.log("RESPONSE: ", await res.text())) 
+        .catch(err => console.log("ERROR: ", err))
+</script>
