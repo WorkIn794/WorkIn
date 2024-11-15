@@ -8,11 +8,11 @@ interface Props extends HTMLAttributes<"input">{
     label: "Email Address" | "Password";
 };
 
-const {form, name, type, label, placeholder = "", id, ...inputProps } = Astro.props;
+const { form, name, type, label, placeholder = "", id, ...inputProps } = Astro.props;
 ---
 
 <div>
-    <label for={id || name}>{label}</label>
+    <label for={id || name} set:text={label}/>
     <input id={id || name} name={name || id} type={type} form={form} placeholder={placeholder} {...inputProps}/>
 </div>
 

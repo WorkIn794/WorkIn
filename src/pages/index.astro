@@ -13,6 +13,8 @@ const navPages: ReadonlyArray<[string, string]> = [
     ["Pricing", ""],
 	["Enterprise", "enterprise"]
 ]
+
+const formID: Readonly<string> = "login";
 ---
 
 <LoginLayout title="WorkIn">
@@ -22,15 +24,15 @@ const navPages: ReadonlyArray<[string, string]> = [
 		<h2>Artificial Intelligence <span>empowering</span></h2>
 		<h2><span>your</span> Career Journey</h2>
 		<small>Welcome back! Please <ins>login</ins> to your account.</small>
-		<form id="form" name="login" action="" method="get">
-			<LoginInpt form="login" name="email" type="email" label="Email Address" autocomplete="email" required/>
-			<LoginInpt form="login" name="password" type="password" label="Password" autocomplete="current-password" required/>
+		<form id={formID} name="login" action="" method="get">
+			<LoginInpt form={formID} name="email" type="email" label="Email Address" autocomplete="email" required/>
+			<LoginInpt form={formID} name="password" type="password" label="Password" autocomplete="current-password" required/>
 			<div class="mt-2 mb-10 ml-2 flex flex-wrap justify-between">
-				<CheckBox name="rememberMe" form="login" text="Remember Me" intent="login"/>
+				<CheckBox name="rememberMe" form={formID} text="Remember Me" intent="login"/>
 				<Link href="https://youtu.be/dQw4w9WgXcQ?si=S2f1ZH6iodUjWRr8" text="Forgot Password?" intent="forgetPW" aria-label="Forgotten password"/>
 			</div>
 			<div class="flex gap-x-4">
-				<Button aria-label="Login" form="form" type="submit" text="Login" intent="login" className="flex-none"/>
+				<Button aria-label="Login" form={formID} type="submit" text="Login" intent="login" className="flex-none"/>
 				<Button aria-label="Sign up" type="button" text="Sign Up" intent="login" className="flex-none"/>
 			</div>
 		</form>
@@ -44,3 +46,13 @@ const navPages: ReadonlyArray<[string, string]> = [
 		<Navmenu mobile={false} navPages={navPages}/>
 	</section>
 </LoginLayout>
+
+<script>
+	document.getElementById("login")?.addEventListener("submit", async e => {
+		e.preventDefault();
+
+		const form = e.target as HTMLFormElement;
+		const formData = new FormData(form);
+		const data = Object.fromEntries(formData.entries()) as { email: string, password: string };
+	});
+</script>
