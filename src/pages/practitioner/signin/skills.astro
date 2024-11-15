@@ -21,7 +21,7 @@ const radioButtons: ReadonlyArray<[string, string]> = [
     <Link href="./data" text="Back" icon="heroicons:chevron-left-16-solid" iconLeft intent="navControl" className="my-6"/>
     <InfoBox className="min-w-[460px]" text="Finally, please mark the corresponding boxes on a scale from 0 to 5, where 0 indicates that you have no knowledge and 5 indicates that you are an expert in the subject."/>
     <h2 class="text-WIblack text-lg text-nowrap font-semibold mt-8 mb-4">Technical Skills</h2>
-    <form name={formName} class="w-2/3 min-w-[460px] grid grid-cols-2 gap-y-4">
+    <form id="form" name={formName} class="w-2/3 min-w-[460px] grid grid-cols-2 gap-y-4">
         {groups.map(group =>
             <Fragment>
                 <InfoBox text={group} intent="label" size="small"/>
@@ -31,5 +31,23 @@ const radioButtons: ReadonlyArray<[string, string]> = [
         <InfoBox text="Others" intent="label" size="small"/>
         <TextBox name="others" type="text" placeholder="Notion - Figma - Python ..." className="self-end scale-x-105"/>
     </form>
-    <Link href="owo" text="Finish" icon="heroicons:chevron-right-16-solid" iconRight intent="navControl" className="float-right my-6"/>
+    <Link id="end" href="/" text="Finish" icon="heroicons:chevron-right-16-solid" iconRight intent="navControl" className="float-right my-6"/>
 </LayoutMain>
+
+<script>
+    document.getElementById("end")?.addEventListener("click", async e => {
+        const form = document.getElementById("form") as HTMLFormElement;
+        const formData = new FormData(form);
+        const data = JSON.parse(localStorage.getItem("practitioner") as string);
+
+        formData.forEach((value, key) => data[key] = value);
+        data["role"] = "practitioner"
+
+        await fetch(`${import.meta.env.DEV ? import.meta.env.PUBLIC_NTL_LOCAL_FUNCTION : import.meta.env.PUBLIC_NTL_FUNCTION}/signup`, {
+            method: "POST",
+            body: JSON.stringify(data)
+        })
+
+        localStorage.clear();
+    })
+</script>

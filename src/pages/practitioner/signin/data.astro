@@ -8,7 +8,7 @@ const formName: Readonly<string> = "signinData";
 
 <LayoutMain practitioner>
     <Link href="." text="Back" icon="heroicons:chevron-left-16-solid" iconLeft intent="navControl" className="my-6"/>
-    <form name={formName} class="grid grid-cols-6 gap-y-4">
+    <form id="form" name={formName} class="grid grid-cols-6 gap-y-4">
         <TextBox label="University"                     name="university"           title="Enter your university name"  type="text" className="col-span-2 w-11/12" required/>
         <TextBox label="Major"                          name="major"                title="Enter your major"            type="text" className="col-span-2 w-11/12 justify-self-center" required/>
         <TextBox label="Semester"                       name="semester"             title="Current semester"            type="text" className="col-span-2 w-11/12 justify-self-end" required/>
@@ -19,5 +19,16 @@ const formName: Readonly<string> = "signinData";
         <TextBox label="Sector(s) of Interest"          name="sectorsOfInterest"    title="Sectors of interest"         type="text" className="col-span-3 w-11/12 justify-self-end" required/>
         <TextBox label="Langage(s)"                     name="langages"             title="Languages"                   type="text" className="col-span-3" required/>
     </form>
-    <Link href="./skills" text="Next" icon="heroicons:chevron-right-16-solid" iconRight intent="navControl" className="float-right my-6"/>
+    <Link id="next" href="./skills" text="Next" icon="heroicons:chevron-right-16-solid" iconRight intent="navControl" className="float-right my-6"/>
 </LayoutMain>
+
+<script>
+    document.getElementById("next")?.addEventListener("click", e => {
+        const form = document.getElementById("form") as HTMLFormElement;
+        const formData = new FormData(form);
+        const data = JSON.parse(localStorage.getItem("practitioner") as string);
+        formData.forEach((value, key) => data[key] = value);
+
+        localStorage.setItem("practitioner", JSON.stringify(data));
+    })
+</script>

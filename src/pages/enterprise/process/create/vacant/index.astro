@@ -9,7 +9,7 @@ const formName: Readonly<string> = "createVacant";
 
 <LayoutMain enterprise navBar sideBar>
     <Link href="/enterprise/process" text="Back" icon="heroicons:chevron-left-16-solid" iconLeft intent="navControl" className="my-4"/>
-    <form name={formName} class="grid grid-cols-2 gap-y-2">
+    <form id="form" name={formName} class="grid grid-cols-2 gap-y-2">
         <TextBox name="jobPosition" label="Job Position" type="text" className="col-span-full" required />
         <TextBox name="modality" label="Modality" type="text" className="col-span-full" required />
         <TextBox name="department" label="Department" type="text" className="w-11/12" required/> 
@@ -18,5 +18,17 @@ const formName: Readonly<string> = "createVacant";
         <TextArea name="description" label="What are we looking for? (Up to 300 words):" height={6} className="col-span-full" required/>
         <TextArea name="requirements" label="Requirements:" className="col-span-full" required/>
     </form>
-    <Link href="./vacant/enterpriseInfo" text="Next" icon="heroicons:chevron-right-16-solid" iconRight intent="navControl" className="float-right my-4"/>
+    <Link id="next" href="./vacant/enterpriseInfo" text="Next" icon="heroicons:chevron-right-16-solid" iconRight intent="navControl" className="float-right my-4"/>
 </LayoutMain>
+
+<script>
+    document.getElementById("next")?.addEventListener("click", e => {
+
+        const form = document.getElementById("form") as HTMLFormElement;
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData.entries());
+
+        localStorage.clear();
+        localStorage.setItem("process", JSON.stringify(data));
+    });
+</script>

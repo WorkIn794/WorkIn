@@ -11,7 +11,7 @@ const formName: Readonly<string> = "enterpriseInfo";
 
 <LayoutMain enterprise navBar sideBar>
     <Link href="/enterprise/process/create/vacant" text="Back" icon="heroicons:chevron-left-16-solid" iconLeft intent="navControl" className="my-4"/>
-    <form name={formName}>
+    <form id="form" name={formName}>
         <InfoBox text="Please answer the questions to ensure a better matching"/>
         <TextBox name="salary" label="What is the salary range for this position?" type="text" required/>
         <TextBox name="skills" label="What skills are you looking for in this position?" type="text" required/>
@@ -21,7 +21,7 @@ const formName: Readonly<string> = "enterpriseInfo";
         <div id="questionContainer"/>
     </form>
     <Button id="addQuestion" text="Add question" icon="heroicons:plus-circle-16-solid" intent="withIcon" className="my-4"/>
-    <Link href="test" text="Finish" icon="heroicons:chevron-right-16-solid" iconRight intent="navControl" className="float-right my-4"/>
+    <Link id="finish" href="/enterprise/process" text="Finish" icon="heroicons:chevron-right-16-solid" iconRight intent="navControl" className="float-right my-4"/>
 </LayoutMain>
 
 <style>
@@ -30,13 +30,6 @@ const formName: Readonly<string> = "enterpriseInfo";
         margin-top: 1rem;
         overflow-y: scroll;
     }
-    /* #questionContainer::-webkit-scrollbar{
-        width: 8px;
-    }
-    #questionContainer::-webkit-scrollbar-thumb{
-        border-radius: 12px;
-        background-color: #8080804e;
-    } */
 </style>
 
 <script>
@@ -67,4 +60,18 @@ const formName: Readonly<string> = "enterpriseInfo";
         divContainer.appendChild(input);
         questionContainer.appendChild(divContainer);
     });
+
+    document.getElementById("finish")
+        ?.addEventListener("click", async e => {
+            const form = document.getElementById("form") as HTMLFormElement;
+            const formData = new FormData(form);
+            const data = JSON.parse(localStorage.getItem("process") as string);
+            formData.forEach((value, key) => data[key] = value);
+            data["status"] = "In Progress";
+
+            await fetch(`${import.meta.env.DEV ? import.meta.env.PUBLIC_NTL_LOCAL_FUNCTION : import.meta.env.PUBLIC_NTL_FUNCTION}/createProcess`, {
+                method: "POST",
+                body: JSON.stringify(data)
+            }).then(() => localStorage.clear());
+        });
 </script>

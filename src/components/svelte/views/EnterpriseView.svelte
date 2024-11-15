@@ -1,35 +1,58 @@
-<script lang="ts">
+<script>
     import ProcessCard from "../ProcessCard.svelte";
     import DashboardCard from "../DashboardCard.svelte";
-    import type { EnterpriseView } from "../../../types/global";
+    // import type { EnterpriseView } from "../../../types/global";
+    // import type { Status, EnterpriseCard } from "../../../types/global";
 
-    type $$Props = EnterpriseView;
+    // type $$Props = EnterpriseView;
 
     // Fetch processes
     const processes = fetchProcess();
     async function fetchProcess(){
-        try{
-            const response = await (await fetch("http://localhost:3001/processes")).json();
-            if(!response) throw new Error("No processes found");
-
-            return response;
-        }catch(error){
-            return error; 
-        }
+        return await fetch(`${import.meta.env.DEV ? import.meta.env.PUBLIC_NTL_LOCAL_FUNCTION : import.meta.env.PUBLIC_NTL_FUNCTION}/getProcess`)
+            .then(async res => await res.json())
+                .then(res => {
+                    return res.map(process => {
+                        return {
+                            position: process.jobPosition,
+                            status: process.status,
+                            details: process.description,
+                            applicants: [
+                                {
+                                    firstName: "John",
+                                    lastName: "Doe",
+                                    skills: ["HTML", "CSS", "JavaScript"]
+                                },
+                                {
+                                    firstName: "John",
+                                    lastName: "Doe",
+                                    skills: ["HTML", "CSS", "JavaScript"]
+                                },
+                                {
+                                    firstName: "John",
+                                    lastName: "Doe",
+                                    skills: ["HTML", "CSS", "JavaScript"]
+                                }
+                            ]
+                        }
+                    });
+                }
+            );
+    
     }
 
     // Fetch dashboard data
-    interface DashboardData{
-        applicantsNumber: number;
-        pendingProcesses: number;
-        averageDays: number;
-        topApplicants: [string, string, string];
-        topSkills: [string, string, string];
-        timeForEachProcess: {id: number, name: string, time: number}[];
-    };
+    // interface DashboardData{
+    //     applicantsNumber: number;
+    //     pendingProcesses: number;
+    //     averageDays: number;
+    //     topApplicants: [string, string, string];
+    //     topSkills: [string, string, string];
+    //     timeForEachProcess: {id: number, name: string, time: number}[];
+    // };
     const dashboardData = fetchDashboard();
-    async function fetchDashboard(): Promise<DashboardData>{
-        return new Promise<DashboardData>((resolve) => {
+    async function fetchDashboard(){
+        return new Promise((resolve) => {
             setTimeout(() => resolve({
                     applicantsNumber: 253,
                     pendingProcesses: 8,
@@ -64,7 +87,7 @@
         </div>
     {:then data}
         {#each data as process, index}
-            <ProcessCard id={index} enterprise position={process.position} status={process.status} details={process.applicants} className="my-2"/>
+            <ProcessCard id={index} enterprise position={process.position} status={process.status} details={process.applicants} description={process.details} className="my-2"/>
         {/each}
     {:catch error}
         <h1>Error: {error.message}</h1>

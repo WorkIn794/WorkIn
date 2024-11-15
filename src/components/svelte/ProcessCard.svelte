@@ -7,10 +7,11 @@
     type $$Props =
     UserExtendedCard & {
         id: number;
+        description: string;
         className?: ClassName;
     };
     const restProps = $$restProps;
-    const { id, position, status, details, className } = $$props;
+    const { id, position, status, details, className, description } = $$props;
 
     // Card toggle state
     let isOpen = false;
@@ -44,9 +45,10 @@
     <details open>
         <summary/>
         {#if $$props.enterprise}
+            <p class="w-1/2 text-right absolute left-1/2">{description}</p>
             {#each details as applicant}
-                <b class="block">{applicant.firstName} {applicant.lastName}</b>
-                <ul>
+                <b class="w-1/2">{applicant.firstName} {applicant.lastName}</b>
+                <ul class=w-1/2>
                     {#each applicant.skills as skill}
                         <li>&nbsp;&nbsp;&nbsp;&nbsp;{skill}</li>
                     {/each}
@@ -104,6 +106,7 @@
         list-style: none;
     }
     details{
+        position: relative;
         max-height: 0rem;
         overflow-y: scroll;
         transition: max-height 200ms ease-in-out;

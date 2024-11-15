@@ -54,15 +54,16 @@ type Props =
     IconProps &
     HTMLAttributes<"a"> &
     VariantProps<typeof link> & {
+        id?: string;
         href: string;
         text: string;
         className?: ClassName;
         iconClass?: ClassName;
     };
-const { href, text, icon, iconLeft, iconRight, intent, className, iconClass } = Astro.props;
+const { id, href, text, icon, iconLeft, iconRight, intent, className, iconClass } = Astro.props;
 ---
 
-<a href={href} class={twMerge([link({intent}), `${iconRight && "flex-row-reverse"}`, `${iconLeft && "flex-row"}`, className])}>
+<a id={id} href={href} class={twMerge([link({intent}), `${iconRight && "flex-row-reverse"}`, `${iconLeft && "flex-row"}`, className])}>
     {icon && <Icon name={icon} class={twMerge([iconClass])}/>}
     <span>{text}</span>
 </a>

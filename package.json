@@ -27,6 +27,7 @@
     "cva": "npm:class-variance-authority",
     "d3": "^7.9.0",
     "gotrue-js": "^0.9.29",
+    "mongodb": "^6.10.0",
     "svelte": "^4.2.19",
     "tailwind-merge": "^2.5.4",
     "tailwindcss": "^3.4.14",
