@@ -8,7 +8,8 @@ const checkBox = cva([], {
     variants: {
         intent: {
             login: [
-                "[&+label]:text-sm [&+label]:text-nowrap [&+label]:opacity-60"
+                "[&+label]:text-sm [&+label]:text-nowrap [&+label]:opacity-60",
+                "hover:cursor-pointer hover:[&+label]:cursor-pointer"
             ]
         }
     }
@@ -16,13 +17,23 @@ const checkBox = cva([], {
 
 interface Props extends HTMLAttributes<"input">,
     VariantProps<typeof checkBox>{
+        id: string;
         form: string;
         name: string;
         text: string;
         className?: string | string[];
     };
-const { form, name, text, className, intent, id, ...inputProps } = Astro.props;
+const { id, name, form, text, className, intent, ...inputProps } = Astro.props;
 ---
 
-<div><input id={id || name} name={name || id} form={form} type="checkbox" class={twMerge([checkBox({intent}), className])} {...inputProps}/>
-<label for={id || name}>{text}</label></div>
+<div>
+    <input
+        id={id}
+        name={name}
+        form={form}
+        type="checkbox"
+        value="true"
+        class={twMerge([checkBox({intent}), className])}
+        {...inputProps}/>
+    <label for={id} set:text={text}/>
+</div>

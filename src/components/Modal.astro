@@ -1,0 +1,39 @@
+---
+import { cva } from "cva";
+import { twMerge } from "tailwind-merge";
+import type { HTMLAttributes } from "astro/types";
+import type { ClassName } from "@/types/global";
+import type { VariantProps } from "cva";
+
+const modal = cva([
+    "bg-WIgray-light",
+    "min-w-64 min-h-64 p-10",
+    "rounded-2xl",
+    "relative",
+    "overflow-hidden"
+], {
+    variants: {
+        intent: {
+            loading: [
+                ""
+            ]
+        },
+        size: {
+            md: ["size-80"],
+            lg: ["size-[40rem]"]
+        }
+    }
+})
+
+interface Props extends
+    HTMLAttributes<"dialog">,
+    VariantProps<typeof modal> {
+        className?: ClassName;
+};
+
+const { id, className, intent, size, ...dialogProps } = Astro.props;
+---
+
+<dialog id={id} class={twMerge([modal({intent, size}), className])} {...dialogProps}>
+    <slot/>
+</dialog>
