@@ -4,6 +4,7 @@ import { cva } from "cva";
 import { twMerge } from "tailwind-merge";
 import type { VariantProps } from "cva";
 import type { HTMLAttributes } from "astro/types";
+import type { ClassName } from "@/types/global";
 
 const button = cva([], {
     variants: {
@@ -28,13 +29,20 @@ const button = cva([], {
                 "[&_span]:before:w-full [&_span]:before:h-[1.1px]",
                 "[&_span]:before:absolute [&_span]:before:bottom-0 [&_span]:before:scale-x-0",
                 "[&_span]:before:transition-all [&_span]:before:duration-200 [&_span]:before:ease-in"
+            ],
+            sideBar: [
+                "flex items-center gap-x-2",
+                "[&_svg]:transition-transform [&_svg]:duration-200 [&_svg]:ease-in-out",
+                "[&_svg]:hover:scale-110 [&_svg]:hover:text-WIblue"
             ]
         },
         iconPosition: {
             left: [""]
         },
         size: {
-            md: ["text-base"]
+            md: ["text-base"],
+            lg: ["text-lg"],
+            xl: ["text-xl"]
         }
     }
 });
@@ -42,13 +50,15 @@ const button = cva([], {
 interface Props extends HTMLAttributes<"button">,
     VariantProps<typeof button>{
         text: string;
+        setSize?: number;
         icon?: string;
-        className?: string;
+        className?: ClassName;
+        iconClass?: ClassName;
     };
-const { text, icon, className, intent, size = "md", iconPosition, ...buttonProps } = Astro.props;
+const { text, icon, className, iconClass, setSize, intent, size, iconPosition, ...buttonProps } = Astro.props;
 ---
 
-<button class={twMerge([button({intent, size, iconPosition}), className])} {...buttonProps}>
-    {icon && <Icon name={icon} class:list={[intent === "withIcon" && "group-hover:text-WIblue-input"]}/>}
+<button class={twMerge([button({intent, size, iconPosition}), setSize && `text-[${setSize}em]`, className])} {...buttonProps}>
+    {icon && <Icon name={icon} class:list={[intent === "withIcon" && "group-hover:text-WIblue-input", iconClass]}/>}
     <span set:text={text} class:list={[icon && "group-hover:before:scale-x-100"]}/>
 </button>

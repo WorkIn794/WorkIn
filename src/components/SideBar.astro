@@ -1,5 +1,10 @@
 ---
-import Link from "./Link.astro"
+import Link from "./Link.astro";
+import Button from "./Button.astro";
+import Modal from "./Modal.astro";
+import ModalInput from "./inputs/ModalInput.astro";
+import { Icon } from "astro-icon/components";
+import { twMerge } from "tailwind-merge";
 import type { HTMLAttributes } from "astro/types";
 import type { ClassName } from "src/types/global";
 
@@ -10,22 +15,115 @@ interface Props extends HTMLAttributes<"aside">{
 const { content, className, ...asideProps } = Astro.props;
 ---
 
-<aside class:list={[className]} {...asideProps}>
-    <nav class="h-full pt-8 flex flex-col justify-between">
-        <div>
-            {content.map(([text, icon, link]) =>
-                <div class="w-[90%] h-16 pl-2 my-1 flex items-center transition-colors duration-200 ease-in-out hover:bg-WIgray-light">
-                    <Link href={link} text={text} icon={icon} iconLeft intent="sideBar" className="size-full"/>
+<aside class={twMerge(["pr-10 pt-8 flex flex-col flex-nowrap justify-between", className])} {...asideProps}>
+    <Modal id="contactModal" intent="contactUs" size="lg">
+        <div class="size-full grid grid-cols-2">
+            <h1 class="text-7xl font-semibold">Contact Us</h1>
+            <button id="closeContactModal" class:list={[
+                "size-fit",
+                "justify-self-end",
+                "transform duration-200 ease-in-out",
+                "hover:scale-105 hover:shadow-md rounded-lg"]}>
+                <Icon name="heroicons:x-mark-solid" title="Modal close" size={32}/>
+            </button>
+            <form id="formContactUs" method="dialog" lang="en" class="pr-4 flex flex-col gap-y-4">
+                <ModalInput id="formName"    name="name"    type="text"  label="Full Name" title="Enter your full name" autocomplete="name" autofocus/>
+                <ModalInput id="formEmail"   name="email"   type="email" label="E-mail"    title="Enter your email"     autocomplete="email"/>
+                <ModalInput id="formMessage" name="message" type="text"  label="Message"   title="Write your message"/>
+
+                <button set:text="Contact Us" type="submit" class:list={[
+                    "bg-WIblue",
+                    "text-WIwhite",
+                    "w-4/5 h-14 mx-auto mt-8",
+                    "rounded-full",
+                    "transition-colors duration-200 ease-in-out",
+                    "hover:bg-WIblue-input hover:shadow-lg"]}
+                />
+            </form>
+            <section class="w-3/5 h-4/5 mx-auto flex flex-col justify-between">
+                <div>
+                    <strong set:text="Contact" class="block"/>
+                    <a href="mailto:LucasW@WorkIn.com" set:text="LucasW@WorkIn.com"/>
                 </div>
-            )}
+                <div class="mb-8">
+                    <strong set:text="Based in" class="block"/>
+                    <p>Piso 10, Centro de Innovacion - U de Lima, Lima, Perú</p>
+                </div>
+                <footer class:list={[
+                    "flex justify-between",
+                    "[&_svg]:rounded-lg",
+                    "[&_svg]:transition [&_svg]:duration-200 [&_svg]:ease-in-out",
+                    "hover:[&_svg]:text-WIblue-input",
+                    "hover:[&_svg]:shadow-md",
+                    "hover:[&_svg]:cursor-pointer"]}>
+                    <Icon id="facebookModalIcon" name="simple-icons:facebook" size={28}/>
+                    <Icon id="instagramModalIcon" name="simple-icons:instagram" size={28}/>
+                    <Icon id="xModalIcon" name="simple-icons:x" size={28}/>
+                </footer>
+            </section>
         </div>
-        <div>
-            <div class="w-[90%] h-16 pl-2 my-1 flex items-center transition-colors duration-200 ease-in-out hover:bg-WIgray-light">
-                <Link href="test" text="Contact us" icon="heroicons:cog-8-tooth-20-solid" iconLeft intent="sideBar" className="size-full"/>
+    </Modal>
+    <nav>
+        {content.map(([text, icon, link]) =>
+            <div class="h-16 pl-2 transition-colors duration-200 ease-in-out hover:bg-WIgray-light">
+                <Link href={link} text={text} icon={icon} iconLeft intent="sideBar" size="full" iconClass="size-9"/>
             </div>
-            <div class="w-[90%] h-16 pl-2 my-1 flex items-center transition-colors duration-200 ease-in-out hover:bg-WIgray-light">
-                <Link href="test" text="Log out" icon="heroicons:arrow-right-on-rectangle" iconLeft intent="sideBar" className="size-full"/>
-            </div>
-        </div>
+        )}
     </nav>
+    <div>
+        <div class="h-16 pl-2 transition-colors duration-200 ease-in-out hover:bg-WIgray-light">
+            <Button
+                id="contactUs"
+                text="Contact us"
+                icon="heroicons:cog-8-tooth-20-solid"
+                iconClass="text-[1.5em]"
+                intent="sideBar"
+                size="xl"
+                className="size-full"
+            />
+        </div>
+        <div class="h-16 pl-2 transition-colors duration-200 ease-in-out hover:bg-WIgray-light">
+            <Button
+                id="logout"
+                text="Log out"
+                icon="heroicons:arrow-right-on-rectangle"
+                iconClass="text-[1.5em]"
+                intent="sideBar"
+                size="xl"
+                className="size-full"
+            />
+        </div>
+    </div>
 </aside>
+
+<script>
+    interface FormModalData {
+        name: string;
+        email: string;
+        message: string;
+    };
+
+    const modal = document.getElementById("contactModal") as HTMLDialogElement;
+    const form = document.getElementById("formContactUs") as HTMLFormElement;
+
+    // Handle modal state
+    document.getElementById("contactUs")
+        ?.addEventListener("click", () => modal.showModal());
+
+    document.getElementById("closeContactModal")
+        ?.addEventListener("click", () => {
+            modal.close()
+            form.reset();
+        });
+
+    // Handle submit
+    form.addEventListener("submit", async () => {
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData.entries() as any) as FormModalData;
+
+        console.log(data);
+    });
+
+    document.getElementById("logout")
+        ?.addEventListener("click", () => window.location.href = "/enterprise");
+</script>

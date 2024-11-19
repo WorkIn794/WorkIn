@@ -1,0 +1,30 @@
+---
+import { twMerge } from "tailwind-merge";
+import type { HTMLAttributes } from "astro/types";
+import type { ClassName } from "src/types/global";
+
+interface Props extends HTMLAttributes<"input">{
+    id: string;
+    name: string;
+    type: "email" | "text";
+    label: string;
+    className?: ClassName;
+};
+
+const { id, name, type, label, className, ...inputProps } = Astro.props;
+---
+
+<label for={id} set:text={label}/>
+<input
+    id={id}
+    name={name}
+    spellcheck="false"
+    required
+    aria-required
+    class={twMerge([className,
+        "bg-transparent",
+        "peer",
+        "border-b-2 border-current outline-none"
+    ])}
+    {...inputProps}
+/>

@@ -46,6 +46,9 @@ const link = cva([
                 "gap-x-1",
                 "icon-hover"
             ]
+        },
+        size: {
+            full: ["size-full"]
         }
     }
 });
@@ -60,10 +63,10 @@ type Props =
         className?: ClassName;
         iconClass?: ClassName;
     };
-const { id, href, text, icon, iconLeft, iconRight, intent, className, iconClass } = Astro.props;
+const { id, href, text, icon, iconLeft, iconRight, intent, size, className, iconClass } = Astro.props;
 ---
 
-<a id={id} href={href} class={twMerge([link({intent}), `${iconRight && "flex-row-reverse"}`, `${iconLeft && "flex-row"}`, className])}>
+<a id={id} href={href} class={twMerge([link({intent, size}), `${iconRight && "flex-row-reverse"}`, `${iconLeft && "flex-row"}`, className])}>
     {icon && <Icon name={icon} class={twMerge([iconClass])}/>}
     <span>{text}</span>
 </a>

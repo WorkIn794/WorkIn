@@ -8,19 +8,20 @@ import type { VariantProps } from "cva";
 const modal = cva([
     "bg-WIgray-light",
     "min-w-64 min-h-64 p-10",
-    "rounded-2xl",
+    "rounded-2xl outline-none",
     "relative",
-    "overflow-hidden"
+    "overflow-hidden",
+    // "backdrop:bg-black backdrop:opacity-20"
 ], {
     variants: {
         intent: {
-            loading: [
-                ""
+            contactUs: [
+                "text-WIblue"
             ]
         },
         size: {
             md: ["size-80"],
-            lg: ["size-[40rem]"]
+            lg: ["size-4/5 min-w-[40rem]"]
         }
     }
 })
@@ -34,6 +35,6 @@ interface Props extends
 const { id, className, intent, size, ...dialogProps } = Astro.props;
 ---
 
-<dialog id={id} class={twMerge([modal({intent, size}), className])} {...dialogProps}>
+<dialog id={id} class={twMerge([modal({intent, size}), className])} aria-modal {...dialogProps}>
     <slot/>
 </dialog>

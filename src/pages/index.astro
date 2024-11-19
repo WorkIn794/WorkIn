@@ -21,7 +21,7 @@ const formID: Readonly<string> = "login";
 
 <LoginLayout title="WorkIn">
 	<section>
-		<Modal id="loading" intent="loading" size="md">
+		<Modal id="loading" size="md">
 			<Loader type="bars-1" size={10} className="size-full m-auto"/>
 		</Modal>
 		<Navmenu mobile navPages={navPages}/>
@@ -62,9 +62,6 @@ const formID: Readonly<string> = "login";
 		rememberMe: boolean;
 	};
 
-	const modal = document.getElementById("loading") as HTMLDialogElement;
-	modal.showModal();
-
 	document.getElementById("login")?.addEventListener("submit", async e => {
 		e.preventDefault();
 		// Show loading modal
@@ -93,9 +90,11 @@ const formID: Readonly<string> = "login";
 			// Show error message
 			const email = document.getElementById("email") as HTMLInputElement;
 			const password = document.getElementById("password") as HTMLInputElement;
+			// Meanwhile, alert is shown
+			form.reset();
+			modal.close();
+			alert("Invalid email or password");
 		}
-		form.reset();
-		modal.close();
 	});
 
 	document.getElementById("signup")

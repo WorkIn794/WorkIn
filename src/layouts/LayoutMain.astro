@@ -13,21 +13,26 @@ type Props = User & {
 const { practitioner, enterprise, navBar, sideBar } = Astro.props;
 
 // [<text>, <iconName>, <href>] <- Format.
-// ["", "", ""] <- Format to ommit element.
-const navItems: ReadonlyArray<[string, string, string]> = [
-	practitioner ? ["My applications", "heroicons:folder", "uwu"] : ["", "", ""],
+const navItems: ReadonlyArray<[string, string, string]> = practitioner ?
+[
+	["My applications", "heroicons:folder", "uwu"],
+	["Notifications", "heroicons:chat-bubble-oval-left", "wuw"],
+	["Profile", "heroicons:user", "oqo"]
+]
+	:
+[
 	["Notifications", "heroicons:chat-bubble-oval-left", "wuw"],
 	["Profile", "heroicons:user", "oqo"]
 ];
 
 const sideBarItems: ReadonlyArray<[string, string, string]> = enterprise ?
-	[
-		["Dashboard", "heroicons:chart-bar-solid", "/enterprise/dashboard"],
-		["My processes", "heroicons:user-group-solid", "/enterprise/process"]
-	] :
-	[
-		["", "", ""]
-	];
+[
+	["Dashboard", "heroicons:chart-bar-solid", "/enterprise/dashboard"],
+	["My processes", "heroicons:user-group-solid", "/enterprise/process"]
+] :
+[
+	["", "", ""]
+];
 
 const templateAreas: Readonly<string> =
 	`"header header header header"
@@ -53,7 +58,7 @@ const mainElementStyle: astroHTML.JSX.CSSProperties = {
 				{navBar && <NavBar items={navItems}/>}
 			</header>
 			{sideBar && <SideBar content={sideBarItems}/>}
-			<section class="max-h-screen overflow-y-scroll">
+			<section>
 				<slot />
 			</section>
 		</main>
@@ -77,6 +82,8 @@ const mainElementStyle: astroHTML.JSX.CSSProperties = {
 		grid-area: sidebar;
 	}
 	section{
+		max-height: 100vh;
+		overflow-y: scroll;
 		grid-area: content;
 	}
 </style>
