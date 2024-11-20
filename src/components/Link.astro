@@ -62,8 +62,9 @@ type Props =
         text: string;
         className?: ClassName;
         iconClass?: ClassName;
+        iconColor?: string;
     };
-const { id, href, text, icon, iconLeft, iconRight, intent, size, className, iconClass } = Astro.props;
+const { id, href, text, icon, iconLeft, iconRight, iconColor = "#0C31F1", intent, size, className, iconClass } = Astro.props;
 ---
 
 <a id={id} href={href} class={twMerge([link({intent, size}), `${iconRight && "flex-row-reverse"}`, `${iconLeft && "flex-row"}`, className])}>
@@ -71,9 +72,9 @@ const { id, href, text, icon, iconLeft, iconRight, intent, size, className, icon
     <span set:text={text}/>
 </a>
 
-<style>
+<style define:vars={{ iconColor}}>
     a.icon-hover:hover svg {
-        color: #0C31F1;
+        color: var(--iconColor);
         transform: scale(1.1);
         transition: transform color 200ms ease-in-out 0s;
     }

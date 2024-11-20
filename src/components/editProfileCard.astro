@@ -1,4 +1,8 @@
 ---
+import Link from "./Link.astro";
+import Modal from "./Modal.astro";
+import ModalInput from "./inputs/ModalInput.astro";
+import { Icon } from "astro-icon/components";
 import { twMerge } from "tailwind-merge";
 import type { HTMLAttributes } from "astro/types";
 import type { ClassName } from "src/types/global";
@@ -12,7 +16,7 @@ interface Props extends HTMLAttributes<"div"> {
 const { id, company, className, ...divProps } = Astro.props;
 ---
 
-<div id={id} class={twMerge([className])} {...divProps}>
+<div id="editProfileCard" class={twMerge([className])} {...divProps}>
     <h1>Edit Profile</h1>
     <figure id={`figure-${id}`}>
         <img
@@ -21,14 +25,93 @@ const { id, company, className, ...divProps } = Astro.props;
         />
         <figcaption id={`caption-${id}`} set:text={company}/>
     </figure>
-    <p>text</p>
-    <p>text</p>
-    <p>text</p>
-    <p>text</p>
+    <Link
+        id="editProfileNotifications"
+        href="https://youtu.be/dQw4w9WgXcQ?si=KPhuqJhZXiYn7d3s"
+        text="Notifications"
+        icon="heroicons:chat-bubble-oval-left"
+        iconLeft
+        intent="navBar"
+        className="self-center"
+    />
+    <Link
+        id="editProfileHome"
+        href="/enterprise/process"
+        text="Home"
+        icon="heroicons:home"
+        iconLeft
+        intent="navBar"
+        className="self-center"
+    />
+    <Link
+        id="editProfileContactUs"
+        href="https://youtu.be/dQw4w9WgXcQ?si=KPhuqJhZXiYn7d3s"
+        text="Contact Us"
+        icon="heroicons:cog-6-tooth"
+        iconLeft
+        intent="navBar"
+        className="self-center"
+    />
+    <Link
+        id="editProfileLogout"
+        href="/enterprise"
+        text="Logout"
+        icon="heroicons:arrow-right-on-rectangle"
+        iconLeft
+        intent="navBar"
+        className="self-center"
+    />
 </div>
+<Modal id="contactModal" intent="contactUs" size="lg">
+    <div class="size-full grid grid-cols-2">
+        <h1 class="text-7xl font-semibold">Contact Us</h1>
+        <button id="closeContactModal" class:list={[
+            "size-fit",
+            "justify-self-end",
+            "transform duration-200 ease-in-out",
+            "hover:scale-105 hover:shadow-md rounded-lg"]}>
+            <Icon name="heroicons:x-mark-solid" title="Modal close" size={32}/>
+        </button>
+        <form id="formContactUs" method="dialog" lang="en" class="pr-4 flex flex-col gap-y-4">
+            <ModalInput id="formName"    name="name"    type="text"  label="Full Name" title="Enter your full name" autocomplete="name" autofocus/>
+            <ModalInput id="formEmail"   name="email"   type="email" label="E-mail"    title="Enter your email"     autocomplete="email"/>
+            <ModalInput id="formMessage" name="message" type="text"  label="Message"   title="Write your message"/>
+
+            <button set:text="Contact Us" type="submit" class:list={[
+                "bg-WIblue",
+                "text-WIwhite",
+                "w-4/5 h-14 mx-auto mt-8",
+                "rounded-full",
+                "transition-colors duration-200 ease-in-out",
+                "hover:bg-WIblue-input hover:shadow-lg"]}
+            />
+        </form>
+        <section class="w-3/5 h-4/5 mx-auto flex flex-col justify-between">
+            <div>
+                <strong set:text="Contact" class="block"/>
+                <a href="mailto:LucasW@WorkIn.com" set:text="LucasW@WorkIn.com"/>
+            </div>
+            <div class="mb-8">
+                <strong set:text="Based in" class="block"/>
+                <p>Piso 10, Centro de Innovacion - U de Lima, Lima, Perú</p>
+            </div>
+            <footer class:list={[
+                "flex justify-between",
+                "[&_svg]:rounded-lg",
+                "[&_svg]:transition [&_svg]:duration-200 [&_svg]:ease-in-out",
+                "hover:[&_svg]:text-WIblue-input",
+                "hover:[&_svg]:shadow-md",
+                "hover:[&_svg]:cursor-pointer"]}>
+                <Icon id="facebookModalIcon" name="simple-icons:facebook" size={28}/>
+                <Icon id="instagramModalIcon" name="simple-icons:instagram" size={28}/>
+                <Icon id="xModalIcon" name="simple-icons:x" size={28}/>
+            </footer>
+        </section>
+    </div>
+</Modal>
 
 <style>
-    div {
+    #editProfileCard {
         background-color: #d9d9d9;
         color: #231f20;
         padding: 2rem;
@@ -39,26 +122,26 @@ const { id, company, className, ...divProps } = Astro.props;
         justify-items: center;
     }
 
-    h1 {
+    #editProfileCard h1 {
         font-size: 1.875rem;
         line-height: 2.25rem;
         font-weight: 600;
         text-wrap: nowrap;
     }
 
-    figure {
+    #editProfileCard figure {
         width: 4rem;
         height: 5rem;
     }
 
-    img {
+    #editProfileCard figure img {
         width: 100%;
         height: 100%;
         margin: auto;
         object-fit: contain;
     }
 
-    figcaption {
+    #editProfileCard figure figcaption {
         font-size: 0.75rem;
         line-height: 1rem;
         text-align: center;
@@ -67,3 +150,37 @@ const { id, company, className, ...divProps } = Astro.props;
         white-space: nowrap;
     }
 </style>
+
+<script>
+    interface FormModalData {
+        fullName: string;
+        email: string;
+        message: string;
+    };
+
+    const modal = document.getElementById("contactModal") as HTMLDialogElement;
+    const form = document.getElementById("formContactUs") as HTMLFormElement;
+
+    form.addEventListener("submit", async e => {
+        const formData = new FormData(e.target as HTMLFormElement);
+        const data = Object.fromEntries(formData.entries() as any) as FormModalData;
+
+        // !TODO: Send data to API
+        console.log(data);
+    })
+
+    document.getElementById("editProfileContactUs")
+        ?.addEventListener("click", e => {
+            e.preventDefault();
+            modal.showModal();
+        });
+
+    document.getElementById("closeContactModal")
+        ?.addEventListener("click", () => {
+            modal.close()
+            form.reset();
+        });
+
+    document.getElementById("editProfileLogout")
+        ?.addEventListener("click", () => sessionStorage.clear());
+</script>

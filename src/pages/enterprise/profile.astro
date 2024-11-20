@@ -3,6 +3,8 @@ import LayoutMain from "@/layouts/LayoutMain.astro";
 import Link from "@/components/Link.astro";
 import TextBox from "@/components/inputs/TextBox.astro";
 import EditProfileCard from "@/components/editProfileCard.astro";
+import Modal from "@/components/Modal.astro";
+import Loader from "@/components/Loader.astro";
 
 const formID: Readonly<string> = "profile";
 ---
@@ -24,4 +26,55 @@ const formID: Readonly<string> = "profile";
             className="w-4/5 h-2/3"
         />
     </div>
+    <Modal id="loaderModal" size="md">
+        <Loader type="bars-1" size={10} className="size-full m-auto"/>
+    </Modal>
 </LayoutMain>
+
+<script>
+    import { getDbCredential } from "@/utils/projectMode";
+
+    interface Sesion {
+        email: string;
+        password: string;
+    };
+
+    interface ProfileData {
+        firstName: string;
+        lastName: string;
+        email: string;
+        password: string;
+        contactNumber: string;
+        plan: string;
+    };
+
+    async function getProfile(): Promise<void> {
+        // Fetch profile data
+        const firstName = document.getElementById("firstName") as HTMLInputElement;
+        const lastName = document.getElementById("lastName") as HTMLInputElement;
+        const email = document.getElementById("email") as HTMLInputElement;
+        const password = document.getElementById("password") as HTMLInputElement;
+        const contactNumber = document.getElementById("contactNumber") as HTMLInputElement;
+        const plan = document.getElementById("plan") as HTMLInputElement;
+    
+        // Show loader
+        const loaderModal = document.getElementById("loaderModal") as HTMLDialogElement;
+        loaderModal.showModal();
+
+        const profileData = await (await fetch(`${getDbCredential()}/getProfile`, {
+            method: "POST",
+            body: sessionStorage.getItem("user"),
+        })).json() as ProfileData;
+
+        loaderModal.close();
+    
+        firstName.value = profileData.firstName;
+        lastName.value = profileData.lastName;
+        email.value = profileData.email;
+        password.value = profileData.password;
+        contactNumber.value = profileData.contactNumber;
+        plan.value = profileData.plan;
+    }
+
+    await getProfile();
+</script>
