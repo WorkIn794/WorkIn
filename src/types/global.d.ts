@@ -1,3 +1,5 @@
+// !TODO: Add namespace View to these types
+
 // General component props
 type ClassName = string | string[];
 

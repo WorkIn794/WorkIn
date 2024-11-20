@@ -12,8 +12,7 @@ interface Props extends HTMLAttributes<"input">{
 const { group, label, className, name = group, id, ...radioBtnProps } = Astro.props;
 ---
 
-<label for={id || group} class="text-WIblack text-opacity-50 text-xl">
-    {label}
+<label set:text={label} for={id || group} class="text-WIblack text-opacity-50 text-xl">
     <input id={id || group} name={name || group} type="radio" class={twMerge([className,
         "appearance-none",
         "size-[1em]",

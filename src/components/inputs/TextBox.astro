@@ -27,7 +27,7 @@ const { name, label, iconConfirm, intent, className, innerClass, id, ...inputPro
 
 <div class:list={[textbox({intent}), className]}>
     {label &&
-    <label for={id || name}>{label}</label>}
+    <label set:text={label} for={id || name}/>}
     <input id={id || name} name={name || id} class:list={[innerClass, iconConfirm && "icon"]} {...inputProps}/>
 </div>
 
@@ -46,7 +46,7 @@ const { name, label, iconConfirm, intent, className, innerClass, id, ...inputPro
         border-WIgray-contrast border-[1.5px] rounded-md;
     }
     input:user-invalid{
-        @apply border-red-600;
+        border-color: #dc2626;
     }
     input.icon:user-valid{
         padding-right: 2.5rem;

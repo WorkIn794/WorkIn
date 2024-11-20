@@ -23,12 +23,13 @@ export default async (req: Request) => {
     const collection = db.collection(user.role === "practitioner" ? "practitioner" : "enterprise");
 
     try {
-      const res = await collection.findOne({email: user.email, password: user.password});
-      if(!res) throw new Error("Not Found");
-      return new Response("true");
+        const res = await collection.findOne({email: user.email, password: user.password});
+        
+        if(!res) throw new Error("Not Found");
+        return new Response(JSON.stringify(res));
     }catch(e){
-      return new Response("false");
+        return new Response("false");
     }finally{
-      await client.close();
+        await client.close();
     }
 }

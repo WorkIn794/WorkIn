@@ -68,7 +68,7 @@ const { id, href, text, icon, iconLeft, iconRight, intent, size, className, icon
 
 <a id={id} href={href} class={twMerge([link({intent, size}), `${iconRight && "flex-row-reverse"}`, `${iconLeft && "flex-row"}`, className])}>
     {icon && <Icon name={icon} class={twMerge([iconClass])}/>}
-    <span>{text}</span>
+    <span set:text={text}/>
 </a>
 
 <style>

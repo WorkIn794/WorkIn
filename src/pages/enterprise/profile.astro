@@ -1,0 +1,27 @@
+---
+import LayoutMain from "@/layouts/LayoutMain.astro";
+import Link from "@/components/Link.astro";
+import TextBox from "@/components/inputs/TextBox.astro";
+import EditProfileCard from "@/components/editProfileCard.astro";
+
+const formID: Readonly<string> = "profile";
+---
+
+<LayoutMain enterprise>
+    <div class="grid grid-cols-2 justify-items-center">
+        <Link href="/enterprise/process" text="Back" icon="heroicons:chevron-left-16-solid" iconLeft intent="navControl" className="my-8 col-span-full justify-self-start"/>
+        <form id={formID} class="grid grid-cols-2 gap-y-4">
+            <TextBox id="firstName" name="firstName" type="text" label="First Name" title="First Name" className="mr-4" tabindex="-1" readonly disabled aria-readonly aria-disabled/>
+            <TextBox id="lastName" name="lastName" type="text" label="Last Name" title="Last Name" className="ml-4" tabindex="-1" readonly disabled aria-readonly aria-disabled/>
+            <TextBox id="email" name="email" type="text" label="Email" title="Email" className="col-span-2" iconConfirm tabindex="-1" readonly disabled aria-readonly aria-disabled/>
+            <TextBox id="password" name="password" type="text" label="Password" title="Password" className="col-span-2" iconConfirm tabindex="-1" readonly disabled aria-readonly aria-disabled/>
+            <TextBox id="contactNumber" name="contactNumber" type="tel" label="Contact Number" title="Contact Number" className="col-span-2" iconConfirm tabindex="-1" readonly disabled aria-readonly aria-disabled/>
+            <TextBox id="plan" name="plan" type="text" label="My Plan" title="My Plan" placeholder="WorkIn Basic monthly (S/ 1000)" className="col-span-2" tabindex="-1" readonly disabled aria-readonly aria-disabled/>
+        </form>
+        <EditProfileCard
+            id="profileCard"
+            company="Evil Corp"
+            className="w-4/5 h-2/3"
+        />
+    </div>
+</LayoutMain>

@@ -60,6 +60,12 @@ const formID: Readonly<string> = "login";
 		rememberMe: boolean;
 	};
 
+	interface Response {
+		_id: string;
+		email: string;
+		password: string;
+	};
+
 	document.getElementById("login")?.addEventListener("submit", async e => {
 		e.preventDefault();
 		// Show loading modal
@@ -76,12 +82,13 @@ const formID: Readonly<string> = "login";
 
 		const data = Object.fromEntries(formData.entries() as any) as LoginData;
 
-		const response: boolean = await (await fetch(`${getDbCredential()}/login`, {
+		const response: Response = await (await fetch(`${getDbCredential()}/login`, {
 			method: "POST",
 			body: JSON.stringify(data)
-		})).json() as boolean;
+		})).json() as Response;
 
 		if(response){
+			sessionStorage.setItem("user", JSON.stringify(response));
 			window.location.href = "/enterprise/process";
 		}else{
 			// !TODO: Show error message
