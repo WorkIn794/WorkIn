@@ -2,64 +2,15 @@
     import ProcessCard from "../ProcessCard.svelte";
     import DashboardCard from "../DashboardCard.svelte";
     import { getDbCredential } from "@/utils/projectMode";
-    // import type { EnterpriseView } from "../../../types/global";
-    // import type { Status, EnterpriseCard } from "../../../types/global";
 
-    // type $$Props = EnterpriseView;
-
-    // Fetch processes
     const processes = fetchProcess();
     async function fetchProcess(){
-        const processes = await (await fetch(`${getDbCredential()}/getProcess`, {
+        return await (await fetch(`${getDbCredential()}/getEnterpriseProcesses`, {
             method: "POST",
             body: sessionStorage.getItem("user")
         })).json();
-        console.log(processes);
-
-        return await fetch(`${getDbCredential()}/getProcess`, {
-            method: "POST",
-            body: sessionStorage.getItem("user")
-        })  
-            .then(async res => await res.json())
-                .then(res => {
-                    return res.map(process => {
-                        return {
-                            position: process.jobPosition,
-                            status: process.status,
-                            details: process.description,
-                            applicants: [
-                                {
-                                    firstName: "John",
-                                    lastName: "Doe",
-                                    skills: ["HTML", "CSS", "JavaScript"]
-                                },
-                                {
-                                    firstName: "John",
-                                    lastName: "Doe",
-                                    skills: ["HTML", "CSS", "JavaScript"]
-                                },
-                                {
-                                    firstName: "John",
-                                    lastName: "Doe",
-                                    skills: ["HTML", "CSS", "JavaScript"]
-                                }
-                            ]
-                        }
-                    });
-                }
-            );
-    
     }
 
-    // Fetch dashboard data
-    // interface DashboardData{
-    //     applicantsNumber: number;
-    //     pendingProcesses: number;
-    //     averageDays: number;
-    //     topApplicants: [string, string, string];
-    //     topSkills: [string, string, string];
-    //     timeForEachProcess: {id: number, name: string, time: number}[];
-    // };
     const dashboardData = fetchDashboard();
     async function fetchDashboard(){
         return new Promise((resolve) => {
