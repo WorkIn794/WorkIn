@@ -1,6 +1,7 @@
 <script>
     import ProcessCard from "../ProcessCard.svelte";
     import DashboardCard from "../DashboardCard.svelte";
+    import { getDbCredential } from "@/utils/projectMode";
     // import type { EnterpriseView } from "../../../types/global";
     // import type { Status, EnterpriseCard } from "../../../types/global";
 
@@ -9,7 +10,16 @@
     // Fetch processes
     const processes = fetchProcess();
     async function fetchProcess(){
-        return await fetch(`${import.meta.env.DEV ? import.meta.env.PUBLIC_NTL_LOCAL_FUNCTION : import.meta.env.PUBLIC_NTL_FUNCTION}/getProcess`)
+        const processes = await (await fetch(`${getDbCredential()}/getProcess`, {
+            method: "POST",
+            body: sessionStorage.getItem("user")
+        })).json();
+        console.log(processes);
+
+        return await fetch(`${getDbCredential()}/getProcess`, {
+            method: "POST",
+            body: sessionStorage.getItem("user")
+        })  
             .then(async res => await res.json())
                 .then(res => {
                     return res.map(process => {

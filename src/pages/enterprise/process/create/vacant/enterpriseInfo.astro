@@ -12,12 +12,12 @@ const formName: Readonly<string> = "enterpriseInfo";
 <LayoutMain enterprise navBar sideBar>
     <Link href="/enterprise/process/create/vacant" text="Back" icon="heroicons:chevron-left-16-solid" iconLeft intent="navControl" className="my-4"/>
     <form id="form" name={formName}>
-        <InfoBox text="Please answer the questions to ensure a better matching"/>
-        <TextBox name="salary" label="What is the salary range for this position?" type="text" required/>
-        <TextBox name="skills" label="What skills are you looking for in this position?" type="text" required/>
-        <TextBox name="onboarding" label="When do you need to onboard this intern?" type="text" required/>
-        <TextArea name="benefits" label="What benefits does your company offer?" required/>
-        <InfoBox text="What questions would you like to include in the interviews?"/>
+        <InfoBox text="Please answer the questions to ensure a better matching" spellcheck="false"/>
+        <TextBox name="salary" label="What is the salary range for this position?" type="text" spellcheck="false" required/>
+        <TextBox name="skills" label="What skills are you looking for in this position?" type="text" spellcheck="false" required/>
+        <TextBox name="onboarding" label="When do you need to onboard this intern?" type="text" spellcheck="false" required/>
+        <TextArea name="benefits" label="What benefits does your company offer?" spellcheck="false" required/>
+        <InfoBox text="What questions would you like to include in the interviews?" spellcheck="false"/>
         <div id="questionContainer"/>
     </form>
     <Button id="addQuestion" text="Add question" icon="heroicons:plus-circle-16-solid" intent="withIcon" className="my-4"/>
@@ -33,45 +33,65 @@ const formName: Readonly<string> = "enterpriseInfo";
 </style>
 
 <script>
+    import { getDbCredential } from "@/utils/projectMode";
+
+    interface Session {
+        _id: string;
+        email: string;
+        password: string;
+    };
+
     let questionCount: number = 0;
-    const questionContainer: HTMLDivElement = document.getElementById("questionContainer") as HTMLDivElement;
-    const addBtn: HTMLButtonElement = document.getElementById("addQuestion") as HTMLButtonElement;
+    
+    document.getElementById("addQuestion")
+        ?.addEventListener("click", () => {
+            questionCount++;
+            const questionContainer: HTMLDivElement = document.getElementById("questionContainer") as HTMLDivElement;
+            const divContainer: HTMLDivElement = document.createElement("div");
+            const label: HTMLLabelElement = document.createElement("label");
+            const input: HTMLInputElement = document.createElement("input");
+            const labelId: string = `question${questionCount}`;
+            const inputId: string = `question${questionCount}`;
 
-    addBtn.addEventListener("click", () => {
-        questionCount++;
-        const divContainer: HTMLDivElement = document.createElement("div");
-        const label: HTMLLabelElement = document.createElement("label");
-        const input: HTMLInputElement = document.createElement("input");
-        const labelId: string = `question${questionCount}`;
-        const inputId: string = `question${questionCount}`;
+            divContainer.classList.add("text-WIblack");
+            label.classList.add("text-base", "font-semibold", "block");
+            label.innerText = `Question ${questionCount}`;
+            label.htmlFor = labelId;
+            input.classList.add("w-full", "h-10", "py-1", "pl-4", "outline-none", "border-WIgray-contrast", "border-[1.5px]", "rounded-md");
+            input.id = inputId;
+            input.name = inputId;
+            input.type = "text";
+            input.value = "";
+            input.title = `Question ${questionCount}`;
 
-        divContainer.classList.add("text-WIblack");
-        label.classList.add("text-base", "font-semibold", "block");
-        label.innerText = `Question ${questionCount}`;
-        label.htmlFor = labelId;
-        input.classList.add("w-full", "h-10", "py-1", "pl-4", "outline-none", "border-WIgray-contrast", "border-[1.5px]", "rounded-md");
-        input.id = inputId;
-        input.name = inputId;
-        input.type = "text";
-        input.value = "";
-        input.title = `Question ${questionCount}`;
-
-        divContainer.appendChild(label);
-        divContainer.appendChild(input);
-        questionContainer.appendChild(divContainer);
-    });
+            divContainer.appendChild(label);
+            divContainer.appendChild(input);
+            questionContainer.appendChild(divContainer);
+        });
 
     document.getElementById("finish")
         ?.addEventListener("click", async e => {
+            // !TODO: Check if the form is valid
+            e.preventDefault();
+
             const form = document.getElementById("form") as HTMLFormElement;
             const formData = new FormData(form);
+
             const data = JSON.parse(localStorage.getItem("process") as string);
             formData.forEach((value, key) => data[key] = value);
             data["status"] = "In Progress";
 
-            await fetch(`${import.meta.env.DEV ? import.meta.env.PUBLIC_NTL_LOCAL_FUNCTION : import.meta.env.PUBLIC_NTL_FUNCTION}/createProcess`, {
+            const session = JSON.parse(sessionStorage.getItem("user") as string) as Session;
+            data["userId"] = session._id;
+
+            const response: boolean = await (await fetch(`${getDbCredential()}/createProcess`, {
                 method: "POST",
                 body: JSON.stringify(data)
-            }).then(() => localStorage.clear());
+            })).json();
+        
+            if(response){
+                localStorage.clear();
+                window.location.href = "/enterprise/process"
+            };
         });
 </script>

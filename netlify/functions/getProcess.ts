@@ -1,5 +1,10 @@
-import type { Context } from "@netlify/functions";
 import { MongoClient, ServerApiVersion } from "mongodb";
+
+interface User {
+    _id: string;
+    email: string;
+    password: string;
+};
 
 const uri = "mongodb+srv://vicentejvg:3tUFwiOVpHqcIYDl@maincluster.ylign.mongodb.net/?retryWrites=true&w=majority&appName=mainCluster"
 const client = new MongoClient(uri, {
@@ -10,7 +15,10 @@ const client = new MongoClient(uri, {
     }
 });
 
-export default async (req: Request, context: Context) => {
+export default async (req: Request) => {
+    const { _id } = await req.json() as User;
+    console.log(_id);
+
     await client.connect();
     const db = client.db("workin");
     const collection = db.collection("process");
