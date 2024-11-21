@@ -3,6 +3,7 @@ import Link from "./Link.astro";
 import Button from "./Button.astro";
 import Modal from "./Modal.astro";
 import ModalInput from "./inputs/ModalInput.astro";
+import Loader from "./Loader.astro";
 import { Icon } from "astro-icon/components";
 import { twMerge } from "tailwind-merge";
 import type { HTMLAttributes } from "astro/types";
@@ -27,7 +28,7 @@ const { content, className, ...asideProps } = Astro.props;
                 <Icon name="heroicons:x-mark-solid" title="Modal close" size={32}/>
             </button>
             <form id="formContactUs" method="dialog" lang="en" class="pr-4 flex flex-col gap-y-4">
-                <ModalInput id="formName"    name="name"    type="text"  label="Full Name" title="Enter your full name" autocomplete="name" autofocus/>
+                <ModalInput id="formName"    name="fullName"    type="text"  label="Full Name" title="Enter your full name" autocomplete="name" autofocus/>
                 <ModalInput id="formEmail"   name="email"   type="email" label="E-mail"    title="Enter your email"     autocomplete="email"/>
                 <ModalInput id="formMessage" name="message" type="text"  label="Message"   title="Write your message"/>
 
@@ -63,6 +64,9 @@ const { content, className, ...asideProps } = Astro.props;
             </section>
         </div>
     </Modal>
+    <Modal id="loaderModal" size="md">
+        <Loader type="bars-1" size={10} className="size-full m-auto"/>
+    </Modal>
     <nav>
         {content.map(([text, icon, link]) =>
             <div class="h-16 pl-2 transition-colors duration-200 ease-in-out hover:bg-WIgray-light">
@@ -97,6 +101,8 @@ const { content, className, ...asideProps } = Astro.props;
 </aside>
 
 <script>
+    import { getDbCredential } from "@/utils/projectMode";
+
     interface FormModalData {
         name: string;
         email: string;
@@ -121,7 +127,21 @@ const { content, className, ...asideProps } = Astro.props;
         const formData = new FormData(form);
         const data = Object.fromEntries(formData.entries() as any) as FormModalData;
 
-        console.log(data);
+        const loaderModal = document.getElementById("loaderModal") as HTMLDialogElement;
+        loaderModal.showModal();
+
+        const response: boolean = await (await fetch(`${getDbCredential()}/sendEmail`, {
+            method: "POST",
+            body: JSON.stringify(data)
+        })).json() as boolean;
+
+        if(response){
+            // !TODO: Show success message
+        }else{
+            // !TODO: Show error message
+        }
+
+        loaderModal.close();
     });
 
     document.getElementById("logout")

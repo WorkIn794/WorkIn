@@ -2,6 +2,7 @@
 import Link from "./Link.astro";
 import Modal from "./Modal.astro";
 import ModalInput from "./inputs/ModalInput.astro";
+import Loader from "./Loader.astro";
 import { Icon } from "astro-icon/components";
 import { twMerge } from "tailwind-merge";
 import type { HTMLAttributes } from "astro/types";
@@ -73,7 +74,7 @@ const { id, company, className, ...divProps } = Astro.props;
             <Icon name="heroicons:x-mark-solid" title="Modal close" size={32}/>
         </button>
         <form id="formContactUs" method="dialog" lang="en" class="pr-4 flex flex-col gap-y-4">
-            <ModalInput id="formName"    name="name"    type="text"  label="Full Name" title="Enter your full name" autocomplete="name" autofocus/>
+            <ModalInput id="formName"    name="fullName"    type="text"  label="Full Name" title="Enter your full name" autocomplete="name" autofocus/>
             <ModalInput id="formEmail"   name="email"   type="email" label="E-mail"    title="Enter your email"     autocomplete="email"/>
             <ModalInput id="formMessage" name="message" type="text"  label="Message"   title="Write your message"/>
 
@@ -108,6 +109,9 @@ const { id, company, className, ...divProps } = Astro.props;
             </footer>
         </section>
     </div>
+</Modal>
+<Modal id="loaderModal" size="md">
+    <Loader type="bars-1" size={10} className="size-full m-auto"/>
 </Modal>
 
 <style>
@@ -152,6 +156,8 @@ const { id, company, className, ...divProps } = Astro.props;
 </style>
 
 <script>
+    import { getDbCredential } from "@/utils/projectMode";
+
     interface FormModalData {
         fullName: string;
         email: string;
@@ -165,9 +171,22 @@ const { id, company, className, ...divProps } = Astro.props;
         const formData = new FormData(e.target as HTMLFormElement);
         const data = Object.fromEntries(formData.entries() as any) as FormModalData;
 
-        // !TODO: Send data to API
-        console.log(data);
-    })
+        const loaderModal = document.getElementById("loaderModal") as HTMLDialogElement;
+        loaderModal.showModal();
+
+        const response: boolean = await (await fetch(`${getDbCredential()}/sendEmail`, {
+            method: "POST",
+            body: JSON.stringify(data)
+        })).json() as boolean;
+
+        if(response){
+            // !TODO: Show success message
+        }else{
+            // !TODO: Show error message
+        }
+
+        loaderModal.close();
+    });
 
     document.getElementById("editProfileContactUs")
         ?.addEventListener("click", e => {
