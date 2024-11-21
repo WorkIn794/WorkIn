@@ -201,5 +201,9 @@ const { id, company, className, ...divProps } = Astro.props;
         });
 
     document.getElementById("editProfileLogout")
-        ?.addEventListener("click", () => sessionStorage.clear());
+        ?.addEventListener("click", () => {
+            localStorage.clear();
+            sessionStorage.clear()
+            window.location.href = "/enterprise";
+        });
 </script>

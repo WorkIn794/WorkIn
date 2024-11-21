@@ -2,32 +2,43 @@ import { MongoClient, ServerApiVersion } from "mongodb";
 
 interface LoginData {
   email: string;
-  password: "practitioner" | "enterprise";
+  password: string;
   role: string;
 };
 
 const uri = "mongodb+srv://vicentejvg:3tUFwiOVpHqcIYDl@maincluster.ylign.mongodb.net/?retryWrites=true&w=majority&appName=mainCluster"
 const client = new MongoClient(uri, {
     serverApi: {
-      version: ServerApiVersion.v1,
-      strict: true,
-      deprecationErrors: true,
+        version: ServerApiVersion.v1,
+        strict: true,
+        deprecationErrors: true,
     }
-  });
+});
 
 export default async (req: Request) => {
-    const user = await req.json() as LoginData;
+    const loginData = await req.json() as LoginData;
 
     await client.connect();
     const db = client.db("workin");
-    const collection = db.collection(user.role === "practitioner" ? "practitioner" : "enterprise");
+    const collection = db.collection(loginData.role === "practitioner" ? "practitioner" : "enterprise");
 
     try {
-        const res = await collection.findOne({email: user.email, password: user.password});
+        const user = await collection
+            .findOne(
+                { email: loginData.email, password: loginData.password },
+                { projection: { email: 1 }}
+            );
         
-        if(!res) throw new Error("Not Found");
-        return new Response(JSON.stringify(res));
+        if(!user) throw new Error("Not Found");
+        const session = {
+            _id: user._id.toString(),
+            email: user.email,
+            role: loginData.role
+        };
+
+        return new Response(JSON.stringify(session));
     }catch(e){
+        console.log(e);
         return new Response("false");
     }finally{
         await client.close();

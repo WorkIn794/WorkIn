@@ -7,7 +7,7 @@
     async function fetchProcess(){
         return await (await fetch(`${getDbCredential()}/getEnterpriseProcesses`, {
             method: "POST",
-            body: sessionStorage.getItem("user")
+            body: sessionStorage.getItem("session")
         })).json();
     }
 
