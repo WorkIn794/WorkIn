@@ -1,1 +1,33 @@
-<h1>WORK IN PROGRESS</h1>
+---
+import LayoutMain from "@layouts/LayoutMain.astro";
+import Searchbar from "@/components/svelte/Searchbar.svelte";
+import View from "@svelteComponents/views/PractitionerView.svelte";
+---
+
+<LayoutMain practitioner sideBar navBar>
+    <Searchbar client:idle id="searchBar" placeholder="Search by keyword (Area, company...)" className="w-full mb-4"/>
+    <strong>Internships that best match your profile:</strong>
+    <legend class="w-3/5 h-14 flex justify-between items-center">
+        <span class="after:bg-[#B70000]">Closed</span>
+        <span class="after:bg-[#FDB022]">In Progress</span>
+        <span class="after:bg-[#23B000]">Accepted</span>
+    </legend>
+    <View client:idle internships>
+
+    </View>
+</LayoutMain>
+
+<style>
+    legend span{
+        position: relative;
+    }
+    legend span::after{
+        content: "";
+        width: 0.75rem;
+        height: 50%;
+        border-radius: 100%;
+        position: absolute;
+        left: 110%;
+        top: 25%;
+    }
+</style>

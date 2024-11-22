@@ -20,7 +20,7 @@
     class={twMerge([
         "bg-WIgray-light",
         "text-WIblack",
-        "pl-6",
+        "pl-6 py-1",
         "outline-none",
         "border border-current rounded-2xl",
         "placeholder:text-current placeholder:font-light",

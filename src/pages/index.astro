@@ -84,6 +84,7 @@ const formID: Readonly<string> = "login";
 		})).json() as boolean;
 
 		if(response){
+			sessionStorage.setItem("session", JSON.stringify(data));
 			window.location.href = "/practitioner";
 		}else{
 			// !TODO: Show error message

@@ -48,7 +48,7 @@
         </div>
     {:then data}
         {#each data as process, index}
-            <ProcessCard id={index} enterprise position={process.position} status={process.status} details={process.applicants} description={process.details} className="my-2"/>
+            <ProcessCard id={index} enterprise position={process.position} status={process.status} applicants={process.applicants} description={process.description} className="my-2"/>
         {/each}
     {:catch error}
         <h1>Error: {error.message}</h1>

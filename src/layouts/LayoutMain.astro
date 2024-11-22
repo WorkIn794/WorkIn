@@ -15,13 +15,13 @@ const { practitioner, enterprise, navBar, sideBar } = Astro.props;
 // [<text>, <iconName>, <href>] <- Format.
 const navItems: ReadonlyArray<[string, string, string]> = practitioner ?
 [
-	["My applications", "heroicons:folder", "uwu"],
-	["Notifications", "heroicons:chat-bubble-oval-left", "wuw"],
-	["Profile", "heroicons:user", "oqo"]
+	["My applications", "heroicons:folder", "https://youtu.be/dQw4w9WgXcQ?si=3AHsVjEK764U-aoP"],
+	["Notifications", "heroicons:chat-bubble-oval-left", "https://youtu.be/dQw4w9WgXcQ?si=3AHsVjEK764U-aoP"],
+	["Profile", "heroicons:user", "https://youtu.be/dQw4w9WgXcQ?si=3AHsVjEK764U-aoP"]
 ]
 	:
 [
-	["Notifications", "heroicons:chat-bubble-oval-left", "wuw"],
+	["Notifications", "heroicons:chat-bubble-oval-left", "https://youtu.be/dQw4w9WgXcQ?si=3AHsVjEK764U-aoP"],
 	["Profile", "heroicons:user", "/enterprise/profile"]
 ];
 
@@ -31,7 +31,9 @@ const sideBarItems: ReadonlyArray<[string, string, string]> = enterprise ?
 	["My processes", "heroicons:user-group-solid", "/enterprise/process"]
 ] :
 [
-	["", "", ""]
+	["My Resumes", "heroicons:clipboard-document-list", "https://youtu.be/dQw4w9WgXcQ?si=3AHsVjEK764U-aoP"],
+	["Internships", "heroicons:briefcase", "https://youtu.be/dQw4w9WgXcQ?si=3AHsVjEK764U-aoP"],
+	["Training Pack", "heroicons:presentation-chart-line", "https://youtu.be/dQw4w9WgXcQ?si=3AHsVjEK764U-aoP"]
 ];
 
 const templateAreas: Readonly<string> =

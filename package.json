@@ -1,7 +1,7 @@
 {
   "name": "workin",
   "type": "module",
-  "version": "0.5.3",
+  "version": "0.5.4",
   "author": "Vicente Javier Viera Guizar",
   "description": "",
   "license": "UNLICENSED",
@@ -18,7 +18,7 @@
   "dependencies": {
     "@astrojs/check": "0.9.3",
     "@astrojs/netlify": "^5.5.4",
-    "@astrojs/svelte": "^5.7.2",
+    "@astrojs/svelte": "^5.7.3",
     "@astrojs/tailwind": "5.1.1",
     "@netlify/functions": "^2.8.2",
     "@observablehq/plot": "^0.6.16",

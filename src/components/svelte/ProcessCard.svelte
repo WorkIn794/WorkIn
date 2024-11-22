@@ -1,17 +1,17 @@
 <script lang="ts">
-    import Chevron from "@components/svelte/icons/Chevron.svelte"
     import Pencil from "@components/svelte/icons/Pencil.svelte";
+    import Trash from "@components/svelte/icons/Trash.svelte";
+    import Chevron from "@components/svelte/icons/Chevron.svelte"
     import { twMerge } from "tailwind-merge";
-    import type { ClassName, UserExtendedCard } from "../../types/global";
+    import type { ClassName, ProcessCard } from "../../types/global";
 
-    type $$Props =
-    UserExtendedCard & {
-        id: number;
-        description: string;
+    type $$Props = ProcessCard & {
         className?: ClassName;
     };
+
+    const { className } = $$props;
+    const { id, enterprise, practitioner, status, position, description, applicants } = $$props as ProcessCard;
     const restProps = $$restProps;
-    const { id, position, status, details, className, description } = $$props;
 
     // Card toggle state
     let isOpen = false;
@@ -21,32 +21,43 @@
 <div id={`card-${id}`} class={twMerge([
     "bg-WIgray-light", "min-h-20 p-4",
     "rounded-md",
-    "grid grid-flow-row",
-    "transition-all duration-200 ease-in-out delay-100", className])}
-    {...restProps}> 
-    <div class="mb-4 flex justify-between items-center">
-        {#if $$props.enterprise}
-            <span class="basis-1/3">{position}</span>
-            {#if status === "Closed"}
-                <span class="status after:bg-[#B70000]">Status</span>
-            {:else if status === "In Progress"}
-                <span class="status after:bg-[#FDB022]">Status</span>
-            {:else if status === "Accepted"}
-                <span class="status after:bg-[#23B000]">Status</span>
-            {/if}
-            <button class="view-info">View results</button>
-            <button class="icon"><Pencil className="size-5 m-auto"/></button>
-            <button on:click={toggle} class="icon"><Chevron id={id} toggleState={isOpen}/></button>
-        {:else if $$props.practitioner}
+    "grid grid-flow-row content-center",
+     className])}
+    {...restProps}>
+    <div class="flex justify-between items-center">
+        {#if enterprise}
+            <span class="basis-2/6">{position}</span>
+            <div class="basis-3/6 flex justify-around items-center">
+                {#if status === "Closed"}
+                    <span class="status after:bg-[#B70000]">Status</span>
+                {:else if status === "In Progress"}
+                    <span class="status after:bg-[#FDB022]">Status</span>
+                {:else if status === "Accepted"}
+                    <span class="status after:bg-[#23B000]">Status</span>
+                {/if}
+                <button class="view-results justify-self-end">View results</button>
+            </div>
+            <div class="basis-1/6 flex-grow-0 flex justify-between items-center">
+                <button id="edit" class="size-6">
+                    <Pencil className="size-5 m-auto"/>
+                </button>
+                <button id="delete" class="size-6">
+                    <Trash/>
+                </button>
+                <button on:click={toggle} class="size-6">
+                    <Chevron id={id} toggleState={isOpen}/>
+                </button>
+            </div>
+        {:else if practitioner}
             <h1>Practitioner</h1>
         {/if}
     </div>
     <input type="checkbox" bind:checked={isOpen}/>
     <details open>
-        <summary/>
-        {#if $$props.enterprise}
+        <summary class="list-none"/>
+        {#if enterprise}
             <p class="w-1/2 text-right absolute left-1/2">{description}</p>
-            {#each details as applicant}
+            {#each applicants as applicant}
                 <b class="w-1/2">{applicant.firstName} {applicant.lastName}</b>
                 <ul class=w-1/2>
                     {#each applicant.skills as skill}
@@ -54,17 +65,17 @@
                     {/each}
                 </ul>
             {/each}
-        {:else if $$props.practitioner}
+        {:else if practitioner}
             <h1>Practitioner</h1>
         {/if}
     </details>
 </div>
 
 <style>
-    button.view-info{
+    button.view-results{
         position: relative;
     }
-    button.view-info::before{
+    button.view-results::before{
         content: "";
         width: 100%;
         height: 1.5px;
@@ -74,13 +85,8 @@
         transition: transform 200ms ease-in-out;
         background-color: currentColor;
     }
-    button.view-info:hover::before{
+    button.view-results:hover::before{
         transform: scaleX(1);
-    }
-
-    button.icon{
-        width: 1.5rem;
-        height: 1.5rem;
     }
 
     span.status{
@@ -98,18 +104,16 @@
         top: 25%;
     }
 
-    input[type="checkbox"]{
-        height: 0px;
-        appearance: none;
-    }
-    summary{
-        list-style: none;
-    }
     details{
         position: relative;
         max-height: 0rem;
         overflow-y: scroll;
         transition: max-height 200ms ease-in-out;
+    }
+
+    input[type="checkbox"]{
+        height: 0px;
+        appearance: none;
     }
     input[type="checkbox"]:checked + details{
         max-height: 11rem;

@@ -39,7 +39,7 @@ export default async (req: Request) => {
                 return {
                     position: process.jobPosition,
                     status: process.status,
-                    details: process.description,
+                    description: process.description,
                     applicants: [
                         {
                             firstName: "John",

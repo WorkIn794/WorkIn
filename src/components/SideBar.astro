@@ -70,7 +70,7 @@ const { content, className, ...asideProps } = Astro.props;
     <nav>
         {content.map(([text, icon, link]) =>
             <div class="h-16 pl-2 transition-colors duration-200 ease-in-out hover:bg-WIgray-light">
-                <Link href={link} text={text} icon={icon} iconLeft intent="sideBar" size="full" iconClass="size-9"/>
+                <Link href={link} text={text} icon={icon} iconLeft intent="sideBar" size="full"/>
             </div>
         )}
     </nav>
@@ -146,8 +146,13 @@ const { content, className, ...asideProps } = Astro.props;
 
     document.getElementById("logout")
         ?.addEventListener("click", () => {
+            const session = JSON.parse(sessionStorage.getItem("session") as string);
+            const signupPage: Readonly<string> = session.role === "practitioner" ?
+                "/":
+                "/enterprise";
+
             localStorage.clear();
             sessionStorage.clear();
-            window.location.href = "/enterprise"
+            window.location.href = signupPage;
         });
 </script>
