@@ -24,7 +24,7 @@
     "grid grid-flow-row content-center",
      className])}
     {...restProps}>
-    <div class="flex justify-between items-center">
+    <div class={`flex justify-between items-center ${isOpen ? "mb-4": "mb-0"}`}>
         {#if enterprise}
             <span class="basis-2/6">{position}</span>
             <div class="basis-3/6 flex justify-around items-center">
@@ -56,15 +56,28 @@
     <details open>
         <summary class="list-none"/>
         {#if enterprise}
-            <p class="w-1/2 text-right absolute left-1/2">{description}</p>
-            {#each applicants as applicant}
-                <b class="w-1/2">{applicant.firstName} {applicant.lastName}</b>
-                <ul class=w-1/2>
-                    {#each applicant.skills as skill}
-                        <li>&nbsp;&nbsp;&nbsp;&nbsp;{skill}</li>
+            <div class="grid grid-cols-2">
+                <div>
+                {#if applicants}
+                    {#each applicants as applicant}
+                        <b class="w-1/2">{applicant.firstName} {applicant.lastName}</b>
+                        <ul>
+                            {#each applicant.skills as skill}
+                                <li class="indent-4">{skill}</li>
+                            {/each}
+                        </ul>
                     {/each}
-                </ul>
-            {/each}
+                {:else}
+                    <p class="
+                        w-full h-44
+                        text-WIgray-contrast text-2xl font-bold
+                        flex justify-center items-center">
+                        No applicants yet
+                    </p>
+                {/if}
+                </div>
+                <p>{description}</p>
+            </div>
         {:else if practitioner}
             <h1>Practitioner</h1>
         {/if}
@@ -105,14 +118,13 @@
     }
 
     details{
-        position: relative;
         max-height: 0rem;
         overflow-y: scroll;
         transition: max-height 200ms ease-in-out;
     }
 
     input[type="checkbox"]{
-        height: 0px;
+        list-style: none;
         appearance: none;
     }
     input[type="checkbox"]:checked + details{

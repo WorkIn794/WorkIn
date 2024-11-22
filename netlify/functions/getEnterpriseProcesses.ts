@@ -35,6 +35,7 @@ export default async (req: Request) => {
                 .map((process: string) => new ObjectId(process));
 
             const processes = await collection.find({ _id: { $in: processesId } }).toArray();
+
             const transformProcesses = processes.map(process => {
                 return {
                     position: process.jobPosition,
@@ -63,7 +64,8 @@ export default async (req: Request) => {
             return new Response(JSON.stringify(transformProcesses));
         }
     }catch(e){
-        return new Response("false");
+        console.log(e);
+        return new Response(null);
     }finally{
         await client.close();
     }
