@@ -10,7 +10,23 @@
     };
 
     const { className } = $$props;
-    const { id, enterprise, practitioner, status, position, description, applicants } = $$props as ProcessCard;
+    const {
+        id,
+        defaultId,
+        enterprise, // ~~ Enterprise Props ~~
+        status,
+        position,
+        description,
+        applicants,
+        practitioner, // ~~ Practitioner Props ~~
+        company,
+        jobPosition,
+        publishedDate,
+        duration,
+        salary,
+        startDate,
+        location
+    } = $$props as ProcessCard;
     const restProps = $$restProps;
 
     // Card toggle state

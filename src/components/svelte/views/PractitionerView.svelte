@@ -1,11 +1,12 @@
 <script lang="ts">
+    import { getDbCredential } from "@/utils/projectMode";
     import type { Practitioner__View, ProcessCard } from "../../../types/global";
     
     type $$Props = Practitioner__View;
 
     const availableInternships = fetchInternships();
-    async function fetchInternships(): Promise<ProcessCard[]>{
-        
+    async function fetchInternships(){
+        const processes = await (await fetch(`${getDbCredential()}/getInternships`)).json();
     }
 
     const { myResumes, internships, trainingPack } = $$props as Practitioner__View;

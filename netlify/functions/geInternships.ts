@@ -1,18 +1,53 @@
-import { MongoClient, ServerApiVersion, ObjectId } from "mongodb";
+import { createClient } from "@/utils/dataBase";
 
-const uri = "mongodb+srv://vicentejvg:3tUFwiOVpHqcIYDl@maincluster.ylign.mongodb.net/?retryWrites=true&w=majority&appName=mainCluster"
-const client = new MongoClient(uri, {
-    serverApi: {
-      version: ServerApiVersion.v1,
-      strict: true,
-      deprecationErrors: true,
-    }
-});
+const client = createClient();
 
-export default async (req: Request) => {
+export default async () => {
     await client.connect();
-    const db = client.db("workin");
-    const collection = db.collection("process");
 
-    const processes = collection.find({}).toArray();
+    const processes = await client.db("workin").collection("process").aggregate([
+        {
+            $set: {
+                enterpriseId: { $toObjectId: "$enterpriseId" }
+            }
+        },
+        {
+            $lookup: {
+                from: "enterprise",
+                let: { enterpriseId: "$enterpriseId" },
+                pipeline: [
+                    {
+                        $match: {
+                            $expr: { $eq: ["$_id", "$$enterpriseId"] }
+                        }
+                    },
+                    {
+                        $project: {
+                            _id: 0,
+                            enterpriseName: 1
+                        }
+                    }
+                ],
+                as: "company"
+            }
+        },
+        {
+            $set: {
+                company: { $first: "$company.enterpriseName" }
+            }
+        },
+        {
+            $addFields: {
+                publishedDate: { $toDate: "$_id" },
+                startDate: "01/03/2024",
+                duration: "6 months",
+                location: { $concat: ["$district", ", ", "$department"] }
+            }
+        },
+        {
+            $unset: ["_id", "enterpriseId"]
+        }
+    ]).toArray();
+
+    return new Response(JSON.stringify(processes));
 }

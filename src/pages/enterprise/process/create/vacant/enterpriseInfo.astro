@@ -81,8 +81,8 @@ const formName: Readonly<string> = "enterpriseInfo";
             formData.forEach((value, key) => data[key] = value);
             data["status"] = "In Progress";
 
-            const session = JSON.parse(sessionStorage.getItem("user") as string) as Session;
-            data["userId"] = session._id;
+            const session = JSON.parse(sessionStorage.getItem("session") as string) as Session;
+            data["enterpriseId"] = session._id;
 
             const response: boolean = await (await fetch(`${getDbCredential()}/createProcess`, {
                 method: "POST",

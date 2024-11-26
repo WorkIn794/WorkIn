@@ -1,10 +1,30 @@
 // Namespaces are declared as <Namespace>__<type> for better readability
+import type { XOR } from "ts-xor";
 
 // General component props
 type ClassName = string | string[];
 
-// User types
-import type { XOR } from "ts-xor";
+// Base types
+type Status = "Closed" | "In Progress" | "Accepted";
+
+// !TODO: Add duration and startDate to Process, both, types and form fields.
+// !TODO: Inherit ProcessCard__Enterprise from Process.
+interface Process{
+	_id: string;
+	jobPosition: string;
+	modality: string;
+	department: string;
+	district: string;
+	companyDescription: string;
+	description: string;
+	requirements: string;
+	salary: string;
+	skills: string;
+	onboarding: string;
+	benefits: string;
+	status: Status;
+	enterpriseId: string;
+};
 
 interface Practitioner{
 	practitioner: boolean;
@@ -15,14 +35,14 @@ interface Enterprise{
 type User = XOR<Practitioner, Enterprise>;
 
 // User extended props
-type Status = "Closed" | "In Progress" | "Accepted";
 type Applicant = {
 	firstName: string;
 	lastName: string;
 	skills: string[];
 };
 
-interface ProcessCard__Enterprise{
+// Cards types
+interface ProcessCard__Enterprise {
 	id: number;
 	enterprise: true;
 	status: Status;
@@ -30,29 +50,21 @@ interface ProcessCard__Enterprise{
 	description: string;
 	applicants: Applicant[];
 };
-interface ProcessCard__Practitioner{
+interface ProcessCard__Practitioner
+	extends Pick<Process,
+	| "jobPosition"
+	| "description"
+	| "salary"> {
 	id: number;
+	defaultId: number;
 	practitioner: true;
 	company: string;
-	jobPosition: string;
-	status: Status;
-	publishedTime: string;
-	description: string;
-	duration: string;
-	salary: string;
+	publishedDate: string;
 	startDate: string;
-	Location: string;
+	duration: string;
+	location: string;
 };
 type ProcessCard = XOR<ProcessCard__Enterprise, ProcessCard__Practitioner>;
-
-// Enterprise view props
-interface Process{
-	process: boolean;
-};
-interface Dashboard{
-	dashboard: boolean;
-};
-type EnterpriseView = XOR<Process, Dashboard>;
 
 // Link props
 interface IconRight{
@@ -68,7 +80,7 @@ type IconProps =
 	| {icon?: undefined; iconLeft?: undefined; iconRight?: undefined;}
 	;
 
-// Practitioner types
+// Practitioner view types
 interface Practitioner__View__MyResumes{
 	myResumes: boolean;
 };
@@ -83,3 +95,12 @@ type Practitioner__View = XOR<
 	Practitioner__View__Internships,
 	Practitioner__View__TrainingPack
 	>;
+
+// Enterprise view props
+interface Process{
+	process: boolean;
+};
+interface Dashboard{
+	dashboard: boolean;
+};
+type EnterpriseView = XOR<Process, Dashboard>;

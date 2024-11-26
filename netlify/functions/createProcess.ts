@@ -21,7 +21,7 @@ export default async (req: Request) => {
 
         collection = db.collection("enterprise");
 
-        const filter = { _id: new ObjectId(process.userId as string) };
+        const filter = { _id: new ObjectId(process.enterpriseId as string) };
         const update = { $push: { processes: insertedId.toString() } };
         const { acknowledged } = await collection.updateOne(filter, update);
 
