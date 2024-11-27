@@ -36,7 +36,7 @@ export default {
 			screens: {
 				xs: "350px"
 			}
-		},
+		}
 	},
 	plugins: []
 }

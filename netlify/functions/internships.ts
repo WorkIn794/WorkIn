@@ -57,7 +57,6 @@ async function getInternships(): Promise<Response>{
             $unset: ["_id", "enterpriseId"]
         }
     ]).toArray();
-    console.log(processes);
 
     return new Response(JSON.stringify(processes));
 }

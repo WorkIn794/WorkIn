@@ -39,14 +39,14 @@
         const now = new Date();
         const postDate = new Date(publishedDate);
         const time = (now.getTime() - postDate.getTime()) / 3600000; // Miliseconds to hours
-        
+
         enum Time {
             DAY = 24,
             WEEK = 168,
             MONTH = 730,
             YEAR = 8760
         }; const { DAY, WEEK, MONTH, YEAR } = Time;
-        
+
         if(time >= DAY){
             elapsedTime = Math.floor(time / DAY);
             formattedTime = `Published ${elapsedTime} days ago`;
@@ -64,25 +64,43 @@
             formattedTime = `Published ${elapsedTime} hours ago`;
         }
     }
+
+    // Get status color
+    let statusColor: string;
+    switch(status){
+        case "Closed": statusColor = "after:bg-[#B70000]"; break;
+        case "In Progress": statusColor = "after:bg-[#FDB022]"; break;
+        case "Accepted": statusColor = "after:bg-[#23B000]"; break;
+    }
+
+    // Styles
+    const minHeight: Readonly<string> = "min-h-20";
 </script>
 
-<div id={`card-${id}`} class={twMerge([
-    "bg-WIgray-light", "min-h-20 p-4",
-    "rounded-md",
-    "grid grid-flow-row content-center",
-     className])}
+<!-- Card Container -->
+<div id={`card-${id}`}
+    class={twMerge([
+        "bg-WIgray-light",
+        `${minHeight}`,
+        "rounded-md",
+        "grid grid-flow-row content-center",
+        practitioner && !isOpen && "transition duration-200 ease-in-out",
+        practitioner && !isOpen && "hover:bg-WIgray-contrast hover:bg-opacity-40 hover:shadow-md",
+        className
+    ])}
     {...restProps}>
-    <div class={`flex justify-between items-center ${isOpen ? "mb-4": "mb-0"}`}>
+    <!-- Card Header -->
+    <div
+        on:click={toggle}
+        role={`${practitioner && "button"}`}
+        class={
+            `${minHeight} px-4 flex justify-between items-center
+            ${isOpen ? "mb-2 shadow-lg": "m-0"}`
+        }>
         {#if enterprise}
             <span class="basis-2/6">{position}</span>
             <div class="basis-3/6 flex justify-around items-center">
-                {#if status === "Closed"}
-                    <span class="status after:bg-[#B70000]">Status</span>
-                {:else if status === "In Progress"}
-                    <span class="status after:bg-[#FDB022]">Status</span>
-                {:else if status === "Accepted"}
-                    <span class="status after:bg-[#23B000]">Status</span>
-                {/if}
+                <span class={`status ${statusColor}`}>Status</span>
                 <button class="view-results justify-self-end">View results</button>
             </div>
             <div class="basis-1/6 flex-grow-0 flex justify-between items-center">
@@ -99,22 +117,24 @@
         {:else if practitioner}
             <span class="basis-1/6">{company}</span>
             <span class="basis-1/6">{jobPosition}</span>
-            {#if status === "Closed"}
-                <span class="status after:bg-[#B70000]"/>
-            {:else if status === "In Progress"}
-                <span class="status after:bg-[#FDB022]"/>
-            {:else if status === "Accepted"}
-                <span class="status after:bg-[#23B000]"/>
-            {/if}
-            <span>{formattedTime}</span>
-            <button>View Details</button>
-            <!-- <p>{description}</p> -->
-            <!-- <p>{salary}</p>
-            <p>{startDate}</p>
-            <p>{duration}</p>
-            <p>{location}</p> -->
+            <div class="basis-2/6 flex justify-around items-center">
+                <span class={`status ${statusColor}`}/>
+                <span>{formattedTime}</span>
+            </div>
+            <div class="basis-2/6 flex justify-center items-center gap-x-4">
+                <button class="view-details peer">View Details</button>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                    class="
+                        size-5 opacity-0
+                        transition-all duration-300 ease-in-out
+                        peer-hover:text-WIblue-input peer-hover:opacity-100
+                    ">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                </svg>  
+            </div>
         {/if}
     </div>
+    <!-- Card Body -->
     <input type="checkbox" bind:checked={isOpen}/>
     <details open>
         <summary class="list-none"/>
@@ -142,16 +162,37 @@
                 <p>{description}</p>
             </div>
         {:else if practitioner}
-            <h1>Practitioner</h1>
+            <div class="grid grid-cols-3 p-4">
+                <p class="size-fit pr-2 col-span-2"><strong>Description: </strong>{description}</p>
+                <div>
+                    <p><strong>Duration: </strong>{duration}</p>
+                    <p><strong>Salary: </strong>{salary}</p>
+                    <p><strong>Start Date: </strong>{startDate}</p>
+                    <p><strong>Location: </strong>{location}</p>
+                </div>
+                <button
+                    class="
+                        bg-WIblue bg-opacity-75
+                        text-WIwhite font-medium
+                        w-2/3 py-2 mt-10 col-span-full col-start-3 justify-self-center
+                        rounded-md
+                        transition duration-200 ease-in-out
+                        hover:shadow-lg hover:bg-WIblue-input
+                    ">
+                    Apply
+                </button>
+            </div>
         {/if}
     </details>
 </div>
 
 <style>
-    button.view-results{
+    button.view-results,
+    button.view-details{
         position: relative;
     }
-    button.view-results::before{
+    button.view-results::before,
+    button.view-details::before{
         content: "";
         width: 100%;
         height: 1.5px;
@@ -161,7 +202,8 @@
         transition: transform 200ms ease-in-out;
         background-color: currentColor;
     }
-    button.view-results:hover::before{
+    button.view-results:hover::before,
+    button.view-details:hover::before{
         transform: scaleX(1);
     }
 
@@ -185,12 +227,20 @@
         overflow-y: scroll;
         transition: max-height 200ms ease-in-out;
     }
+    details::-webkit-scrollbar{
+        color: transparent;
+        width: 0.5rem;
+    }
+    details::-webkit-scrollbar-thumb{
+        background-color: #858585;
+        border-radius: 0.75rem;
+    }
 
     input[type="checkbox"]{
         list-style: none;
         appearance: none;
     }
     input[type="checkbox"]:checked + details{
-        max-height: 11rem;
+        max-height: 12rem;
     }
 </style>
