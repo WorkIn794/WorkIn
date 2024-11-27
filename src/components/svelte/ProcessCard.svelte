@@ -12,7 +12,6 @@
     const { className } = $$props;
     const {
         id,
-        defaultId,
         enterprise, // ~~ Enterprise Props ~~
         status,
         position,
@@ -32,6 +31,39 @@
     // Card toggle state
     let isOpen = false;
     const toggle = (): void => {isOpen = !isOpen};
+
+    // Compute time elapsed since post creation
+    let elapsedTime: number;
+    let formattedTime: string;
+    if(practitioner){
+        const now = new Date();
+        const postDate = new Date(publishedDate);
+        const time = (now.getTime() - postDate.getTime()) / 3600000; // Miliseconds to hours
+        
+        enum Time {
+            DAY = 24,
+            WEEK = 168,
+            MONTH = 730,
+            YEAR = 8760
+        }; const { DAY, WEEK, MONTH, YEAR } = Time;
+        
+        if(time >= DAY){
+            elapsedTime = Math.floor(time / DAY);
+            formattedTime = `Published ${elapsedTime} days ago`;
+        }else if(time >= WEEK){
+            elapsedTime = Math.floor(time / WEEK);
+            formattedTime = `Published ${elapsedTime} weeks ago`;
+        }else if(time >= MONTH){
+            elapsedTime = Math.floor(time / MONTH);
+            formattedTime = `Published ${elapsedTime} months ago`;
+        }else if(time >= YEAR){
+            elapsedTime = Math.floor(time / YEAR);
+            formattedTime = `Published ${elapsedTime} years ago`;
+        }else{
+            elapsedTime = Math.ceil(time);
+            formattedTime = `Published ${elapsedTime} hours ago`;
+        }
+    }
 </script>
 
 <div id={`card-${id}`} class={twMerge([
@@ -65,7 +97,22 @@
                 </button>
             </div>
         {:else if practitioner}
-            <h1>Practitioner</h1>
+            <span class="basis-1/6">{company}</span>
+            <span class="basis-1/6">{jobPosition}</span>
+            {#if status === "Closed"}
+                <span class="status after:bg-[#B70000]"/>
+            {:else if status === "In Progress"}
+                <span class="status after:bg-[#FDB022]"/>
+            {:else if status === "Accepted"}
+                <span class="status after:bg-[#23B000]"/>
+            {/if}
+            <span>{formattedTime}</span>
+            <button>View Details</button>
+            <!-- <p>{description}</p> -->
+            <!-- <p>{salary}</p>
+            <p>{startDate}</p>
+            <p>{duration}</p>
+            <p>{location}</p> -->
         {/if}
     </div>
     <input type="checkbox" bind:checked={isOpen}/>
@@ -121,7 +168,7 @@
     span.status{
         height: fit-content;
         position: relative;
-        flex-basis: 4rem;
+        flex-basis: 4rem
     }
     span.status::after{
         content: "";

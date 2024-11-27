@@ -54,9 +54,9 @@ interface ProcessCard__Practitioner
 	extends Pick<Process,
 	| "jobPosition"
 	| "description"
-	| "salary"> {
+	| "salary"
+	| "status"> {
 	id: number;
-	defaultId: number;
 	practitioner: true;
 	company: string;
 	publishedDate: string;

@@ -2,7 +2,16 @@ import { createClient } from "@/utils/dataBase";
 
 const client = createClient();
 
-export default async () => {
+export default async (req: Request) => {
+    const { method } = req;
+
+    switch(method){
+        case "GET": return getInternships();
+        default: return new Response("Method not allowed", { status: 405 });
+    }
+}
+
+async function getInternships(): Promise<Response>{
     await client.connect();
 
     const processes = await client.db("workin").collection("process").aggregate([
@@ -48,6 +57,7 @@ export default async () => {
             $unset: ["_id", "enterpriseId"]
         }
     ]).toArray();
+    console.log(processes);
 
     return new Response(JSON.stringify(processes));
 }
