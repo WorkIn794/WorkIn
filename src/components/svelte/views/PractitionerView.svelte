@@ -22,7 +22,10 @@
         <h1>Loading...</h1>
     {:then internships}
         {#each internships as internship, index}
-        {@const { company, jobPosition, status, publishedDate, description, duration, salary, startDate, location} = internship}
+        {@const {
+            company, jobPosition, status, publishedDate,
+            description, skills, requirements, benefits,
+            duration, salary, startDate, location } = internship}
             <ProcessCard
                 practitioner
                 id={index}
@@ -35,10 +38,12 @@
                 startDate={startDate}
                 location={location}
                 description={description}
+                skills={skills}
+                requirements={requirements}
+                benefits={benefits}
                 className="mb-4"
             />
         {/each}
-        <h1>Internships</h1>
     {:catch}
         <h1>Error</h1>
     {/await}

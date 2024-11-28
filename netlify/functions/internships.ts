@@ -1,4 +1,5 @@
 import { createClient } from "@/utils/dataBase";
+import { get } from "svelte/store";
 
 const client = createClient();
 
@@ -7,6 +8,7 @@ export default async (req: Request) => {
 
     switch(method){
         case "GET": return getInternships();
+        case "POST": return getInternships();
         default: return new Response("Method not allowed", { status: 405 });
     }
 }

@@ -30,7 +30,10 @@
         duration,
         salary,
         startDate,
-        location
+        location,
+        skills,
+        requirements,
+        benefits
     } = $$props as ProcessCard;
     const restProps = $$restProps;
 
@@ -58,9 +61,9 @@
     }
 
     // // Card toggle state
-    // let isOpen = false;
-    const toggle = (): void => {isOpen && viewDetails };
+    const toggle = (): void => { isOpen = !isOpen };
 
+    // !TODO: Move this computing to the backend
     // Compute time elapsed since post creation
     let elapsedTime: number;
     let formattedTime: string;
@@ -192,8 +195,30 @@
             </div>
         {:else if practitioner}
             {#if viewDetails}
-                <h1>Details</h1>
-            {:else}
+                <div class="p-4 [&_p]:mb-2">
+                    <p><strong>Job Summary: </strong>{description}</p>
+                    <p><strong>Skills: </strong>{skills}</p>
+                    <p><strong>Requirements: </strong>{requirements}</p>
+                    <p><strong>Benefits: </strong>{benefits}</p>
+                    <div class="grid grid-cols-4 grid-rows-2 grid-flow-col">
+                        <p><strong>Duration: </strong>{duration}</p>
+                        <p><strong>Start Date: </strong>{startDate}</p>
+                        <p><strong>Salary: </strong>{salary}</p>
+                        <p><strong>Location: </strong>{location}</p>
+                        <button
+                            class="
+                                row-start-2 col-start-4
+                                bg-WIblue bg-opacity-75
+                                text-WIwhite font-medium
+                                rounded-md
+                                transition duration-200 ease-in-out
+                                hover:shadow-lg hover:bg-WIblue-input
+                            ">
+                            Apply Now
+                        </button>
+                    </div>
+                </div>
+            {:else}    
                 <div class="grid grid-cols-3 p-4">
                     <p class="size-fit pr-2 col-span-2"><strong>Description: </strong>{description}</p>
                     <div>
@@ -243,7 +268,7 @@
     span.status{
         height: fit-content;
         position: relative;
-        flex-basis: 4rem
+        flex-basis: 4rem;
     }
     span.status::after{
         content: "";
@@ -251,7 +276,7 @@
         height: 0.75rem;
         border-radius: 100%;
         position: absolute;
-        right: 0;
+        right: 0.5rem;
         top: 25%;
     }
 

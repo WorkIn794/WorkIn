@@ -59,6 +59,9 @@ interface ProcessCard__Practitioner
 	id: number;
 	practitioner: true;
 	company: string;
+	skills: string;
+	requirements: string;
+	benefits: string;
 	publishedDate: string;
 	startDate: string;
 	duration: string;
