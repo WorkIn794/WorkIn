@@ -8,6 +8,12 @@
     type $$Props = ProcessCard & {
         className?: ClassName;
     };
+    
+    interface State {
+        card: boolean;
+        details: boolean;
+        newState: number;
+    };
 
     const { className } = $$props;
     const {
@@ -28,9 +34,32 @@
     } = $$props as ProcessCard;
     const restProps = $$restProps;
 
-    // Card toggle state
+    // Handle state
     let isOpen = false;
-    const toggle = (): void => {isOpen = !isOpen};
+    let viewDetails = false;
+    let currentState = 0;
+
+    const transitionChart: ReadonlyArray<[State, State]> = [
+        //              Click on card              |        Click on View Details
+        [{card: true, details: false, newState: 1}, {card: true, details: true, newState: 2}],  // S1
+        [{card: false, details: false, newState: 0}, {card: true, details: true, newState: 2}], // S2
+        [{card: false, details: false, newState: 0}, {card: true, details: false, newState: 1}] // S3
+    ];
+
+    function handleState({ target }: MouseEvent): void {
+        if(!target) return;
+
+        const { card, details, newState }: State = transitionChart[currentState][target.tagName === "BUTTON" ? 1 : 0];
+        currentState = newState;
+        isOpen = card;
+        viewDetails = details;
+
+        return;
+    }
+
+    // // Card toggle state
+    // let isOpen = false;
+    const toggle = (): void => {isOpen && viewDetails };
 
     // Compute time elapsed since post creation
     let elapsedTime: number;
@@ -91,7 +120,7 @@
     {...restProps}>
     <!-- Card Header -->
     <div
-        on:click={toggle}
+        on:click={e =>  practitioner ? handleState(e) : toggle()}
         role={`${practitioner && "button"}`}
         class={
             `${minHeight} px-4 flex justify-between items-center
@@ -162,26 +191,30 @@
                 <p>{description}</p>
             </div>
         {:else if practitioner}
-            <div class="grid grid-cols-3 p-4">
-                <p class="size-fit pr-2 col-span-2"><strong>Description: </strong>{description}</p>
-                <div>
-                    <p><strong>Duration: </strong>{duration}</p>
-                    <p><strong>Salary: </strong>{salary}</p>
-                    <p><strong>Start Date: </strong>{startDate}</p>
-                    <p><strong>Location: </strong>{location}</p>
+            {#if viewDetails}
+                <h1>Details</h1>
+            {:else}
+                <div class="grid grid-cols-3 p-4">
+                    <p class="size-fit pr-2 col-span-2"><strong>Description: </strong>{description}</p>
+                    <div>
+                        <p><strong>Duration: </strong>{duration}</p>
+                        <p><strong>Salary: </strong>{salary}</p>
+                        <p><strong>Start Date: </strong>{startDate}</p>
+                        <p><strong>Location: </strong>{location}</p>
+                    </div>
+                    <button
+                        class="
+                            bg-WIblue bg-opacity-75
+                            text-WIwhite font-medium
+                            w-2/3 py-2 mt-10 col-span-full col-start-3 justify-self-center
+                            rounded-md
+                            transition duration-200 ease-in-out
+                            hover:shadow-lg hover:bg-WIblue-input
+                        ">
+                        Apply
+                    </button>
                 </div>
-                <button
-                    class="
-                        bg-WIblue bg-opacity-75
-                        text-WIwhite font-medium
-                        w-2/3 py-2 mt-10 col-span-full col-start-3 justify-self-center
-                        rounded-md
-                        transition duration-200 ease-in-out
-                        hover:shadow-lg hover:bg-WIblue-input
-                    ">
-                    Apply
-                </button>
-            </div>
+            {/if}
         {/if}
     </details>
 </div>

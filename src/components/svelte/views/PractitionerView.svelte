@@ -35,6 +35,7 @@
                 startDate={startDate}
                 location={location}
                 description={description}
+                className="mb-4"
             />
         {/each}
         <h1>Internships</h1>
