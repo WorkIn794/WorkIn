@@ -5,6 +5,7 @@
 
     const processes = fetchProcess();
     async function fetchProcess(){
+        console.log(sessionStorage.getItem("session"));
         return await (await fetch(`${getDbCredential()}/getEnterpriseProcesses`, {
             method: "POST",
             body: sessionStorage.getItem("session")

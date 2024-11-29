@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { slide } from "svelte/transition";
     import Pencil from "@components/svelte/icons/Pencil.svelte";
     import Trash from "@components/svelte/icons/Trash.svelte";
     import Chevron from "@components/svelte/icons/Chevron.svelte"
@@ -52,7 +53,8 @@
     function handleState({ target }: MouseEvent): void {
         if(!target) return;
 
-        const { card, details, newState }: State = transitionChart[currentState][target.tagName === "BUTTON" ? 1 : 0];
+        const { card, details, newState }: State =
+            transitionChart[currentState][target.tagName === "BUTTON" ? 1 : 0];
         currentState = newState;
         isOpen = card;
         viewDetails = details;
@@ -60,7 +62,7 @@
         return;
     }
 
-    // // Card toggle state
+    // // Card toggle state for enterprise view
     const toggle = (): void => { isOpen = !isOpen };
 
     // !TODO: Move this computing to the backend
@@ -123,7 +125,7 @@
     {...restProps}>
     <!-- Card Header -->
     <div
-        on:click={e =>  practitioner ? handleState(e) : toggle()}
+        on:click={e =>  practitioner && handleState(e)}
         role={`${practitioner && "button"}`}
         class={
             `${minHeight} px-4 flex justify-between items-center
@@ -155,13 +157,19 @@
             </div>
             <div class="basis-2/6 flex justify-center items-center gap-x-4">
                 <button class="view-details peer">View Details</button>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
                     class="
                         size-5 opacity-0
                         transition-all duration-300 ease-in-out
                         peer-hover:text-WIblue-input peer-hover:opacity-100
                     ">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M12 4.5v15m7.5-7.5h-15"
+                    />
                 </svg>  
             </div>
         {/if}
@@ -171,7 +179,7 @@
     <details open>
         <summary class="list-none"/>
         {#if enterprise}
-            <div class="grid grid-cols-2">
+            <div class="grid grid-cols-2 px-4">
                 <div>
                 {#if applicants}
                     {#each applicants as applicant}
@@ -195,7 +203,7 @@
             </div>
         {:else if practitioner}
             {#if viewDetails}
-                <div class="p-4 [&_p]:mb-2">
+                <div transition:slide class="p-4 [&_p]:mb-2">
                     <p><strong>Job Summary: </strong>{description}</p>
                     <p><strong>Skills: </strong>{skills}</p>
                     <p><strong>Requirements: </strong>{requirements}</p>
@@ -207,10 +215,10 @@
                         <p><strong>Location: </strong>{location}</p>
                         <button
                             class="
-                                row-start-2 col-start-4
                                 bg-WIblue bg-opacity-75
                                 text-WIwhite font-medium
-                                rounded-md
+                                row-start-2 col-start-4
+                                max-h-12 rounded-md
                                 transition duration-200 ease-in-out
                                 hover:shadow-lg hover:bg-WIblue-input
                             ">
@@ -219,8 +227,11 @@
                     </div>
                 </div>
             {:else}    
-                <div class="grid grid-cols-3 p-4">
-                    <p class="size-fit pr-2 col-span-2"><strong>Description: </strong>{description}</p>
+                <div transition:slide class="grid grid-cols-3 p-4">
+                    <p class="size-fit pr-2 col-span-2">
+                        <strong>Description: </strong>
+                        {description}
+                    </p>
                     <div>
                         <p><strong>Duration: </strong>{duration}</p>
                         <p><strong>Salary: </strong>{salary}</p>
