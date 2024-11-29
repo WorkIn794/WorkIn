@@ -1,13 +1,13 @@
-import { MongoClient, ServerApiVersion, ObjectId } from "mongodb";
+import { ObjectId } from "mongodb";
+import { createClient } from "@/utils/dataBase";
+import type { UpdateFilter } from "mongodb";
 
-const uri = "mongodb+srv://vicentejvg:3tUFwiOVpHqcIYDl@maincluster.ylign.mongodb.net/?retryWrites=true&w=majority&appName=mainCluster"
-const client = new MongoClient(uri, {
-    serverApi: {
-      version: ServerApiVersion.v1,
-      strict: true,
-      deprecationErrors: true,
-    }
-});
+interface Enterprise{
+    _id: ObjectId;
+    processes: string[];
+}
+
+const client = createClient();
 
 export default async (req: Request) => {
     const process = await req.json();
@@ -16,7 +16,7 @@ export default async (req: Request) => {
     const db = client.db("workin");
     
     try{
-        let collection = db.collection("process");
+        let collection = db.collection<Enterprise>("process");
         const { insertedId } = await collection.insertOne(process);
 
         collection = db.collection("enterprise");
