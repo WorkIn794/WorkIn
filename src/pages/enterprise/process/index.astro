@@ -19,7 +19,7 @@ import Searchbar from "@components/svelte/Searchbar.svelte";
             <span class="after:bg-[#23B000]">Accepted</span>
         </legend>
     </section>
-    <View client:idle process>
+    <View client:only="svelte" processes>
         <Loader slot="loader" type="bars" size={6}/>
     </View>
 </LayoutMain>

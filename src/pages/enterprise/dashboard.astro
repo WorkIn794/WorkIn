@@ -5,7 +5,7 @@ import Loader from "@components/Loader.astro";
 ---
 
 <LayoutMain enterprise navBar sideBar>
-    <View client:idle dashboard>
+    <View client:only="svelte" dashboard>
         <Loader type="bars" slot="loader" size={6}/>
     </View>
 </LayoutMain>

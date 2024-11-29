@@ -3,12 +3,9 @@ import type { XOR } from "ts-xor";
 
 // General component props
 type ClassName = string | string[];
-
-// Base types
 type Status = "Closed" | "In Progress" | "Accepted";
 
 // !TODO: Add duration and startDate to Process, both, types and form fields.
-// !TODO: Inherit ProcessCard__Enterprise from Process.
 interface Process{
 	_id: string;
 	jobPosition: string;
@@ -34,22 +31,24 @@ interface Enterprise{
 };
 type User = XOR<Practitioner, Enterprise>;
 
-// User extended props
-type Applicant = {
+/* ~~ Process cards types ~~ */
+type ProcessCard__Applicant = {
 	firstName: string;
 	lastName: string;
 	skills: string[];
 };
 
-// Cards types
+// Enterprise cards types
 interface ProcessCard__Enterprise {
 	id: number;
 	enterprise: true;
-	status: Status;
 	position: string;
+	status: Status;
 	description: string;
-	applicants: Applicant[];
+	applicants: ProcessCard__Applicant[];
 };
+
+// Practitioner cards types
 interface ProcessCard__Practitioner
 	extends Pick<Process,
 	| "jobPosition"
@@ -67,6 +66,7 @@ interface ProcessCard__Practitioner
 	duration: string;
 	location: string;
 };
+
 type ProcessCard = XOR<ProcessCard__Enterprise, ProcessCard__Practitioner>;
 
 // Link props
@@ -83,6 +83,17 @@ type IconProps =
 	| {icon?: undefined; iconLeft?: undefined; iconRight?: undefined;}
 	;
 
+/* ~~ View types ~~ */
+
+// Enterprise view types
+interface EnterpriseView__Processes{
+	processes: boolean;
+};
+interface EnterpriseView__Dashboard{
+	dashboard: boolean;
+};
+type EnterpriseView = XOR<EnterpriseView__Processes, EnterpriseView__Dashboard>;
+
 // Practitioner view types
 interface Practitioner__View__MyResumes{
 	myResumes: boolean;
@@ -98,12 +109,3 @@ type Practitioner__View = XOR<
 	Practitioner__View__Internships,
 	Practitioner__View__TrainingPack
 	>;
-
-// Enterprise view props
-interface Process{
-	process: boolean;
-};
-interface Dashboard{
-	dashboard: boolean;
-};
-type EnterpriseView = XOR<Process, Dashboard>;

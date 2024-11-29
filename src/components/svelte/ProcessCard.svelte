@@ -183,9 +183,10 @@
                 <div>
                 {#if applicants}
                     {#each applicants as applicant}
-                        <b class="w-1/2">{applicant.firstName} {applicant.lastName}</b>
+                        {@const { firstName, lastName, skills } = applicant}
+                        <b class="w-1/2">{firstName} {lastName}</b>
                         <ul>
-                            {#each applicant.skills as skill}
+                            {#each skills as skill}
                                 <li class="indent-4">{skill}</li>
                             {/each}
                         </ul>

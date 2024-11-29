@@ -1,11 +1,14 @@
-<script>
+<script lang="ts">
     import ProcessCard from "../ProcessCard.svelte";
     import DashboardCard from "../DashboardCard.svelte";
     import { getDbCredential } from "@/utils/projectMode";
+    import type { EnterpriseView, ProcessCard__Enterprise } from "@/types/global";
 
-    const processes = fetchProcess();
-    async function fetchProcess(){
-        console.log(sessionStorage.getItem("session"));
+    type $$Props = EnterpriseView;
+    const { processes, dashboard } = $$props as EnterpriseView;
+
+    const processesData = fetchProcess();
+    async function fetchProcess(): Promise<ProcessCard__Enterprise[]>{
         return await (await fetch(`${getDbCredential()}/getEnterpriseProcesses`, {
             method: "POST",
             body: sessionStorage.getItem("session")
@@ -42,7 +45,32 @@
     }
 </script>
 
-{#if $$props.process}
+{#if processes}
+    {#await processesData}
+        <div class="size-full flex justify-center items-center">
+            <slot name="loader"/>
+        </div>
+    {:then data}
+        {#each data as process, index}
+            {@const { position, status, description, applicants} = process}
+            <ProcessCard
+                enterprise
+                id={index}
+                position={position}
+                status={status}
+                applicants={applicants}
+                description={description}
+                className="my-2"
+            />
+        {/each}
+    {:catch error}
+        <h1>Error: {error.message}</h1>
+    {/await}
+{:else if dashboard}
+    <h1>Work In Progress</h1>
+{/if}
+
+<!-- {#if $$props.process}
     {#await processes}
         <div class="size-full flex justify-center items-center">
             <slot name="loader"/>
@@ -71,4 +99,4 @@
     {:catch error}
         <h1>Error: {error.message}</h1>
     {/await}
-{/if}
+{/if} -->
