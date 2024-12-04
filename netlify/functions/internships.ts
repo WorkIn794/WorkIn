@@ -1,5 +1,4 @@
 import { createClient } from "@/utils/dataBase";
-import { get } from "svelte/store";
 
 const client = createClient();
 

@@ -1,6 +1,5 @@
 import { ObjectId } from "mongodb";
 import { createClient } from "@/utils/dataBase";
-import type { UpdateFilter } from "mongodb";
 
 interface Enterprise{
     _id: ObjectId;

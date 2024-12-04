@@ -9,9 +9,12 @@
 
     const processesData = fetchProcess();
     async function fetchProcess(): Promise<ProcessCard__Enterprise[]>{
-        return await (await fetch(`${getDbCredential()}/getEnterpriseProcesses`, {
-            method: "POST",
-            body: sessionStorage.getItem("session")
+        const headers = new Headers();
+        headers.append("role", "enterprise");
+        headers.append("session", sessionStorage.getItem("session") as string);
+
+        return await (await fetch(`${getDbCredential()}/process`, {
+            headers: headers,
         })).json();
     }
 

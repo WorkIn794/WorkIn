@@ -5,10 +5,13 @@
     
     type $$Props = Practitioner__View;
 
-    const getInternships = fetchInternships();
-    async function fetchInternships(): Promise<ProcessCard__Practitioner[]> {
+    const processes = fetchProcesses();
+    async function fetchProcesses(): Promise<ProcessCard__Practitioner[]> {
+        const headers = new Headers();
+        headers.append("role", "practitioner");
+
         const processes: ProcessCard__Practitioner[] = await (
-            await fetch(`${getDbCredential()}/internships`)).json();
+            await fetch(`${getDbCredential()}/process`, { headers: headers })).json();
         return processes;
     }
 
@@ -18,7 +21,7 @@
 {#if myResumes}
     <h1>My Resumes</h1>
 {:else if internships}
-    {#await getInternships}
+    {#await processes}
         <h1>Loading...</h1>
     {:then internships}
         {#each internships as internship, index}

@@ -84,14 +84,20 @@ const formName: Readonly<string> = "enterpriseInfo";
             const session = JSON.parse(sessionStorage.getItem("session") as string) as Session;
             data["enterpriseId"] = session._id;
 
-            const response: boolean = await (await fetch(`${getDbCredential()}/createProcess`, {
+            const headers = new Headers();
+            headers.append("role", "enterprise");
+            
+            const response: boolean = await (await fetch(`${getDbCredential()}/process`, {
                 method: "POST",
+                headers: headers,
                 body: JSON.stringify(data)
             })).json();
         
             if(response){
                 localStorage.clear();
                 window.location.href = "/enterprise/process"
-            };
+            }else{
+                console.log("Error creating process");
+            }
         });
 </script>
