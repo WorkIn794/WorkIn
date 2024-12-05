@@ -5,6 +5,7 @@
     import Chevron from "@components/svelte/icons/Chevron.svelte"
     import { twMerge } from "tailwind-merge";
     import type { ClassName, ProcessCard } from "../../types/global";
+  import { getDbCredential } from "@/utils/projectMode";
 
     type $$Props = ProcessCard & {
         className?: ClassName;
@@ -18,6 +19,7 @@
 
     const { className } = $$props;
     const {
+        _id,
         id,
         enterprise, // ~~ Enterprise Props ~~
         status,
@@ -62,7 +64,7 @@
         return;
     }
 
-    // // Card toggle state for enterprise view
+    // Card toggle state for enterprise view
     const toggle = (): void => { isOpen = !isOpen };
 
     // !TODO: Move this computing to the backend
@@ -107,6 +109,31 @@
         case "Accepted": statusColor = "after:bg-[#23B000]"; break;
     }
 
+    // Delete process
+    async function deleteProcess(){
+        const headers = new Headers();
+        headers.append("role", "enterprise");
+
+        const body = JSON.parse(sessionStorage.getItem("session") as string);
+        body.processId = _id;
+
+        const response = await fetch(`${getDbCredential()}/process`, {
+            method: "DELETE",
+            headers: headers,
+            body: JSON.stringify(body)
+        });
+
+        if(response.ok){
+            // Show success message
+            
+            // Dummy solution to refresh the page.
+            // !TODO: Find a better solution
+            window.location.href = "/enterprise/process";
+        }else{
+            // Show error message
+        }
+    }
+
     // Styles
     const minHeight: Readonly<string> = "min-h-20";
 </script>
@@ -141,7 +168,7 @@
                 <button id="edit" class="size-6">
                     <Pencil className="size-5 m-auto"/>
                 </button>
-                <button id="delete" class="size-6">
+                <button on:click={deleteProcess} id="delete" class="size-6">
                     <Trash/>
                 </button>
                 <button on:click={toggle} class="size-6">

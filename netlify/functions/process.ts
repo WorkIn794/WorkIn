@@ -16,6 +16,7 @@ export default async (req: Request) => {
             switch(method){
                 case "GET": return await getEnterpriseProcesses(req);
                 case "POST": return await createProcess(req);
+                case "DELETE": return await deleteProcess(req);
                 default: return new Response("Method not allowed", { status: 405 });
             }
         case "practitioner":
@@ -69,6 +70,7 @@ async function getEnterpriseProcesses(req: Request) {
                         input: "$processes",
                         as: "process",
                         in: {
+                            _id: "$$process._id",
                             position: "$$process.jobPosition",
                             status: "$$process.status",
                             description: "$$process.description",
@@ -174,6 +176,45 @@ async function createProcess(req: Request) {
         if(e instanceof Error){
             console.log(e.message);
             return new Response("false", { status: 500, statusText: e.message });
+        }
+    }finally{
+        await client.close();
+    }
+}
+
+async function deleteProcess(req: Request){
+    interface DeleteData{
+        _id: string; // Enterprise _id
+        email: string;
+        role: string;
+        processId: string;
+    };
+
+    const data = await req.json() as DeleteData;
+    const processId = new ObjectId(data.processId);
+    const sessionId = new ObjectId(data._id);
+
+    await client.connect();
+    const db = client.db("workin");
+    const processCollection = db.collection("process");
+    const enterpriseCollection = db.collection<Enterprise>("enterprise");
+
+    try{
+        const deletedProcess = await processCollection
+            .deleteOne({ _id: processId });
+        const deletedFromEnterprise = await enterpriseCollection.updateOne(
+            { _id: sessionId },
+            { $pull: { processes: processId.toString() } }
+        );
+
+        if(!deletedFromEnterprise.acknowledged || !deletedProcess.acknowledged)
+            throw new Error("Error deleting process");
+
+        return new Response("Process deleted", { status: 201 });
+    }catch(e){
+        if(e instanceof Error){
+            console.log(e.message);
+            return new Response("Error deleting process", { status: 500 });
         }
     }finally{
         await client.close();

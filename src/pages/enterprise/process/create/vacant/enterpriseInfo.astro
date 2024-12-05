@@ -21,7 +21,7 @@ const formName: Readonly<string> = "enterpriseInfo";
         <div id="questionContainer"/>
     </form>
     <Button id="addQuestion" text="Add question" icon="heroicons:plus-circle-16-solid" intent="withIcon" className="my-4"/>
-    <Link id="finish" href="/enterprise/process" text="Finish" icon="heroicons:chevron-right-16-solid" iconRight intent="navControl" className="float-right my-4"/>
+    <Link id="finish" href="" text="Finish" icon="heroicons:chevron-right-16-solid" iconRight intent="navControl" className="float-right my-4"/>
 </LayoutMain>
 
 <style>
@@ -38,7 +38,7 @@ const formName: Readonly<string> = "enterpriseInfo";
     interface Session {
         _id: string;
         email: string;
-        password: string;
+        role: string;
     };
 
     let questionCount: number = 0;

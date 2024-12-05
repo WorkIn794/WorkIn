@@ -55,9 +55,10 @@
         </div>
     {:then data}
         {#each data as process, index}
-            {@const { position, status, description, applicants} = process}
+            {@const { _id, position, status, description, applicants} = process}
             <ProcessCard
                 enterprise
+                _id={_id}
                 id={index}
                 position={position}
                 status={status}

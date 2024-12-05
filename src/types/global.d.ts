@@ -59,6 +59,7 @@ type ProcessCard__Applicant = {
 
 // Enterprise cards types
 interface ProcessCard__Enterprise {
+	_id: ObjectId;
 	id: number;
 	enterprise: true;
 	position: string;
