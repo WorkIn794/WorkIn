@@ -54,6 +54,7 @@ const formID: Readonly<string> = "login";
 
 <script>
 	import { getDbCredential } from "@utils/projectMode";
+	import { signUp } from "@/utils/auth";
 
 	interface LoginData {
 		email: string;
@@ -99,6 +100,14 @@ const formID: Readonly<string> = "login";
 	});
 
 	document.getElementById("signup")
-		?.addEventListener("click", () =>
-			window.location.href = "/practitioner/signin");
+		?.addEventListener("click", async (e) => {
+			e.preventDefault();
+			
+			await fetch(`${getDbCredential()}/auth`);
+
+			// const user = await signUp("practitioner");
+			// console.log(user);
+			
+			// window.location.href = "/practitioner/signin"
+		});
 </script>

@@ -24,7 +24,7 @@ export default async (req: Request) => {
                 case "GET": return await getPractitionerProcesses();
                 default: return new Response("Method not allowed", { status: 405 });
             }
-        default: return new Response("Role not allowed", { status: 405 });
+        default: return new Response("Role not allowed", { status: 403 });
     }
 }
 
@@ -98,7 +98,10 @@ async function getEnterpriseProcesses(req: Request) {
         }
     ]).toArray();
 
-    return new Response(JSON.stringify(processes[0].processes));
+    return new Response(JSON.stringify(processes[0].processes), {
+        status: 200,
+        statusText: "OK"
+    });
 }
 
 async function getPractitionerProcesses(): Promise<Response> {
@@ -148,7 +151,10 @@ async function getPractitionerProcesses(): Promise<Response> {
         }
     ]).toArray();
 
-    return new Response(JSON.stringify(processes));
+    return new Response(JSON.stringify(processes), {
+        status: 200,
+        statusText: "OK"
+    });
 }
 
 async function createProcess(req: Request) {
@@ -171,7 +177,7 @@ async function createProcess(req: Request) {
 
         if(!acknowledged)
             throw new Error("Could not push process's _id into enterprise");
-        return new Response("true", { status: 201, statusText: "Process created" });
+        return new Response("true", { status: 201, statusText: "OK" });
     }catch(e){
         if(e instanceof Error){
             console.log(e.message);

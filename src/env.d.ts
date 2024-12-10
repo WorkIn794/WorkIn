@@ -6,6 +6,7 @@ interface ImportMetaEnv {
     readonly EMAIL_PASSWORD: string;
     readonly RESEND_API_KEY: string;
     readonly MONGODB_API_KEY: string;
+    readonly PUBLIC_NTL_IDENTITY: string;
 };
 
 interface ImportMeta {

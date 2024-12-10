@@ -1,7 +1,7 @@
 {
   "name": "workin",
   "type": "module",
-  "version": "0.5.8",
+  "version": "0.5.9",
   "author": "Vicente Javier Viera Guizar",
   "description": "",
   "license": "UNLICENSED",
@@ -28,7 +28,6 @@
     "d3": "^7.9.0",
     "gotrue-js": "^0.9.29",
     "mongodb": "^6.10.0",
-    "nodemailer": "^6.9.16",
     "resend": "^4.0.1",
     "svelte": "^4.2.19",
     "tailwind-merge": "^2.5.4",
