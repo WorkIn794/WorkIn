@@ -7,6 +7,7 @@ interface ImportMetaEnv {
     readonly RESEND_API_KEY: string;
     readonly MONGODB_API_KEY: string;
     readonly PUBLIC_NTL_IDENTITY: string;
+    readonly MONGODB_DASHBOARD_ID: string;
 };
 
 interface ImportMeta {
