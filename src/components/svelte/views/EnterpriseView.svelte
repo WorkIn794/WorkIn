@@ -63,5 +63,5 @@
     {/await}
 {:else if dashboard}
     <h1>Work In Progress</h1>
-    <div id={dashboardContainerId} class="size-full"/>
+    <div id={dashboardContainerId} class="size-full"></div>
 {/if}

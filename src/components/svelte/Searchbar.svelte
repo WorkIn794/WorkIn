@@ -1,14 +1,14 @@
 <script lang="ts">
     import { twMerge } from "tailwind-merge";
-    import type { HTMLAttributes } from "astro/types";
+    import type { HTMLInputAttributes } from "svelte/elements";
     import type { ClassName } from "../../types/global";
 
-    interface $$Props extends HTMLAttributes<"input">{
+    interface Props extends HTMLInputAttributes {
         readonly id: string;
         className?: ClassName;
     };
-    const { className, id } = $$props;
-    const restProps = $$restProps;
+
+    const { id, className, ...restProps }: Props = $props();
 </script>
 
 <input
@@ -28,4 +28,5 @@
     {...restProps}
 />
 <!-- Populate datalist with options on component load -->
+<!-- svelte-ignore element_invalid_self_closing_tag -->
 <datalist id={`${id}-datalist`}/>

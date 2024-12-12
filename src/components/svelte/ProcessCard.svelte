@@ -4,46 +4,33 @@
     import Trash from "@components/svelte/icons/Trash.svelte";
     import Chevron from "@components/svelte/icons/Chevron.svelte"
     import { twMerge } from "tailwind-merge";
+    import { getDbCredential } from "@/utils/projectMode";
     import type { ClassName, ProcessCard } from "../../types/global";
-  import { getDbCredential } from "@/utils/projectMode";
 
-    type $$Props = ProcessCard & {
+    type Props = ProcessCard & {
         className?: ClassName;
     };
-    
+
     interface State {
         card: boolean;
         details: boolean;
         newState: number;
     };
 
-    const { className } = $$props;
     const {
-        _id,
-        id,
+        _id, id, status,
         enterprise, // ~~ Enterprise Props ~~
-        status,
-        position,
-        description,
-        applicants,
+        position, description, applicants,
         practitioner, // ~~ Practitioner Props ~~
-        company,
-        jobPosition,
-        publishedDate,
-        duration,
-        salary,
-        startDate,
-        location,
-        skills,
-        requirements,
-        benefits
-    } = $$props as ProcessCard;
-    const restProps = $$restProps;
+        company, jobPosition, publishedDate, duration, salary, startDate,
+        location, skills, requirements, benefits,
+        className, ...restProps
+    }: Props = $props();
 
     // Handle state
-    let isOpen = false;
-    let viewDetails = false;
-    let currentState = 0;
+    let isOpen: boolean = $state(false);
+    let viewDetails: boolean = $state(false);
+    let currentState: number = $state(0);
 
     const transitionChart: ReadonlyArray<[State, State]> = [
         //              Click on card              |        Click on View Details
@@ -70,7 +57,7 @@
     // !TODO: Move this computing to the backend
     // Compute time elapsed since post creation
     let elapsedTime: number;
-    let formattedTime: string;
+    let formattedTime: string = $state("");
     if(practitioner){
         const now = new Date();
         const postDate = new Date(publishedDate);
@@ -102,7 +89,7 @@
     }
 
     // Get status color
-    let statusColor: string;
+    let statusColor: string = $state("");
     switch(status){
         case "Closed": statusColor = "after:bg-[#B70000]"; break;
         case "In Progress": statusColor = "after:bg-[#FDB022]"; break;
@@ -138,6 +125,16 @@
     const minHeight: Readonly<string> = "min-h-20";
 </script>
 
+{#snippet processStatus(state: string)}
+    {#if state === "Closed"}
+        <span class="status after:bg-[#B70000]">Status</span>
+    {:else if state === "In Progress"}
+        <span class="status after:bg-[#FDB022]">Status</span>
+    {:else if state === "Accepted"}
+        <span class="status after:bg-[#23B000]">Status</span>
+    {/if}
+{/snippet}
+
 <!-- Card Container -->
 <div id={`card-${id}`}
     class={twMerge([
@@ -152,7 +149,7 @@
     {...restProps}>
     <!-- Card Header -->
     <div
-        on:click={e =>  practitioner && handleState(e)}
+        onclick={e => practitioner && handleState(e)}
         role={`${practitioner && "button"}`}
         class={
             `${minHeight} px-4 flex justify-between items-center
@@ -161,17 +158,17 @@
         {#if enterprise}
             <span class="basis-2/6">{position}</span>
             <div class="basis-3/6 flex justify-around items-center">
-                <span class={`status ${statusColor}`}>Status</span>
+                {@render processStatus(status)}
                 <button class="view-results justify-self-end">View results</button>
             </div>
             <div class="basis-1/6 flex-grow-0 flex justify-between items-center">
                 <button id="edit" class="size-6">
                     <Pencil className="size-5 m-auto"/>
                 </button>
-                <button on:click={deleteProcess} id="delete" class="size-6">
+                <button onclick={deleteProcess} id="delete" class="size-6">
                     <Trash/>
                 </button>
-                <button on:click={toggle} class="size-6">
+                <button onclick={toggle} class="size-6">
                     <Chevron id={id} toggleState={isOpen}/>
                 </button>
             </div>
@@ -179,7 +176,7 @@
             <span class="basis-1/6">{company}</span>
             <span class="basis-1/6">{jobPosition}</span>
             <div class="basis-2/6 flex justify-around items-center">
-                <span class={`status ${statusColor}`}/>
+                {@render processStatus(status)}
                 <span>{formattedTime}</span>
             </div>
             <div class="basis-2/6 flex justify-center items-center gap-x-4">
@@ -204,6 +201,7 @@
     <!-- Card Body -->
     <input type="checkbox" bind:checked={isOpen}/>
     <details open>
+        <!-- svelte-ignore element_invalid_self_closing_tag -->
         <summary class="list-none"/>
         {#if enterprise}
             <div class="grid grid-cols-2 px-4">

@@ -2,9 +2,9 @@
     import ProcessCard from "../ProcessCard.svelte";
     import { getDbCredential } from "@/utils/projectMode";
     import type { Practitioner__View, ProcessCard__Practitioner } from "../../../types/global";
-    
-    type $$Props = Practitioner__View;
 
+    type Props = Practitioner__View;
+    
     const processes = fetchProcesses();
     async function fetchProcesses(): Promise<ProcessCard__Practitioner[]> {
         const headers = new Headers();
@@ -15,7 +15,8 @@
         return processes;
     }
 
-    const { myResumes, internships, trainingPack } = $$props as Practitioner__View;
+    const { myResumes, internships, trainingPack }: Props = $props();
+    // const { myResumes, internships, trainingPack } = $$props as Practitioner__View;
 </script>
 
 {#if myResumes}
