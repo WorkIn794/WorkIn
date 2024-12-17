@@ -2,25 +2,20 @@
 import type { HTMLAttributes } from "astro/types";
 
 interface Props extends HTMLAttributes<"input">{
-    form: string;
     name: string;
     type: "email" | "password";
     label: "Email Address" | "Password";
 };
 
-const { form, name, type, label, placeholder = "", id, ...inputProps } = Astro.props;
+const { name, type, label, placeholder = "", id, ...inputProps } = Astro.props;
 ---
 
 <div>
-    <label for={id || name} set:text={label}/>
-    <input id={id || name} name={name || id} type={type} form={form} placeholder={placeholder} {...inputProps}/>
+    <label for={id} set:text={label}/>
+    <input id={id} name={name} type={type} placeholder={placeholder} {...inputProps}/>
 </div>
 
 <style>
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 div{
     @apply
     h-16 py-1
