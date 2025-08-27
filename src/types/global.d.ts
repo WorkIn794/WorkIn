@@ -2,6 +2,8 @@
 import type { XOR } from "ts-xor";
 import type { ObjectId } from "mongodb";
 
+// !TODO: Declare namespaces using sintax: declare namespace <Namespace>{...};
+
 // General component props
 type ClassName = string | string[];
 type Status = "Closed" | "In Progress" | "Accepted";

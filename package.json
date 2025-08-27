@@ -1,7 +1,7 @@
 {
   "name": "workin",
   "type": "module",
-  "version": "0.5.11",
+  "version": "0.5.12",
   "author": "Vicente Javier Viera Guizar",
   "description": "",
   "license": "UNLICENSED",
@@ -25,6 +25,7 @@
     "@observablehq/plot": "^0.6.16",
     "astro": "5.0.5",
     "astro-icon": "^1.1.1",
+    "better-auth": "^1.0.22",
     "cva": "npm:class-variance-authority",
     "d3": "^7.9.0",
     "mongodb": "^6.10.0",

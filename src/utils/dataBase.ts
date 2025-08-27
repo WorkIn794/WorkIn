@@ -1,10 +1,8 @@
+import { MONGODB_API_KEY } from "astro:env/server";
 import { MongoClient, ServerApiVersion } from "mongodb";
 
 export function createClient(): MongoClient {
     try{
-        const { MONGODB_API_KEY } = process.env;
-        if(!MONGODB_API_KEY) throw new Error("MONGODB_API_KEY is not set");
-    
         const client: MongoClient = new MongoClient(MONGODB_API_KEY, {
             serverApi: {
                 version: ServerApiVersion.v1,

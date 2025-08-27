@@ -54,6 +54,8 @@ const formID: Readonly<string> = "login";
 
 <script>
 	import ntlFunction from "@utils/ntlFunction";
+	import { actions } from "astro:actions";
+	const { getGreeting } = actions;
 
 	interface LoginData {
 		email: string;
@@ -96,6 +98,11 @@ const formID: Readonly<string> = "login";
 	});
 
 	document.getElementById("signup")
-		?.addEventListener("click", () =>
-			window.location.href = "/practitioner/signin");
+		?.addEventListener("click", async () =>
+			{
+				const res = await actions.getGreeting({ name: "John" });
+				console.log(res);
+			}
+			// window.location.href = "/practitioner/signin"
+			);
 </script>

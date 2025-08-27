@@ -6,6 +6,11 @@ const ntlApi = (): string => PROD ? NTL_FUNCTION : NLT_DEV_FUNCTION;
 
 export default ntlApi;
 
+/**
+ * 
+ * @deprecated use ntlApi() instead
+ * @returns The Netlify Function API URL
+ */
 export function getDbCredential(): string {
     const { PROD } = import.meta.env;
 
